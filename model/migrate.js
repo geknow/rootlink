@@ -11,7 +11,7 @@ var url =  require('url');
 
 
 function *addUser() {
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 5; i++) {
         var user = {
             username:'name'+i,
             password:'123',
@@ -24,11 +24,22 @@ function *addUser() {
     }
 }
 
+
+function *addBlog() {
+    for (var i = 0; i < 5; i++) {
+        var blog = {
+            text: "blog text" + i
+        };
+        yield db.models.Blog.create(blog);
+    }
+}
+
 function* init() {
     yield db.sync({
         force: true
     });
     yield addUser();
+    yield addBlog();
 }
 
 co(function*() {

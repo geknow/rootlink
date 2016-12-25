@@ -1,6 +1,7 @@
 #url : 
 #port : 
 
+
 #通用响应格式
 ```json
 Response:{
@@ -56,5 +57,42 @@ Response:{
     error: STRING,
     status: INTERGER,
     msg: {LoginToken : STRING}
+}
+```
+
+#博客模块
+###获取接口:
+**/blog/index**
+Method:GET
+```json
+RequestData:{
+     page: INT,//allowNull(true),默认为1,获取的第几页
+     count: INT //allowNull(true),默认为10，获取的条数
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {list : `对象数组`}
+}
+```
+
+###添加接口:
+**/blog/add**
+**管理员才有的功能：测试账号name3 密码123**
+Method:POST
+```json
+RequestData:{
+     text : String //allowNull(false) 
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
 }
 ```
