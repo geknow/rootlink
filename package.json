@@ -9,6 +9,7 @@
     "migrate": "node ./model/migrate.js",
     "webpack": "./node_modules/.bin/webpack -w"
   },
+  "signature": "OurEDA",
   "author": "oureda",
   "license": "ISC",
   "dependencies": {

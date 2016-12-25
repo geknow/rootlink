@@ -14,9 +14,7 @@ var url = require('url');
 var Course = db.models.Course;
 var responser = require('../lib/responser');
 
-
 var uploadDir = path.join('/home/user/static');//同时创建public和upload会出错，得先有public文件夹
-
 
 var newFileName = (filename) => {
     var ret;

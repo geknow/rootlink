@@ -51,11 +51,11 @@ let config = {
             pass: "oureda123456"
         }
     },
-    mailInfo: (code, address) => {
+    mailInfo: (link, address) => {
         return {
             from: "OurEDA <ouredaeducation@yeah.net>", // 发件地址
             to: address, // 收件列表 example: "2838890xx@qq.com, minimixx@126.com"
-            subject: "欢迎使用OurEDA Bag,请完成验证", // 标题
+            subject: "您还差一步就完成注册，请使用下面的链接激活您的帐户", // 标题
             html: `<div style="text-indent: 2em;`
             + `min-height: 500px;`
             + `font-family:MicrosoftYaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu;`
@@ -63,7 +63,7 @@ let config = {
             + `background: -moz-gradient(white,darkseagreen);`
             + `background: -o-gradient(white,darkseagreen);`
             + `background: linear-gradient(white,darkseagreen);"><h1>欢迎使用OurEDA Bag</h1>`
-            + `<p>您的验证码是:${code}, 请完成注册.</p><p>若您不知道这封邮件从何而来`
+            + `<p>${link}</p><p>若您不知道这封邮件从何而来`
             + `, 请将其忽略, 对给您带来的不便深表歉意.</p></div>` // html 内容
         };
     },

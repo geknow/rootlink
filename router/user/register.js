@@ -4,36 +4,26 @@
 const db = require('./../../model/index');
 const helper = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
+const cache = require('../../instance/cache');
+const indentifyCode = require("../../lib/identifyCode");
 
 module.exports = router=> {
-    router.post('/user/add', async(ctx, next)=> {
+    router.post('/user/register', async(ctx, next)=> {
         let body = ctx.request.body;
-        let error;
-        let user = await db.models.User.create({
+        let reg= /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        if(!reg.test(body.email)){
+            responser.reject(ctx,"邮箱错误");
+            return;
+        }
+        let user = {
             username: body.username,
             password: body.password,
-            email: body.email || 'NULL',
+            email: body.email,
             avatar: '', //todo : get update avatar
             type: body.type === 'OurEDA_admin' ? 1 : 0
-        }).catch(err=> {
-            error = err;
-        });
-
-        if (user) {
-            let LoginToken = helper.login(ctx, user);
-            responser.success(ctx, {
-                LoginToken: LoginToken
-            });
-        } else {
-            let errorInfo;
-            if (error && /SequelizeUniqueConstraintError/.test(error.toString())) {
-                errorInfo = 'Username has been used';
-            }
-            if (errorInfo)
-                responser.reject(ctx, errorInfo, 403);
-            else
-                responser.catchErr(ctx, error, 500);
-        }
-        await next();
+        };
+        //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
+        let link = indentifyCode.sendMail(JSON.stringify(user));
+        responser.success(ctx,link);
     });
 };

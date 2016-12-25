@@ -36,7 +36,7 @@ RequestData:{
 Response:{
     error: STRING,
     status: INTERGER,
-    msg: {LoginToken : STRING}
+    msg: {link : "邮箱验证链接"}
 }
 ```
 ###登录接口:
