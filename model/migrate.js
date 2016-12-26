@@ -7,15 +7,15 @@ var co = require('co');
 var util = require('util');
 var utilx = require('../lib/utilx');
 var config = require('../config/config');
-var url =  require('url');
+var url = require('url');
 
 
 function *addUser() {
     for (var i = 0; i < 5; i++) {
         var user = {
-            username:'name'+i,
-            password:'123',
-            email:i+"@qq.com",
+            username: 'name' + i,
+            password: '123',
+            email: i + "@qq.com",
             desc: "一些介绍",
             type: i % 2,
             avatar: '/default_avatar.jpg'
@@ -37,9 +37,21 @@ function *addBlog() {
 function *addDevice() {
     for (var i = 0; i < 5; i++) {
         var device = {
-            name: 1
+            name: "name" + i,
+            label: i,
+            UserId: 1
         };
         yield db.models.Device.create(device);
+    }
+}
+function *addSensor() {
+    for (var i = 0; i < 5; i++) {
+        var sensor = {
+            name: "name" + i,
+            label: i,
+            DeviceId: 1
+        };
+        yield db.models.Sensor.create(sensor);
     }
 }
 
@@ -49,7 +61,8 @@ function* init() {
     });
     yield addUser();
     yield addBlog();
-    // yield addDevice();
+    yield addDevice();
+    yield addSensor();
 }
 
 co(function*() {

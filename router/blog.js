@@ -42,6 +42,7 @@ module.exports = router => {
         let user = await auth.user(ctx);
         if(!user || user.type !== 1){
             responser.reject(ctx,"权限不够");
+            return;
         }
         let body = ctx.request.body;
         let text = body.text;

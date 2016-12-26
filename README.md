@@ -95,3 +95,116 @@ Response:{
     msg: {}
 }
 ```
+
+
+#设备模块
+###获取接口:
+**/device/all**
+Method:GET
+```json
+RequestData:{
+     
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {devices: `对象数组`}
+}
+```
+
+###添加接口:
+**/device/add**
+Method:POST
+```json
+RequestData:{
+     name: STRING //allowNull(false),
+     label: STRING //allowNull(false),
+     description: STRING //allowNull(true)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {device: }
+}
+```
+
+###删除接口:
+**/device/delete**
+Method:POST
+```json
+RequestData:{
+     token:  //allowNull(false)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {count: }
+}
+```
+
+
+
+#传感器模块
+###获取接口:
+**/sensor/all**
+Method:GET
+```json
+RequestData:{
+     deviceId: INT //allowNull(false)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {sensors: `对象数组`}
+}
+```
+
+
+###添加接口:
+**/sensor/add**
+Method:POST
+```json
+RequestData:{
+     name: STRING //allowNull(false),
+     label: STRING //allowNull(false),
+     description: STRING //allowNull(true),
+     deviceId: INT //allowNull(false)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {sensor: }
+}
+```
+
+###删除接口:
+**/sensor/add**
+Method:POST
+```json
+RequestData:{
+     sensorId: INT //allowNull(false)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {count: }
+}
+```

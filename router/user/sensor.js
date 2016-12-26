@@ -2,29 +2,22 @@
  * Created by webhugo on 12/26/16.
  */
 const db = require('./../../model/index');
-const User = db.models.User;
-const Device = db.models.Device;
 const Sensor = db.models.Sensor;
+const Device = db.models.Device;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 
+
 module.exports = router => {
-    router.get("/device/all", async(ctx, next) => {
-        let user = ctx.currentUser;
-        user = user ? user : (await auth.user(ctx));
-        if (!user) {
-            responser.reject(ctx, "没登录");
-            return;
-        }
-        // let user = {id: 1}; 测试
+    router.get("/sensor/all", async(ctx, next) => {
+        let deviceId = ctx.request.query.deviceId;
         let error;
-        let devices;
+        let sensors;
         try {
-            let id = user.id;
-            devices = await Device.findAll({
+            sensors = await Sensor.findAll({
                 where: {
-                    UserId: id
+                    DeviceId: deviceId
                 }
             });
         } catch (e) {
@@ -34,22 +27,19 @@ module.exports = router => {
             responser.catchErr(ctx, error);
             return;
         }
-
-        responser.success(ctx, devices);
+        responser.success(ctx, sensors);
     });
 
-    router.post("/device/add", async(ctx, next) => {
+    router.post("/sensor/add", async(ctx, next) => {
         let body = ctx.request.body;
-        let user = ctx.currentUser;
-        user = user ? user : (await auth.user(ctx));
         let error;
-        let device;
+        let sensor;
         try {
-            device = await Device.create({
+            sensor = await Sensor.create({
                 name: body.name,
                 label: body.label,
                 description: body.description,
-                UserId: user.id
+                DeviceId: body.deviceId
             })
         } catch (e) {
             error = e;
@@ -58,29 +48,23 @@ module.exports = router => {
             responser.catchErr(ctx, "参数缺失");
             return;
         } else
-            responser.success(ctx,device);
+            responser.success(ctx,sensor);
     });
 
-    router.post("/device/delete", async(ctx, next) => {
+    router.post("/sensor/delete", async(ctx, next) => {
         let body = ctx.request.body;
-        let token = body.token;
+        let sensorId = body.sensorId;
         let count;
         let error;
         try{
-            count = await Device.destroy({
+            count = await Sensor.destroy({
                 where: {
-                    token: token
-                }
-            });
-            await Sensor.destroy({
-                where: {
-                    DeviceId: null
+                    id: sensorId
                 }
             })
         }catch (e){
             error = e;
         }
-        console.log(count);
         if(error) {
             responser.catchErr(ctx,error);
             return;
