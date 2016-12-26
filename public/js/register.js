@@ -15,7 +15,7 @@ function settime(obj) {
     } 
 setTimeout(function() { 
     settime(obj) }
-    ,1000) 
+    ,1000);
     if(countdown==0){
     	obj.removeAttribute("disabled");
     	obj.innerHTML="再次发送";

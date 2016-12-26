@@ -28,8 +28,7 @@ Method:POST
 RequestData:{
     username: STRING,
     password: STRING,
-    email: STRING,
-    type: KEY || undefined //请联系后台管理员获得管理注册接口
+    email: STRING
 }
 ```
 响应格式:

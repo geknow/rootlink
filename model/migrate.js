@@ -34,12 +34,22 @@ function *addBlog() {
     }
 }
 
+function *addDevice() {
+    for (var i = 0; i < 5; i++) {
+        var device = {
+            name: 1
+        };
+        yield db.models.Device.create(device);
+    }
+}
+
 function* init() {
     yield db.sync({
         force: true
     });
     yield addUser();
     yield addBlog();
+    // yield addDevice();
 }
 
 co(function*() {

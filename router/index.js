@@ -22,7 +22,9 @@ router.use(async (ctx, next) => {
     };
     await next();
 });
-
+router.get("/", async (ctx, next) => {
+    ctx.body = await ctx.render("login");
+});
 utilx.autoImport(__dirname, (tmpPath) => {   // 自动引入
     require(tmpPath)(router);
 });

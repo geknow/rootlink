@@ -14,8 +14,9 @@ module.exports = function (sequelize, DataTypes) {
         // 0 => normalUser   1=>adminer
         type: shortDataTypes.Int(0),//管理员  或  普通用户
     }, {
+        updatedAt: false,
         associate: function (models) {
-            models.User.belongsTo(models.Device,{foreignKey : "DeviceID"});
+            models.User.hasMany(models.Device);
         },
         instanceMethods: {}
     });

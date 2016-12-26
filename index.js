@@ -24,4 +24,14 @@ app.use(staticServer(path.join(__dirname, 'public')));
 app.use(koaBody());
 app.use(koaValidate());
 app.use(router.routes());
-app.listen(config.server.port);
+
+// 这一行代码一定要在最后一个app.use后面使用
+var server = require('http').Server(app.callback());
+server.listen(config.server.port);
+
+module.exports = {
+    app,
+    server
+};
+//加载的时候要放最后，因为这个文件要加载当前文件
+require('./socket/index');
