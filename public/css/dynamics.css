@@ -193,3 +193,11 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 	color:#BABABA;
 	float:right;
 }
+#container_rt{
+	width:278px;
+	height:310px;
+	background-color: #FFFFFF;
+	position:absolute;
+	left:1000px;
+	top:100px;
+}

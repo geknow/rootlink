@@ -1,25 +1,28 @@
-var countdown=61; 
-function settime(obj) { 
-    if (countdown == 0) { 
-        obj.removeAttribute("disabled");    
-        obj.value="获取验证码"; 
-        countdown = 61; 
-        return;
-    } else { 
-    	var count=countdown-1;
-        obj.setAttribute("disabled", true); 
-        obj.innerHTML="再次发送(" + count + ")"; 
-        obj.style.backgroundColor="#e1e4eb";
-        obj.style.color="#969696";
-        countdown--; 
-    } 
-setTimeout(function() { 
-    settime(obj) }
-    ,1000);
-    if(countdown==0){
-    	obj.removeAttribute("disabled");
-    	obj.innerHTML="再次发送";
-    	obj.style.backgroundColor="#00a2e0";
-    	obj.style.color="#ffffff";
-    }
+function validateForm()
+{
+  var x=document.forms["myForm"]["username"].value;
+  if (x==null || x=="")
+  {
+    alert("用户名不能为空");
+    return false;
+  }
+  var x1=document.forms["myForm"]["password"].value;
+  if(x1==null||x1=="")
+  {
+  	alert("密码不能为空");
+  	return false;
+  }
+  var x2=document.forms["myForm"]["password2"].value;
+  if(x2==null||x2=="")
+  {
+  	alert("确认密码不能为空");
+  	return false;
+  }
+  var x3=document.forms["myForm"]["r_way"].value;
+  if(x3==null||x3=="")
+  {
+  	alert("邮箱不能为空");
+  	return false;
+  }
+  window.location.href="skip.html";
 }
