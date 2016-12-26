@@ -8,8 +8,8 @@ let config = {
     db: {
         name: 'postgres',
         username: 'postgres',
-        host: "localhost",
-        pwd: 'csc',
+        host: "118.89.28.157",
+        pwd: 'oureda',
         database: 'yeelink',
         toString() {
             return `${this.name}://${this.username}:${this.pwd}@${this.host}/${this.database}`;
@@ -39,7 +39,7 @@ let config = {
     },
     root: __dirname + '/../',
     server: {
-        ip: '210.30.100.4',
+        ip: '118.89.28.157',
         port: '6743'
     },
     mailOptions: {
@@ -77,9 +77,9 @@ let config = {
 };
 
 if (process.env.NODE_ENV == 'development') {
-    config.db.host = '210.30.100.4';
+    config.db.host = '118.89.28.157';
     config.server.ip = '127.0.0.1';
-    config.server.port = '3000';
+    config.server.port = '6743';
 }
 
 module.exports = config;
