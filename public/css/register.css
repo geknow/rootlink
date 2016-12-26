@@ -36,7 +36,7 @@ body{
 }
 #register_form{
 	width:1096px;
-	height:1220px;
+	height:1020px;
 	overflow:auto;
 	background-color: #ffffff;
 	margin-left:-548px;
@@ -164,7 +164,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 #r_way input{
 	position:relative;
 	top:405px;
-	left:16px;
+	left:80px;
 	font-size: 30px;
 }
 #r_way img{
@@ -172,7 +172,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 	width:32px;
 	position: relative;
 	top:412px;
-	left:-694px
+	left:-630px
 }
 #check span{
 	height:32px;
@@ -198,29 +198,12 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 	top:494px;
 	left:-415px
 }
-#send{
-	font-family: "Microsoft YaHei";
-	border: none;
-	font-size: 26px;
-	color:#ffffff;
-	background-color:#00A2E0;
-	text-align: center;
-	width:206px;
-	height:90px;
-	position:relative;
-	top:350px;
-	left:712px;
-	-webkit-border-radius:8px;
-	-moz-border-radius:8px;
-	border-radius:8px;
-	cursor:pointer;
-}
 #submit{
 	font-family: "Microsoft YaHei";
 	position:relative;
 	background-color: #00A2E0;
-	top:540px;
-	left:-24px;
+	top:440px;
+	left:190px;
 	width:732px;
 	height:88px;
 	color: white;
@@ -243,7 +226,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 	position: absolute;
 	width: 16px;
 	height: 16px;
-	top: 510px;
+	top: 416px;
   	left: 100px;
 	background: #fefefe;
 	border:1px solid #ddd;
@@ -281,7 +264,7 @@ input:-ms-input-placeholder { /* Internet Explorer 10+ */
 	font-size: 20px;
 	color:#969696;
 	position:relative;
-	top:504px;
+	top:410px;
 	left:232px;
 }
 a{
