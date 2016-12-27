@@ -23,16 +23,8 @@ module.exports = router => {
 
 
     router.post("/weixin/getAuthentic", async (ctx, next) => {
-        let context = "<xml>"+
-            "<ToUserName><![CDATA[toUser]]></ToUserName>"+
-            "<FromUserName><![CDATA[fromUser]]></FromUserName>"+
-            "<CreateTime>12345678</CreateTime>"+
-            "<MsgType><![CDATA[text]]></MsgType>"+
-            "<Content><![CDATA[你好]]></Content>"+
-            "</xml>";
-        console.log(context);
-        ctx.body = context;
-    })
+        ctx.body = "";
+    });
 
     router.get("/weixin/getAccess_token", async(ctx, next) => {
         var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
