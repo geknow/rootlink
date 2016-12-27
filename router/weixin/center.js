@@ -6,6 +6,7 @@ const WeixinConfig = require('../../config/config').weixin;
 const request = require('superagent');
 const xml = require('../../lib/xml');
 let crypto = require("crypto");
+const js2xmlparser = require("js2xmlparser");
 
 const checkSignature = function (query) {
     let timestamp = query.timestamp
@@ -21,17 +22,11 @@ const checkSignature = function (query) {
     return encrypted === signature;
 };
 
-const returnText = (ToUserName,FromUserName,Content) => {
-    return `<xml>`+
-    `<ToUserName>${ToUserName}</ToUserName>`+
-    `<FromUserName>${FromUserName}</FromUserName>`+
-    `<CreateTime>${new Date().getTime()}</CreateTime>`+
-    `<MsgType>text</MsgType>`+
-    `<Content>${Content}</Content>`+
-    `</xml>`
-};
 
 module.exports = router => {
+    /**
+     * 微信测试接口 GET
+     */
     router.get("/weixin", async(ctx, next) => {
         console.log("Authentic");
         let query = ctx.request.query;
@@ -39,32 +34,46 @@ module.exports = router => {
         ctx.body = checkSignature(query) ? echostr : "invalid";
     });
 
-
+    /**
+     * 与微信服务器交互的接口 POST
+     * 信息 语音 事件
+     */
     router.post("/weixin", async(ctx, next) => {
         let data = await xml(ctx);
         console.log(data);
         console.log(data.xml.MsgType);
         let type = data.xml.MsgType;
         if (type == "text") {//文本信息
-            let text = returnText(data.xml.FromUserName,data.xml.ToUserName,"小主,你好");
-            console.log(text);
-            ctx.body = text;
-            return;
-        }else if(type == "voice"){//语音信息
-            let text = returnText(data.xml.FromUserName,data.xml.ToUserName,"语音无法识别");
-            console.log(text);
-            ctx.body = text;
-            return;
-        }else if(type == "event" || data.Event == "subscribe"){//初次关注
-            let text = returnText(data.xml.FromUserName,data.xml.ToUserName,"初次关注，谢谢");
-            console.log(text);
-            ctx.body = text;
-            return;
+            let returnData = {
+                ToUserName: data.xml.FromUserName,
+                FromUserName: data.xml.ToUserName,
+                CreateTime: new Date().getTime(),
+                MsgType: "text",
+                Content: eval("小主，你好")
+            };
+            ctx.body = js2xmlparser("xml", returnData);
+        } else if (type == "voice") {//语音信息
+            let returnData = {
+                ToUserName: data.xml.FromUserName,
+                FromUserName: data.xml.ToUserName,
+                CreateTime: new Date().getTime(),
+                MsgType: "text",
+                Content: eval("语音无法识别")
+            };
+            ctx.body = js2xmlparser("xml", returnData);
+        } else if (type == "event" || data.Event == "subscribe") {//初次关注
+            let returnData = {
+                ToUserName: data.xml.FromUserName,
+                FromUserName: data.xml.ToUserName,
+                CreateTime: new Date().getTime(),
+                MsgType: "text",
+                Content: eval("谢谢关注")
+            };
+            ctx.body = js2xmlparser("xml", returnData);
         }
-        else{//其他信息忽略
+        else {//其他信息忽略
             ctx.body = "";
         }
-        ctx.body = "";
     });
 
     router.get("/weixin/getAccess_token", async(ctx, next) => {
@@ -77,5 +86,12 @@ module.exports = router => {
                 else
                     console.log(res.body);
             })
+    });
+    
+    
+    router.get("/weixin/lock", async (ctx, next) => {
+        let query = ctx.request.query;
+        let code = query.code;
+        console.log(code);
     })
 };

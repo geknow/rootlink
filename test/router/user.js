@@ -55,51 +55,48 @@ var login = () => {
         return token;
     })
 };
-
-var menu = {
-    "button": [
+var u = (url) => {
+    return encodeURI(url)
+};
+var menu ={
+    "button":[
         {
-            "type": "click",
-            "name": "今日歌曲",
-            "key": "V1001_TODAY_MUSIC"
+            "type":"view",
+            "name":"绑定",
+            "url":`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.weixin.AppID}&redirect_uri=https%3a%2f%2f118.89.28.157%2fweixin%2flock&response_type=code&scope=snsapi_base&state=123#wechat_redirect`
+            // "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
+            // "url": "http://www.baidu.com"
         }]
 };
 
 
-
-//
-// new Promise((resolve, reject) => {
-//     var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
-//         WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
-//     agent.get(url)
-//         .end((e, res) => {
-//             if (e)
-//                 console.log(e);
-//             else {
-//                 console.log(res.body);
-//                 resolve(res.body.access_token);
-//             }
-//         });
-// }).then((token) => {
-//     let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
-//     // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
-//     // agent.get(ipUrl)
-//     //     .end((e,res) => {
-//     //         console.log(res.body);
-//     //     });
-//     agent.post(url)
-//         .send(menu)
-//         .end((err, res) => {
-//             console.log(res.body);
-//         })
-// });
-
-var parseString = require('xml2js').parseString;
-var xml = ' <xml> <ToUserName><![CDATA[toUser]]></ToUserName> <FromUserName><![CDATA[fromUser]]></FromUserName> <CreateTime>1348831860</CreateTime> <MsgType><![CDATA[text]]></MsgType> <Content><![CDATA[this is a test]]></Content> <MsgId>1234567890123456</MsgId> </xml>';
-parseString(xml, function (err, result) {
-    // console.log(JSON.stringify(result));
-    console.log(result);
+new Promise((resolve, reject) => {
+    var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
+        WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
+    agent.get(url)
+        .end((e, res) => {
+            if (e)
+                console.log(e);
+            else {
+                console.log(res.body);
+                resolve(res.body.access_token);
+            }
+        });
+}).then((token) => {
+    let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
+    // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
+    // agent.get(ipUrl)
+    //     .end((e,res) => {
+    //         console.log(res.body);
+    //     });
+    console.log(menu.button[0].url);
+    agent.post(url)
+        .send(menu)
+        .end((err, res) => {
+            console.log(res.body);
+        })
 });
+
 module.exports = {
     validate,
     register,

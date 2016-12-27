@@ -43,8 +43,8 @@ let config = {
         port: '6743'
     },
     weixin: {
-        AppID: 'wx8b2f46da705af3d8',
-        AppSecret: '1cc058e0c1a028994182fd16d2182e94',
+        AppID: 'wx158a9040d252b3e5',
+        AppSecret: 'f3e503967f3e7b888f1c75137b56b6d9',
         signature: 'OurEDA'
     },
     mailOptions: {
