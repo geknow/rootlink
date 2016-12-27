@@ -43,14 +43,14 @@ module.exports = router => {
     router.post("/weixin", async(ctx, next) => {
         let data = await xml(ctx);
         console.log(data);
-        if (data.MsgType == "text") {//文本信息
+        if (data.MsgType[0] == "text") {//文本信息
             let text = returnText(data.FromUserName,data.ToUserName,"小主,你好");
             console.log(text);
             ctx.body = text;
             return;
-        }else if(data.MsgType == "voice"){//语音信息
+        }else if(data.MsgType[0] == "voice"){//语音信息
 
-        }else if(data.MsgType == "event" || data.Event == "subscribe"){//初次关注
+        }else if(data.MsgType[0] == "event" || data.Event == "subscribe"){//初次关注
 
         }
         else{//其他信息忽略
