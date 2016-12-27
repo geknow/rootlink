@@ -28,7 +28,7 @@ module.exports = router => {
 
         var extractedData = "";
         var parser = new xml2js.Parser();
-        parser.parseString(xml, function(err,result){
+        parser.parseString(body, function(err,result){
             extractedData = result['xml']['MsgType'];
         });
         console.log(extractedData);
