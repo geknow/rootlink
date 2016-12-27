@@ -101,7 +101,8 @@ module.exports = router => {
         console.log(url);
         request.get(url)
             .end((err,res) => {
-                console.log(res.body);
+                console.log(err);
+                console.log(res);
             })
         ctx.body = "Fdsa"
     })
