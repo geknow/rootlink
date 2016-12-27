@@ -49,7 +49,7 @@ module.exports = router => {
                 FromUserName: data.xml.ToUserName,
                 CreateTime: new Date().getTime(),
                 MsgType: "text",
-                Content: eval("小主，你好")
+                Content: "小主，你好"
             };
             ctx.body = js2xmlparser("xml", returnData);
         } else if (type == "voice") {//语音信息
@@ -58,7 +58,7 @@ module.exports = router => {
                 FromUserName: data.xml.ToUserName,
                 CreateTime: new Date().getTime(),
                 MsgType: "text",
-                Content: eval("语音无法识别")
+                Content: "语音无法识别"
             };
             ctx.body = js2xmlparser("xml", returnData);
         } else if (type == "event" || data.Event == "subscribe") {//初次关注
@@ -67,7 +67,7 @@ module.exports = router => {
                 FromUserName: data.xml.ToUserName,
                 CreateTime: new Date().getTime(),
                 MsgType: "text",
-                Content: eval("谢谢关注")
+                Content: "谢谢关注"
             };
             ctx.body = js2xmlparser("xml", returnData);
         }
