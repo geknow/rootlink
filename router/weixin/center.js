@@ -51,9 +51,15 @@ module.exports = router => {
             ctx.body = text;
             return;
         }else if(type == "voice"){//语音信息
-
+            let text = returnText(data.xml.FromUserName,data.xml.ToUserName,"语音无法识别");
+            console.log(text);
+            ctx.body = text;
+            return;
         }else if(type == "event" || data.Event == "subscribe"){//初次关注
-
+            let text = returnText(data.xml.FromUserName,data.xml.ToUserName,"初次关注，谢谢");
+            console.log(text);
+            ctx.body = text;
+            return;
         }
         else{//其他信息忽略
             ctx.body = "";
