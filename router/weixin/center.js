@@ -24,7 +24,8 @@ module.exports = router => {
             "<CreateTime>12345678</CreateTime>"+
             "<MsgType><![CDATA[text]]></MsgType>"+
             "<Content><![CDATA[你好]]></Content>"+
-            "</xml>"
+            "</xml>";
+        console.log(context);
         ctx.body = context;
     });
 
