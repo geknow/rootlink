@@ -67,34 +67,39 @@ var menu = {
 
 
 
+//
+// new Promise((resolve, reject) => {
+//     var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
+//         WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
+//     agent.get(url)
+//         .end((e, res) => {
+//             if (e)
+//                 console.log(e);
+//             else {
+//                 console.log(res.body);
+//                 resolve(res.body.access_token);
+//             }
+//         });
+// }).then((token) => {
+//     let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
+//     // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
+//     // agent.get(ipUrl)
+//     //     .end((e,res) => {
+//     //         console.log(res.body);
+//     //     });
+//     agent.post(url)
+//         .send(menu)
+//         .end((err, res) => {
+//             console.log(res.body);
+//         })
+// });
 
-new Promise((resolve, reject) => {
-    var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
-        WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
-    agent.get(url)
-        .end((e, res) => {
-            if (e)
-                console.log(e);
-            else {
-                console.log(res.body);
-                resolve(res.body.access_token);
-            }
-        });
-}).then((token) => {
-    let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
-    // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
-    // agent.get(ipUrl)
-    //     .end((e,res) => {
-    //         console.log(res.body);
-    //     });
-    agent.post(url)
-        .send(menu)
-        .end((err, res) => {
-            console.log(res.body);
-        })
+var parseString = require('xml2js').parseString;
+var xml = ' <xml> <ToUserName><![CDATA[toUser]]></ToUserName> <FromUserName><![CDATA[fromUser]]></FromUserName> <CreateTime>1348831860</CreateTime> <MsgType><![CDATA[text]]></MsgType> <Content><![CDATA[this is a test]]></Content> <MsgId>1234567890123456</MsgId> </xml>';
+parseString(xml, function (err, result) {
+    // console.log(JSON.stringify(result));
+    console.log(result);
 });
-
-
 module.exports = {
     validate,
     register,

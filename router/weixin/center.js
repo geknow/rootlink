@@ -5,7 +5,7 @@ const Signature = require('../../package.json').signature;
 const responser = require('./../../lib/responser');
 const WeixinConfig = require('../../config/config').weixin;
 const request = require('superagent');
-const xml2js = require('xml2js');
+const parseString = require('xml2js').parseString;
 
 module.exports = router => {
     router.get("/weixin/getAuthentic", async(ctx, next) => {
@@ -24,19 +24,18 @@ module.exports = router => {
 
 
     router.post("/weixin/getAuthentic", async (ctx, next) => {
-        let body = ctx.request.body;
-
         var extractedData = "";
-        var parser = new xml2js.Parser();
-        parser.parseString(body, function(err,result){
+
+        parseString(ctx, function(err,result){
             console.log(result);
         });
-        parser.parseString(ctx, function(err,result){
+        parseString(ctx.request, function(err,result){
             console.log(result);
         });
-        parser.parseString(ctx.request, function(err,result) {
+        parseString(ctx.request.body, function(err,result){
             console.log(result);
-        })
+        });
+        
             // console.log(extractedData);
         ctx.body = "";
     });
