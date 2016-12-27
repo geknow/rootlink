@@ -30,9 +30,14 @@ module.exports = router => {
         var parser = new xml2js.Parser();
         parser.parseString(body, function(err,result){
             console.log(result);
-            extractedData = result['MsgType'];
         });
-        console.log(extractedData);
+        parser.parseString(ctx, function(err,result){
+            console.log(result);
+        });
+        parser.parseString(ctx.request, function(err,result) {
+            console.log(result);
+        })
+            // console.log(extractedData);
         ctx.body = "";
     });
 
