@@ -43,8 +43,8 @@ module.exports = router => {
     router.post("/weixin", async(ctx, next) => {
         let data = await xml(ctx);
         console.log(data);
-        console.log(data.MsgType);
-        if (data.MsgType == "text") {//文本信息
+        console.log(data.xml.MsgType);
+        if (data.xml.MsgType == "text") {//文本信息
             let text = returnText(data.FromUserName,data.ToUserName,"小主,你好");
             console.log(text);
             ctx.body = text;
