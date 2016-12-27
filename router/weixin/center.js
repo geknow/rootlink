@@ -23,7 +23,7 @@ module.exports = router => {
 
 
     router.post("/weixin/getAuthentic", async (ctx, next) => {
-        let body = ctx.request.body;
+        let body = ctx.request;
         console.log(body);
         ctx.body = "";
     });
