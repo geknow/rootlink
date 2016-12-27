@@ -51,7 +51,8 @@ module.exports = router => {
                 MsgType: "text",
                 Content: "小主，你好"
             };
-            ctx.body = js2xmlparser("xml", returnData);
+            // ctx.body = js2xmlparser("xml", returnData);
+            ctx.body  = ""
         } else if (type == "voice") {//语音信息
             let returnData = {
                 ToUserName: data.xml.FromUserName,
@@ -60,7 +61,8 @@ module.exports = router => {
                 MsgType: "text",
                 Content: "语音无法识别"
             };
-            ctx.body = js2xmlparser("xml", returnData);
+            // ctx.body = js2xmlparser("xml", returnData);
+            ctx.body  = ""
         } else if (type == "event" || data.Event == "subscribe") {//初次关注
             let returnData = {
                 ToUserName: data.xml.FromUserName,
@@ -69,7 +71,8 @@ module.exports = router => {
                 MsgType: "text",
                 Content: "谢谢关注"
             };
-            ctx.body = js2xmlparser("xml", returnData);
+            // ctx.body = js2xmlparser("xml", returnData);
+            ctx.body  = ""
         }
         else {//其他信息忽略
             ctx.body = "";
