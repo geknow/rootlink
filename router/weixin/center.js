@@ -1,25 +1,34 @@
 /**
  * Created by webhugo on 12/27/16.
  */
-const Signature = require('../../package.json').signature;
 const responser = require('./../../lib/responser');
 const WeixinConfig = require('../../config/config').weixin;
 const request = require('superagent');
 const xml = require('../../lib/xml');
-var crypto = require("crypto");
+let crypto = require("crypto");
 
 const checkSignature = function (query) {
-    var timestamp = query.timestamp
+    let timestamp = query.timestamp
         , nonce = query.nonce
         , signature = query.signature;
 
-    var tmpArr = [timestamp, nonce, Signature];
+    let tmpArr = [timestamp, nonce, WeixinConfig.signature];
     tmpArr.sort();
-    var tmpStr = `${tmpArr[0]}${tmpArr[1]}${tmpArr[2]}`;
+    let tmpStr = `${tmpArr[0]}${tmpArr[1]}${tmpArr[2]}`;
 
     const hash = crypto.createHash("sha1");
-    var encrypted = hash.update(tmpStr, "utf8").digest("hex");
+    let encrypted = hash.update(tmpStr, "utf8").digest("hex");
     return encrypted === signature;
+};
+
+const returnText = (ToUserName,FromUserName,Content) => {
+    return `<xml>`+
+    `<ToUserName>${ToUserName}</ToUserName>`+
+    `<FromUserName>${FromUserName}</FromUserName>`+
+    `<CreateTime>${new Date().getTime()}</CreateTime>`+
+    `<MsgType>text</MsgType>`+
+    `<Content>${Content}</Content>`+
+    `</xml>`
 };
 
 module.exports = router => {
@@ -35,10 +44,14 @@ module.exports = router => {
         let data = await xml(ctx);
         console.log(data);
         if (data.MsgType == "text") {//文本信息
-
+            ctx.body = returnText(data.FromUserName,data.ToUserName,"小主,你好");
+            return;
         }else if(data.MsgType == "voice"){//语音信息
 
-        }else{//其他信息忽略
+        }else if(data.MsgType == "event" || data.Event == "subscribe"){//初次关注
+
+        }
+        else{//其他信息忽略
             ctx.body = "";
         }
         ctx.body = "";

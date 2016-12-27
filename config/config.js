@@ -44,7 +44,8 @@ let config = {
     },
     weixin: {
         AppID: 'wx8b2f46da705af3d8',
-        AppSecret: '1cc058e0c1a028994182fd16d2182e94'
+        AppSecret: '1cc058e0c1a028994182fd16d2182e94',
+        signature: 'OurEDA'
     },
     mailOptions: {
         host: "smtp.yeah.net",
