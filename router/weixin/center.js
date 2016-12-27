@@ -93,6 +93,7 @@ module.exports = router => {
     
     
     router.get("/weixin/lock", async (ctx, next) => {
+        console.log("Fdsa");
         let query = ctx.request.query;
         let code = query.code;
         console.log(code);
