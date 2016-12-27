@@ -103,6 +103,7 @@ module.exports = router => {
                 });
         }).then((text) => {
             console.log(text);
+            text = JSON.parse(text);
             let openId = text.openid;
             console.log(openId); 
         });
