@@ -68,37 +68,42 @@ var menu ={
 };
 
 
-new Promise((resolve, reject) => {
-    var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
-        WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
-    agent.get(url)
-        .end((e, res) => {
-            if (e)
-                console.log(e);
-            else {
-                console.log(res.body);
-                resolve(res.body.access_token);
-            }
-        });
-}).then((token) => {
-    let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
-    // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
-    // agent.get(ipUrl)
-    //     .end((e,res) => {
-    //         console.log(res.body);
-    //     });
-    console.log(menu.button[0].url);
-    agent.post(url)
-        .send(menu)
-        .end((err, res) => {
-            console.log(res.body);
-        })
-});
-// agent.get("http://localhost:6743/weixin/lock?code=12")
-//     .end((err,res) => {
-//         console.log(err);
-//         console.log(res.body);
-//     });
+// new Promise((resolve, reject) => {
+//     var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
+//         WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
+//     agent.get(url)
+//         .end((e, res) => {
+//             if (e)
+//                 console.log(e);
+//             else {
+//                 console.log(res.body);
+//                 resolve(res.body.access_token);
+//             }
+//         });
+// }).then((token) => {
+//     let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
+//     // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
+//     // agent.get(ipUrl)
+//     //     .end((e,res) => {
+//     //         console.log(res.body);
+//     //     });
+//     console.log(menu.button[0].url);
+//     agent.post(url)
+//         .send(menu)
+//         .end((err, res) => {
+//             console.log(res.body);
+//         })
+// });
+
+const js2xmlparser = require("js2xmlparser");
+let returnData = {
+    ToUserName: "1",
+    "FromUserName": "1",
+    "CreateTime": new Date().getTime(),
+    "MsgType": "text",
+    "Content": "小主,你好"
+};
+console.log(js2xmlparser.parse("xml", returnData));;
 module.exports = {
     validate,
     register,

@@ -49,10 +49,10 @@ module.exports = router => {
                 FromUserName: data.xml.ToUserName,
                 CreateTime: new Date().getTime(),
                 MsgType: "text",
-                Content: "小主，你好"
+                Content: "小主,你好"
             };
-            // ctx.body = js2xmlparser("xml", returnData);
-            ctx.body = ""
+            ctx.body = js2xmlparser.parse("xml", returnData);
+            // ctx.body = ""
         } else if (type == "voice") {//语音信息
             let returnData = {
                 ToUserName: data.xml.FromUserName,
@@ -61,8 +61,8 @@ module.exports = router => {
                 MsgType: "text",
                 Content: "语音无法识别"
             };
-            // ctx.body = js2xmlparser("xml", returnData);
-            ctx.body = ""
+            ctx.body = js2xmlparser.parse("xml", returnData);
+            // ctx.body = ""
         } else if (type == "event" || data.Event == "subscribe") {//初次关注
             let returnData = {
                 ToUserName: data.xml.FromUserName,
@@ -71,14 +71,16 @@ module.exports = router => {
                 MsgType: "text",
                 Content: "谢谢关注"
             };
-            // ctx.body = js2xmlparser("xml", returnData);
-            ctx.body = ""
+            ctx.body = js2xmlparser.parse("xml", returnData);
+            // ctx.body = ""
         }
         else {//其他信息忽略
             ctx.body = "";
         }
     });
-
+    /**
+     * 获取access_token，一般情况下不调用
+     */
     router.get("/weixin/getAccess_token", async(ctx, next) => {
         var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
             WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
@@ -91,7 +93,9 @@ module.exports = router => {
             })
     });
 
-
+    /**
+     * 微信和网页账号绑定
+     */
     router.get("/weixin/lock", async(ctx, next) => {
         let query = ctx.request.query;
         let code = query.code;
@@ -104,7 +108,7 @@ module.exports = router => {
         }).then((text) => {
             console.log(text);
             text = JSON.parse(text);
-            let openId = text.openid;
+            let openId = text.openid;//得到用户的openId，和用户的邮箱绑定起来
             console.log(openId); 
         });
         ctx.body = "绑定"
