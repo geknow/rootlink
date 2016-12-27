@@ -62,10 +62,8 @@ var menu ={
     "button":[
         {
             "type":"view",
-            "name":"绑定",
-            "url":`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.weixin.AppID}&redirect_uri=https%3a%2f%2f118.89.28.157%2fweixin%2flock&response_type=code&scope=snsapi_base&state=123#wechat_redirect`
-            // "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
-            // "url": "http://www.baidu.com"
+            "name":"绑定11",
+            "url":`https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.weixin.AppID}&redirect_uri=http%3a%2f%2f118.89.28.157%2fweixin%2flock&response_type=code&scope=snsapi_base&state=123#wechat_redirect`
         }]
 };
 
@@ -96,7 +94,11 @@ new Promise((resolve, reject) => {
             console.log(res.body);
         })
 });
-
+// agent.get("http://localhost:6743/weixin/lock?code=12")
+//     .end((err,res) => {
+//         console.log(err);
+//         console.log(res.body);
+//     });
 module.exports = {
     validate,
     register,

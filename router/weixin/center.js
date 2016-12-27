@@ -97,5 +97,11 @@ module.exports = router => {
         let query = ctx.request.query;
         let code = query.code;
         console.log(code);
+        let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${WeixinConfig.AppID}&secret=SECRET&code=${code}&grant_type=authorization_code`
+        request.get(url)
+            .end((err,res) => {
+                console.log(res.body);
+            })
+        ctx.body = "Fdsa"
     })
 };
