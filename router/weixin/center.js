@@ -96,13 +96,16 @@ module.exports = router => {
         let query = ctx.request.query;
         let code = query.code;
         let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${WeixinConfig.AppID}&secret=${WeixinConfig.AppSecret}&code=${code}&grant_type=authorization_code`
-        let text = await new Promise((resolve,reject) => {
+        await new Promise((resolve,reject) => {
             request.get(url)
                 .end((err, res) => {
                     resolve(res.text);
                 });
+        }).then((text) => {
+            console.log(text);
+            let openId = text.openid;
+            console.log(openId); 
         });
-        let openId = text.openid;
-        console.log(openId);
+        ctx.body = "绑定"
     })
 };
