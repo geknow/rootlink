@@ -24,7 +24,7 @@ module.exports = router => {
 
 
     router.post("/weixin/getAuthentic", async (ctx, next) => {
-        let data = xml(ctx.request);
+        let data = xml(ctx);
         console.log(data);
         ctx.body = "";
     });
