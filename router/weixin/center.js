@@ -18,6 +18,11 @@ module.exports = router => {
         //     responser.reject(ctx);
         //     return;
         // }
+        ctx.body = echostr;
+    });
+
+
+    router.post("/weixin/getAuthentic", async (ctx, next) => {
         let context = "<xml>"+
             "<ToUserName><![CDATA[toUser]]></ToUserName>"+
             "<FromUserName><![CDATA[fromUser]]></FromUserName>"+
@@ -27,7 +32,7 @@ module.exports = router => {
             "</xml>";
         console.log(context);
         ctx.body = context;
-    });
+    })
 
     router.get("/weixin/getAccess_token", async(ctx, next) => {
         var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
