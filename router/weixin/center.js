@@ -44,14 +44,15 @@ module.exports = router => {
         let data = await xml(ctx);
         console.log(data);
         console.log(data.xml.MsgType);
-        if (data.xml.MsgType == "text") {//文本信息
-            let text = returnText(data.FromUserName,data.ToUserName,"小主,你好");
+        let type = data.xml.MsgType;
+        if (type == "text") {//文本信息
+            let text = returnText(data.xml.FromUserName,data.xml.ToUserName,"小主,你好");
             console.log(text);
             ctx.body = text;
             return;
-        }else if(data.MsgType == "voice"){//语音信息
+        }else if(type == "voice"){//语音信息
 
-        }else if(data.MsgType == "event" || data.Event == "subscribe"){//初次关注
+        }else if(type == "event" || data.Event == "subscribe"){//初次关注
 
         }
         else{//其他信息忽略
