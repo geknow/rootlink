@@ -52,7 +52,7 @@ module.exports = router => {
                 Content: "小主，你好"
             };
             // ctx.body = js2xmlparser("xml", returnData);
-            ctx.body  = ""
+            ctx.body = ""
         } else if (type == "voice") {//语音信息
             let returnData = {
                 ToUserName: data.xml.FromUserName,
@@ -62,7 +62,7 @@ module.exports = router => {
                 Content: "语音无法识别"
             };
             // ctx.body = js2xmlparser("xml", returnData);
-            ctx.body  = ""
+            ctx.body = ""
         } else if (type == "event" || data.Event == "subscribe") {//初次关注
             let returnData = {
                 ToUserName: data.xml.FromUserName,
@@ -72,7 +72,7 @@ module.exports = router => {
                 Content: "谢谢关注"
             };
             // ctx.body = js2xmlparser("xml", returnData);
-            ctx.body  = ""
+            ctx.body = ""
         }
         else {//其他信息忽略
             ctx.body = "";
@@ -90,19 +90,19 @@ module.exports = router => {
                     console.log(res.body);
             })
     });
-    
-    
-    router.get("/weixin/lock", async (ctx, next) => {
-        console.log("Fdsa");
+
+
+    router.get("/weixin/lock", async(ctx, next) => {
         let query = ctx.request.query;
         let code = query.code;
-        console.log(code);
         let url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${WeixinConfig.AppID}&secret=${WeixinConfig.AppSecret}&code=${code}&grant_type=authorization_code`
-        console.log(url);
-        request.get(url)
-            .end((err,res) => {
-                console.log(res.text);
-            })
-        ctx.body = "Fdsa"
+        let text = await new Promise((resolve,reject) => {
+            request.get(url)
+                .end((err, res) => {
+                    resolve(res.text);
+                });
+        });
+        let openId = text.openid;
+        console.log(openId);
     })
 };
