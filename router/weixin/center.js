@@ -27,12 +27,15 @@ module.exports = router => {
         var extractedData = "";
 
         parseString(ctx, function(err,result){
+            console.log(err);
             console.log(result);
         });
         parseString(ctx.request, function(err,result){
+            console.log(err);
             console.log(result);
         });
         parseString(ctx.request.body, function(err,result){
+            console.log(err);
             console.log(result);
         });
         
