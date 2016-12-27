@@ -5,7 +5,7 @@ const Signature = require('../../package.json').signature;
 const responser = require('./../../lib/responser');
 const WeixinConfig = require('../../config/config').weixin;
 const request = require('superagent');
-const xml = require('../../lib/xml').xml;
+const xml = require('../../lib/xml');
 
 module.exports = router => {
     router.get("/weixin/getAuthentic", async(ctx, next) => {
