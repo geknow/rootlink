@@ -42,6 +42,10 @@ let config = {
         ip: '118.89.28.157',
         port: '6743'
     },
+    weixin: {
+        AppID: 'wx8b2f46da705af3d8',
+        AppSecret: '1cc058e0c1a028994182fd16d2182e94'
+    },
     mailOptions: {
         host: "smtp.yeah.net",
         secureConnection: true, // 使用 SSL

@@ -3,13 +3,13 @@
  */
 
 const config = require('./../../config/config');
-
+const WeixinConfig = config.weixin;
 let agent = require('superagent').agent();
 
 var register = ()=> {
     agent.post('localhost:' + config.server.port + '/user/register')
         .send({
-            
+
             password: 'pass_word',
             email: '2248906444@qq.com',
             type: 1
@@ -56,12 +56,51 @@ var login = () => {
     })
 };
 
+var menu = {
+    "button": [
+        {
+            "type": "click",
+            "name": "今日歌曲",
+            "key": "V1001_TODAY_MUSIC"
+        }]
+};
+
+
+
+
+new Promise((resolve, reject) => {
+    var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +
+        WeixinConfig.AppID + '&secret=' + WeixinConfig.AppSecret;
+    agent.get(url)
+        .end((e, res) => {
+            if (e)
+                console.log(e);
+            else {
+                console.log(res.body);
+                resolve(res.body.access_token);
+            }
+        });
+}).then((token) => {
+    let url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token=' + token;
+    // let ipUrl = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='+token;
+    // agent.get(ipUrl)
+    //     .end((e,res) => {
+    //         console.log(res.body);
+    //     });
+    agent.post(url)
+        .send(menu)
+        .end((err, res) => {
+            console.log(res.body);
+        })
+});
+
 
 module.exports = {
     validate,
     register,
     login
 };
+
 
 
 
