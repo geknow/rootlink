@@ -44,7 +44,9 @@ module.exports = router => {
         let data = await xml(ctx);
         console.log(data);
         if (data.MsgType == "text") {//文本信息
-            ctx.body = returnText(data.FromUserName,data.ToUserName,"小主,你好");
+            let text = returnText(data.FromUserName,data.ToUserName,"小主,你好");
+            console.log(text);
+            ctx.body = text;
             return;
         }else if(data.MsgType == "voice"){//语音信息
 
