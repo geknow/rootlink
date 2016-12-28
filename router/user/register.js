@@ -35,9 +35,9 @@ module.exports = router=> {
         };
         //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
         let link = indentifyCode.sendMail(JSON.stringify(user));
-        // ctx.body = await ctx.render("register",{
-        //     link: link
-        // });
-        responser.success(ctx,link);
+        ctx.body = await ctx.render("skip",{
+            link: link
+        });
+        // responser.success(ctx,link);
     });
 };

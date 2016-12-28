@@ -31,16 +31,13 @@ module.exports = router => {
         if (user) {
             let LoginToken = helper.login(ctx, user);
             //noinspection JSValidateTypes
-            responser.success(ctx, {
-                LoginToken: LoginToken
-            });
+            ctx.body = await ctx.render("dynamics",{});
             //todo: 
             EvenImit.emit("user_login");
         } else {
-            responser(ctx, {
+            responser.catchErr(ctx, {
                 error: 'Login Failed'
             }, 403);
         }
-        await next();
     });
 };

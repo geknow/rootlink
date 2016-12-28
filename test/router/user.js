@@ -22,7 +22,7 @@ var register = ()=> {
             }
         });
 };
-// register();
+register();
 
 var validate = () => {
 
@@ -57,7 +57,7 @@ var login = () => {
     })
 };
 
-login();
+// login();
 var u = (url) => {
     return encodeURI(url)
 };
