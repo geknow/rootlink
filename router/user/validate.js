@@ -11,7 +11,7 @@ module.exports = router => {
     /**
      * 邮箱验证之后，解密得到user，再写入数据库
      */
-    router.post('/validate/email/:link', async(ctx, next) => { //用邮件地址验证
+    router.get('/validate/email/:link', async(ctx, next) => { //用邮件地址验证
         let link = ctx.params.link;
         let user = utilx.getTokenInfo(decodeURI(link));
         user = JSON.parse(user);

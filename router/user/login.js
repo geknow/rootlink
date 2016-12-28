@@ -7,6 +7,7 @@ const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 
 module.exports = router => {
+
     router.get('/login', async(ctx, next) => {
         ctx.body = await ctx.render("login");
     });
@@ -31,7 +32,7 @@ module.exports = router => {
         if (user) {
             let LoginToken = helper.login(ctx, user);
             //noinspection JSValidateTypes
-            ctx.body = await ctx.render("dynamics",{});
+            ctx.redirect("/user/index");
             //todo: 
             EvenImit.emit("user_login");
         } else {
@@ -39,5 +40,9 @@ module.exports = router => {
                 error: 'Login Failed'
             }, 403);
         }
+    });
+    
+    router.get("/user/index", async (ctx, next) => {
+        ctx.body = await ctx.render("dynamics",{}); 
     });
 };

@@ -22,11 +22,11 @@ var register = ()=> {
             }
         });
 };
-register();
+// register();
 
 var validate = () => {
 
-    agent.post('localhost:' + config.server.port + '/validate/email/f01d4bc1f8f3fe2e606cfc463c4f7675521d3f8f447ac5ce759bd218da04146e872f871c4b08812ccb3bdafa850744ee5c299fa16c702fcd77e9ee938b88e3c5e5cf5e1db2d3631a8c49871a4bb86a4e')
+    agent.get('localhost:' + config.server.port + '/validate/email/063be38497f03d20848e1f15aa51c138724fd131260502ee75362c7b42055ac2a33a8fac3dbdfcd45a6418ca384c594b886fdb8bcc0359a26383267ff5fe5183aa2c647554f985cbc06435b0703b9290e036347ab332bf15759dffb0d80c25c4')
         .end((err, res)=> {
             if (err)
                 console.log('Error : ' + err);
@@ -35,7 +35,7 @@ var validate = () => {
             }
         });
 };
-
+validate()
 var login = () => {
     return new Promise((resolve, reject)=> {
         agent.post('localhost:' + config.server.port + '/user/login')
