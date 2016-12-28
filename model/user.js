@@ -17,6 +17,8 @@ module.exports = function (sequelize, DataTypes) {
         updatedAt: false,
         associate: function (models) {
             models.User.hasMany(models.Device);
+            
+            models.User.hasMany(models.Directive);
         },
         instanceMethods: {}
     });

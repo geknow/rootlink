@@ -21,7 +21,7 @@ app.use(async(ctx, next)=> {
     }
 });
 app.use(staticServer(path.join(__dirname, 'public')));
-// app.use(koaBody());
+app.use(koaBody());
 app.use(koaValidate());
 app.use(router.routes());
 

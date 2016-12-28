@@ -15,12 +15,14 @@ module.exports = router=> {
     
     router.post('/user/register', async(ctx, next)=> {
         let body = ctx.request.body;
-        let reg= /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-        if(!reg.test(body.email)){
+        ctx.checkBody("email").isEmail();
+        if(ctx.errors){
             responser.reject(ctx,"邮箱错误");
             return;
         }
-        if(!body.username || !body.password || !body.email){
+        ctx.checkBody("username").notEmpty();
+        ctx.checkBody("password").notEmpty();
+        if(ctx.errors){
             responser.reject(ctx,"参数不全");
             return;
         }

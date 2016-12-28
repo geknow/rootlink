@@ -9,9 +9,9 @@ let agent = require('superagent').agent();
 var register = ()=> {
     agent.post('localhost:' + config.server.port + '/user/register')
         .send({
-
             password: 'pass_word',
             email: '2248906444@qq.com',
+            username: "name1",
             type: 1
         })
         .end((err, res)=> {
@@ -22,6 +22,7 @@ var register = ()=> {
             }
         });
 };
+// register();
 
 var validate = () => {
 
@@ -48,13 +49,15 @@ var login = () => {
                     console.log('Error : ' + err);
                 else {
                     console.log(res.body);
-                    resolve(res.body.msg.LoginToken);
+                    // resolve(res.body.msg.LoginToken);
                 }
             });
     }).then(token => {
         return token;
     })
 };
+
+login();
 var u = (url) => {
     return encodeURI(url)
 };
@@ -95,15 +98,15 @@ var menu ={
 //         })
 // });
 
-const js2xmlparser = require("js2xmlparser");
-let returnData = {
-    ToUserName: "1",
-    "FromUserName": "1",
-    "CreateTime": new Date().getTime(),
-    "MsgType": "text",
-    "Content": "小主,你好"
-};
-console.log(js2xmlparser.parse("xml", returnData));;
+// const js2xmlparser = require("js2xmlparser");
+// let returnData = {
+//     ToUserName: "1",
+//     "FromUserName": "1",
+//     "CreateTime": new Date().getTime(),
+//     "MsgType": "text",
+//     "Content": "小主,你好"
+// };
+// console.log(js2xmlparser.parse("xml", returnData));;
 module.exports = {
     validate,
     register,

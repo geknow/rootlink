@@ -11,11 +11,11 @@ var eventEmitter = new events.EventEmitter();
  * todo:消息推送
  */
 eventEmitter.on("message", ()=> {
-    
+
 });
 
 eventEmitter.on("user_login", ()=> {
-    
+
 });
 
 module.exports =  eventEmitter;

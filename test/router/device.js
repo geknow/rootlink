@@ -2,7 +2,7 @@
  * Created by webhugo on 12/26/16.
  */
 const config = require('./../../config/config');
-const userTest = require('./user');
+// const userTest = require('./user');
 let agent = require('superagent').agent();
 
 var getDevice = (loginToken) => {
@@ -45,7 +45,7 @@ var delDevice = () => {
             }
         })
 };
-delDevice();
+addDevice();
 // new Promise((resolve, reject)=> {
 //     resolve(userTest.login());
 // }).then((LoginToken) => {

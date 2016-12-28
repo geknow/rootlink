@@ -9,5 +9,15 @@ var shortDataTypes = sequelizex.DataTypes;
  * @param DataTypes
  */
 module.exports = function(sequelize,DataTypes) {
-      
+    return sequelize.define("Directive", {
+        name : shortDataTypes.String(100,false),
+        operation: shortDataTypes.String()
+    }, {
+        updatedAt: false,
+        associate: function (models) {
+            models.Directive.belongsTo(models.User,{foreignKey : "UserId"});
+            models.Directive.belongsTo(models.Sensor,{foreignKey : "SensorId"});
+        },
+        instanceMethods: {}
+    })
 };

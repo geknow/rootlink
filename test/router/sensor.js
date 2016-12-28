@@ -2,7 +2,7 @@
  * Created by webhugo on 12/26/16.
  */
 const config = require('./../../config/config');
-const userTest = require('./user');
+// const userTest = require('./user');
 let agent = require('superagent').agent();
 
 var getSensor = () => {
@@ -45,4 +45,4 @@ var delSensor = () => {
             }
         })
 };
-delSensor()
+getSensor()

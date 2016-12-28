@@ -49,7 +49,8 @@ function *addSensor() {
         var sensor = {
             name: "name" + i,
             label: i,
-            DeviceId: 1
+            DeviceId: 1,
+            value: 1
         };
         yield db.models.Sensor.create(sensor);
     }

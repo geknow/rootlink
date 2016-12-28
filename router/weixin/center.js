@@ -109,7 +109,7 @@ module.exports = router => {
             console.log(text);
             text = JSON.parse(text);
             let openId = text.openid;//得到用户的openId，和用户的邮箱绑定起来
-            console.log(openId); 
+            console.log(openId);
         });
         ctx.body = "绑定"
     })

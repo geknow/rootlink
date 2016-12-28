@@ -17,7 +17,7 @@ module.exports = router => {
             responser.reject(ctx, "没登录");
             return;
         }
-        // let user = {id: 1}; 测试
+        // let user = {id: 1}; //测试
         let error;
         let devices;
         try {
