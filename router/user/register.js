@@ -35,7 +35,7 @@ module.exports = router=> {
         };
         let link = indentifyCode.sendMail(JSON.stringify(user));
         user.password = body.password;
-        cache.jsetex(link,3600*1000,JSON.stringify(user));
+        cache.jsetex(link,3600*1000,user);
         //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
         ctx.body = await ctx.render("skip",{
             link: link
