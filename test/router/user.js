@@ -9,9 +9,9 @@ let agent = require('superagent').agent();
 var register = ()=> {
     agent.post('localhost:' + config.server.port + '/user/register')
         .send({
-            password: 'pass_word',
+            password: '123',
             email: '2248906444@qq.com',
-            username: "name1",
+            username: "name10",
             type: 1
         })
         .end((err, res)=> {
@@ -22,7 +22,7 @@ var register = ()=> {
             }
         });
 };
-// register();
+register();
 
 var validate = () => {
 
@@ -35,7 +35,7 @@ var validate = () => {
             }
         });
 };
-validate()
+// validate()
 var login = () => {
     return new Promise((resolve, reject)=> {
         agent.post('localhost:' + config.server.port + '/user/login')

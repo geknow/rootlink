@@ -4,8 +4,8 @@
 const db = require('./../../model/index');
 const helper = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
-const cache = require('../../instance/cache');
 const indentifyCode = require("../../lib/identifyCode");
+const cache = require('../../instance/cache');
 
 module.exports = router=> {
     
@@ -28,13 +28,15 @@ module.exports = router=> {
         }
         let user = {
             username: body.username,
-            password: body.password,
+            // password: body.password,
             email: body.email,
             avatar: '', //todo : get update avatar
             type: body.type === 'OurEDA_admin' ? 1 : 0
         };
-        //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
         let link = indentifyCode.sendMail(JSON.stringify(user));
+        user.password = body.password;
+        cache.jsetex(link,3600,JSON.stringify(user));
+        //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
         ctx.body = await ctx.render("skip",{
             link: link
         });
