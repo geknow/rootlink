@@ -15,7 +15,7 @@ module.exports = router => {
     router.get('/validate/email/:link', async(ctx, next) => { //用邮件地址验证
         let link = ctx.params.link;
         console.log(link);
-        let user = cache.jget(link);
+        let user = await cache.jget(link);
         // let user = utilx.getTokenInfo(decodeURI(link));
         console.log(user);
         user = JSON.parse(user);
