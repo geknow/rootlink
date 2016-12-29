@@ -22,7 +22,7 @@ var register = ()=> {
             }
         });
 };
-register();
+// register();
 
 var validate = () => {
 
@@ -112,6 +112,18 @@ module.exports = {
     register,
     login
 };
+const cache = require('../../instance/cache');
+let user = {
+    username: "1",
+    // password: body.password,
+    email: "2248906444@qq.com",
+    avatar: '', //todo : get update avatar
+    type: 0
+};
+user.password = "1"
+cache.set("11111",3600*1000,user);
+let a  = cache.get("11111")
+console.log(a);
 
 
 
