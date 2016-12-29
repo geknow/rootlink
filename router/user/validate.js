@@ -19,6 +19,7 @@ module.exports = router => {
         // let user = utilx.getTokenInfo(decodeURI(link));
         console.log(user);
         user = JSON.parse(user);
+        console.log(user);
         let error;
         user = await db.models.User.create(user).catch(err=> {
             error = err;

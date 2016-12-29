@@ -112,23 +112,25 @@ module.exports = {
     register,
     login
 };
-const cache = require('../../instance/cache');
-var ca =  async () => {
-    
-    let user = {
-        username: "1",
-        // password: body.password,
-        email: "2248906444@qq.com",
-        avatar: '', //todo : get update avatar
-        type: 0
-    };
-    user.password = "1";
-    cache.jsetex("11111",3600*1000,JSON.stringify(user));
-    let a  = await cache.get("11111")
-    console.log(JSON.parse(a));
-}
-ca()
-
+// const cache = require('../../instance/cache');
+// var ca =  async () => {
+//    
+//     let user = {
+//         username: "1",
+//         // password: body.password,
+//         email: "2248906444@qq.com",
+//         avatar: '', //todo : get update avatar
+//         type: 0
+//     };
+//     user.password = "1";
+//     cache.jsetex("11111",3600*1000,JSON.stringify(user));
+//     let a  = await cache.get("11111")
+//     console.log(JSON.parse(a));
+// }
+// ca()
+let aa = "{\"username\":\"6\",\"email\":\"2248906444@qq.com\",\"avatar\":\"\",\"type\":0,\"password\":\"6\"}";
+aa = JSON.parse(aa);
+console.log(aa);
 
 
 
