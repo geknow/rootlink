@@ -22,7 +22,7 @@ var register = ()=> {
             }
         });
 };
-// register();
+register();
 
 var validate = () => {
 

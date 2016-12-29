@@ -35,9 +35,9 @@ module.exports = router=> {
         };
         let link = indentifyCode.sendMail(JSON.stringify(user));
         user.password = body.password;
-        console.log(link);
-        cache.jsetex(link,60 * 60,JSON.stringify(user));
+        //todo: 把link和user存在redis里面，验证邮箱来得到link，从而取出user，写入数据库
         //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
+        cache.jsetex(link,60 * 60,user);
         ctx.body = await ctx.render("skip",{
             link: link
         });

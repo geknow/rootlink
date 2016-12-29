@@ -14,12 +14,9 @@ module.exports = router => {
      */
     router.get('/validate/email/:link', async(ctx, next) => { //用邮件地址验证
         let link = ctx.params.link;
-        console.log(link);
         let user = await cache.get(link);
         // let user = utilx.getTokenInfo(decodeURI(link));
-        console.log(user);
         user = JSON.parse(user);
-        console.log(user);
         let error;
         user = await db.models.User.create(user).catch(err=> {
             error = err;
