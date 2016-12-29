@@ -123,7 +123,6 @@ var ca =  async () => {
         type: 0
     };
     user.password = "1";
-    
     cache.jsetex("11111",3600*1000,JSON.stringify(user));
     let a  = await cache.get("11111")
     console.log(JSON.parse(a));
