@@ -10,8 +10,8 @@ var register = ()=> {
     agent.post('localhost:' + config.server.port + '/user/register')
         .send({
             password: '123',
-            email: '2248906444@qq.com',
-            username: "name10",
+            email: '22489064443@qq.com',
+            username: "name1",
             type: 1
         })
         .end((err, res)=> {
@@ -128,9 +128,9 @@ module.exports = {
 //     console.log(JSON.parse(a));
 // }
 // ca()
-let aa = "{\"username\":\"6\",\"email\":\"2248906444@qq.com\",\"avatar\":\"\",\"type\":0,\"password\":\"6\"}";
-aa = JSON.parse(aa);
-console.log(aa);
+// let aa = "{\"username\":\"6\",\"email\":\"2248906444@qq.com\",\"avatar\":\"\",\"type\":0,\"password\":\"6\"}";
+// aa = JSON.parse(aa);
+// console.log(aa);
 
 
 

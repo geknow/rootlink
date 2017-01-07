@@ -6,6 +6,7 @@ const helper = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const indentifyCode = require("../../lib/identifyCode");
 const cache = require('../../instance/cache');
+const User = db.models.User;
 
 module.exports = router=> {
     
@@ -26,21 +27,50 @@ module.exports = router=> {
             responser.reject(ctx,"参数不全");
             return;
         }
+        console.log("adsf");
+        console.log((await User.findOne({
+            where: {
+                $or: [
+                    {
+                        email: body.email
+                    },
+                    {
+                        username: body.username
+                    }
+                ]
+            }
+        })));
+        if(await User.findOne({
+                where: {
+                    $or: [
+                        {
+                            email: body.email
+                        },
+                        {
+                            username: body.username
+                        }
+                    ]
+                }
+        })){//如果存在同用户名或者同邮箱
+            console.log("Fdsa");
+            responser.reject(ctx,"用户名或者邮箱已经存在");
+            return;
+        }
         let user = {
             username: body.username,
-            // password: body.password,
             email: body.email,
             avatar: '', //todo : get update avatar
             type: body.type === 'OurEDA_admin' ? 1 : 0
         };
-        let link = indentifyCode.sendMail(JSON.stringify(user));
+        let key = indentifyCode.sendMail(JSON.stringify(user));
+        // todo: 上面生成key是不存放密码的，在redis才存放密码
         user.password = body.password;
         //todo: 把link和user存在redis里面，验证邮箱来得到link，从而取出user，写入数据库
         //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
-        cache.jsetex(link,60 * 60,user);
+        console.log(key);
+        cache.jsetex(key,60 * 60,user);
         ctx.body = await ctx.render("skip",{
-            link: link
+            key: key
         });
-        // responser.success(ctx,link);
     });
 };

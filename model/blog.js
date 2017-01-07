@@ -6,7 +6,7 @@ var shortDataTypes = sequelizex.DataTypes;
 
 module.exports = function (sequelize, DataTypes) {
 
-    var Blog = sequelize.define('Blog', {
+    return sequelize.define('Blog', {
         text: shortDataTypes.Text(false)
     }, {
         associate: function (models) {
@@ -14,6 +14,4 @@ module.exports = function (sequelize, DataTypes) {
         },
         instanceMethods: {}
     });
-
-    return Blog;
 };
