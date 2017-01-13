@@ -1,15 +1,1 @@
-function validateForm()
-{
-  var x=document.forms["myForm"]["username"].value;
-  if (x==null || x=="")
-  {
-    alert("用户名不能为空");
-    return false;
-  }
-  var x1=document.forms["myForm"]["password"].value;
-  if(x1==null||x1=="")
-  {
-  	alert("密码不能为空");
-  	return false;
-  }
-}
+function validateForm(){var r=document.forms.myForm.username.value;if(null==r||""==r)return alert("用户名不能为空"),!1;var e=document.forms.myForm.password.value;return null==e||""==e?(alert("密码不能为空"),!1):void 0}

@@ -12,7 +12,7 @@ const EvenImit = require('../../instance/EvenImit');
 module.exports = router => {
     router.get("/device/all", async(ctx, next) => {
         let user = ctx.currentUser;
-        user = user ? user : (await auth.user(ctx));
+        user =  user || (await auth.user(ctx));
         if (!user) {
             responser.reject(ctx, "没登录");
             return;
@@ -41,7 +41,7 @@ module.exports = router => {
     router.post("/device/add", async(ctx, next) => {
         let body = ctx.request.body;
         let user = ctx.currentUser;
-        user = user ? user : (await auth.user(ctx));
+        user = user || (await auth.user(ctx));
         let error;
         let device;
         try {
