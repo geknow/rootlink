@@ -3,7 +3,6 @@
  */
 const db = require('./../../model/index');
 const Sensor = db.models.Sensor;
-const Device = db.models.Device;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
@@ -20,6 +19,13 @@ module.exports = router => {
                     DeviceId: deviceId
                 }
             });
+            sensors.forEach((sensor) => {
+                [1, 2, 3, 4].forEach((i) => {
+                    if (sensor["value" + i])
+                        return;
+                    delete sensor["value" + i];
+                })
+            })
         } catch (e) {
             error = e;
         }
@@ -33,14 +39,20 @@ module.exports = router => {
     router.post("/sensor/add", async(ctx, next) => {
         let body = ctx.request.body;
         let error;
-        let sensor;
+        let sensor = {
+            name: body.name,
+            label: body.label,
+            value: body.value,
+            description: body.description,
+            DeviceId: body.deviceId
+        };
+        [1, 2, 3, 4].forEach((ele) => {
+            if (body["value" + ele]) {
+                sensor["value" + ele] = body["value" + ele];
+            }
+        });
         try {
-            sensor = await Sensor.create({
-                name: body.name,
-                label: body.label,
-                description: body.description,
-                DeviceId: body.deviceId
-            })
+            sensor = await Sensor.create(sensor)
         } catch (e) {
             error = e;
         }
@@ -48,7 +60,7 @@ module.exports = router => {
             responser.catchErr(ctx, "参数缺失");
             return;
         } else
-            responser.success(ctx,sensor);
+            responser.success(ctx, sensor);
     });
 
     router.post("/sensor/delete", async(ctx, next) => {
@@ -56,22 +68,22 @@ module.exports = router => {
         let sensorId = body.sensorId;
         let count;
         let error;
-        try{
+        try {
             count = await Sensor.destroy({
                 where: {
                     id: sensorId
                 }
             })
-        }catch (e){
+        } catch (e) {
             error = e;
         }
-        if(error) {
-            responser.catchErr(ctx,error);
+        if (error) {
+            responser.catchErr(ctx, error);
             return;
-        }else if(!count){
-            responser.reject(ctx,"token 错误");
+        } else if (!count) {
+            responser.reject(ctx, "token 错误");
             return;
         }
-        responser.success(ctx,count);
+        responser.success(ctx, count);
     });
 };

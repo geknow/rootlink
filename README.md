@@ -180,7 +180,12 @@ RequestData:{
      name: STRING //allowNull(false),
      label: STRING //allowNull(false),
      description: STRING //allowNull(true),
-     deviceId: INT //allowNull(false)
+     deviceId: INT //allowNull(false),
+     value: STRING //allowNull(false),
+     value1: STRING //allowNull(true),
+     value2: STRING //allowNull(true),
+     value3: STRING //allowNull(true),
+     value4: STRING //allowNull(true),
 }
 ```
 响应格式:
