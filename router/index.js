@@ -18,8 +18,8 @@ router.use(async (ctx, next) => {
 
 router.use(async (ctx, next) => {
     // todo: 权限过滤
-    let url = ctx.request.url;
-    let user = ctx.currentUser || auth.user(ctx);
+    // let url = ctx.request.url;
+    // let user = ctx.currentUser || await auth.user(ctx);
     //内测中，暂时不需要
     // if(/\/user/.test(url)){
     //     if(!user){

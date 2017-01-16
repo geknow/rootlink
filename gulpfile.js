@@ -1,5 +1,6 @@
 /**
  * Created by webhugo on 1/13/17.
+ * 前端构建工具
  */
 // 引入 gulp
 var gulp = require('gulp');
@@ -8,7 +9,6 @@ var gulp = require('gulp');
 var htmlmin = require('gulp-htmlmin'), //html压缩
     imagemin = require('gulp-imagemin'),//图片压缩
     pngcrush = require('imagemin-pngcrush'),
-    gLess=require('gulp-less'),// 编译less生成css文件
     minifycss = require('gulp-minify-css'),//css压缩
     jshint = require('gulp-jshint'),//js检测
     uglify = require('gulp-uglify'),//js压缩

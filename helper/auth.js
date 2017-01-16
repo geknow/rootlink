@@ -6,6 +6,7 @@ var util = require('util');
 var db = require('../model/index');
 var cookieName = 'LoginToken';
 let crypto = require('crypto');
+let clone = require('../lib/utilx').ObjectClone;
 let hash = ()=> {
     return crypto.createHash('sha1');
 };
@@ -27,7 +28,10 @@ module.exports = {
         ctx.cookies.set(cookieName, LoginToken, {
             maxAge: ifKeep ? 7 * 24 * 3600 * 1000 : 0
         });
-        cache.set(LoginToken, username);
+        
+        let newUer = clone(user.dataValues);
+        delete newUer.password;//删除密码
+        cache.set(LoginToken, JSON.stringify(newUer));
         return LoginToken;
     },
     logout: async(ctx) => {
@@ -45,8 +49,13 @@ module.exports = {
      * @returns {user || null}
      */
     user: async(ctx) => {
-        var id = ctx.cookies.get(cookieName);
-        var user = await db.models.User.findById(id);
-        return user;
+        let error;
+        try {
+            var token = ctx.cookies.get(cookieName);
+            var user = cache.jget(token);
+        } catch (e) {
+            error = e;
+        }
+        return error ? null : user;
     }
 };

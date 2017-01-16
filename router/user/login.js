@@ -15,6 +15,7 @@ module.exports = router => {
     router.post('/user/login', async(ctx, next) => {
         let body = ctx.request.body;
         let user;
+        
         if (body.username)
             user = await db.models.User.findOne({
                 where: {
@@ -22,6 +23,7 @@ module.exports = router => {
                     password: body.password
                 }
             });
+      
         if (body.email)
             user = await db.models.User.findOne({
                 where: {
@@ -29,6 +31,7 @@ module.exports = router => {
                     password: body.password
                 }
             });
+        
         if (user) {
             let LoginToken = helper.login(ctx, user);
             //noinspection JSValidateTypes
