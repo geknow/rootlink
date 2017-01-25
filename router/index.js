@@ -19,14 +19,15 @@ router.use(async (ctx, next) => {
 router.use(async (ctx, next) => {
     // todo: 权限过滤
     // let url = ctx.request.url;
-    // let user = ctx.currentUser || await auth.user(ctx);
-    //内测中，暂时不需要
-    // if(/\/user/.test(url)){
+    // let user = ctx.currentUser || (await auth.user(ctx));
+    // // 内测中，暂时不需要
+    // if(/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url) || /\/sensor/.test(url)){
     //     if(!user){
     //         ctx.redirect("/login");
     //         return;
     //     }
     // }
+    
     
     ctx.render = (path, data) => {
         data = data || {};
@@ -35,7 +36,9 @@ router.use(async (ctx, next) => {
     await next();
 });
 router.get("/", async (ctx, next) => {
-    ctx.body = await ctx.render("login");
+    ctx.body = await ctx.render("index",{
+       
+    });
 });
 utilx.autoImport(__dirname, (tmpPath) => {   // 自动引入
     require(tmpPath)(router);

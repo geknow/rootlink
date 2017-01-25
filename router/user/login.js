@@ -15,7 +15,6 @@ module.exports = router => {
     router.post('/user/login', async(ctx, next) => {
         let body = ctx.request.body;
         let user;
-        
         if (body.username)
             user = await db.models.User.findOne({
                 where: {
@@ -34,7 +33,6 @@ module.exports = router => {
         
         if (user) {
             let LoginToken = helper.login(ctx, user);
-            //noinspection JSValidateTypes
             ctx.redirect("/user/index");
             //todo: 
             EvenImit.emit("user_login");
@@ -46,6 +44,6 @@ module.exports = router => {
     });
     
     router.get("/user/index", async (ctx, next) => {
-        ctx.body = await ctx.render("dynamics",{}); 
+        ctx.body = await ctx.render("index",{}); 
     });
 };

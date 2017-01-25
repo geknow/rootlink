@@ -27,7 +27,6 @@ module.exports = router=> {
             responser.reject(ctx,"参数不全");
             return;
         }
-        console.log("adsf");
         console.log((await User.findOne({
             where: {
                 $or: [
@@ -52,7 +51,6 @@ module.exports = router=> {
                     ]
                 }
         })){//如果存在同用户名或者同邮箱
-            console.log("Fdsa");
             responser.reject(ctx,"用户名或者邮箱已经存在");
             return;
         }

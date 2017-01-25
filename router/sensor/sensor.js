@@ -6,6 +6,7 @@ const Sensor = db.models.Sensor;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
+const config = require('../../config/config');
 
 
 module.exports = router => {
@@ -20,7 +21,7 @@ module.exports = router => {
                 }
             });
             sensors.forEach((sensor) => {
-                [1, 2, 3, 4].forEach((i) => {
+                config.sensorsValue.forEach((i) => {
                     if (sensor["value" + i])
                         return;
                     delete sensor["value" + i];
@@ -46,7 +47,7 @@ module.exports = router => {
             description: body.description,
             DeviceId: body.deviceId
         };
-        [1, 2, 3, 4].forEach((ele) => {
+        config.sensorsValue.forEach((ele) => {
             if (body["value" + ele]) {
                 sensor["value" + ele] = body["value" + ele];
             }

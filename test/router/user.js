@@ -7,7 +7,9 @@ const WeixinConfig = config.weixin;
 let agent = require('superagent').agent();
 
 var register = ()=> {
-    agent.post('localhost:' + config.server.port + '/user/register')
+    var url = 'localhost:' + config.server.port + '/user/register';
+    console.log(url);
+    agent.post(url)
         .send({
             password: '123',
             email: '22489064443@qq.com',
@@ -22,7 +24,8 @@ var register = ()=> {
             }
         });
 };
-register();
+
+// register();
 
 var validate = () => {
 
@@ -37,27 +40,24 @@ var validate = () => {
 };
 // validate()
 var login = () => {
-    return new Promise((resolve, reject)=> {
-        agent.post('localhost:' + config.server.port + '/user/login')
-            .send({
-                password: '123',
-                username: 'name3',
-                type: 1
-            })
-            .end((err, res)=> {
-                if (err)
-                    console.log('Error : ' + err);
-                else {
-                    console.log(res.body);
-                    // resolve(res.body.msg.LoginToken);
-                }
-            });
-    }).then(token => {
-        return token;
-    })
+    var url = 'localhost:' + config.server.port + '/user/login';
+    console.log(url);
+    agent.post(url)
+        .send({
+            password: '123',
+            username: "name2"
+        })
+        .end((err, res)=> {
+            if (err)
+                console.log(err);
+            else {
+                console.log(res.body);
+                // resolve(res.body.msg.LoginToken);
+            }
+        });
 };
 
-// login();
+login();
 var u = (url) => {
     return encodeURI(url)
 };
