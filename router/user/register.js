@@ -11,7 +11,7 @@ const User = db.models.User;
 module.exports = router=> {
     
     router.get('/register', async (ctx,next) => {
-        ctx.body = await ctx.render("register"); 
+        ctx.body = await ctx.render("index");
     });
     
     router.post('/user/register', async(ctx, next)=> {
@@ -67,7 +67,7 @@ module.exports = router=> {
         //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
         console.log(key);
         cache.jsetex(key,60 * 60,user);
-        ctx.body = await ctx.render("skip",{
+        ctx.body = await ctx.render("index",{
             key: key
         });
     });

@@ -9,7 +9,7 @@ const EvenImit = require('../../instance/EvenImit');
 module.exports = router => {
 
     router.get('/login', async(ctx, next) => {
-        ctx.body = await ctx.render("login");
+        ctx.body = await ctx.render("index",{});
     });
 
     router.post('/user/login', async(ctx, next) => {

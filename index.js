@@ -11,10 +11,28 @@ var koaBody = require('koa-body');
 const responser = require('./lib/responser');
 const config = require('./config/config');
 var logger = require('./log/index').logger;
+const render = require("./instance/render");
+const auth = require("./helper/auth");
 
 app.use(async(ctx, next)=> {
     try {
+        let url = ctx.request.url;
+        if (/\/api/.test(url)) {//自定义路由
+            let url = ctx.request.url;
+            let user = ctx.currentUser || (await auth.user(ctx));
+            //todo: 权限过滤
+            if (/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url) || /\/sensor/.test(url)) {
+                if (!user) {
+                    ctx.redirect("/");
+                    return;
+                }
+            }
+        }
         await next();
+        if (ctx.body === undefined) {//当和自定义路由不匹配时,而且不是静态文件请求时,返回index.html
+            console.log("not found");
+            ctx.body = await render("index", {});
+        }
     } catch (e) {
         //logger.error(e);//在生产模式下把错误输入到文件中
         responser.catchErr(ctx, e);

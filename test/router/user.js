@@ -5,7 +5,11 @@
 const config = require('./../../config/config');
 const WeixinConfig = config.weixin;
 let agent = require('superagent').agent();
-
+agent.get('localhost:' + config.server.port + "/login")
+    .end((e,res) => {
+        console.log(e);
+        console.log(res.text);
+    })
 var register = ()=> {
     var url = 'localhost:' + config.server.port + '/user/register';
     console.log(url);
@@ -57,7 +61,7 @@ var login = () => {
         });
 };
 
-login();
+// login();
 var u = (url) => {
     return encodeURI(url)
 };

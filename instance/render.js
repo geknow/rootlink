@@ -4,7 +4,7 @@
 var coViews = require('co-views');
 
 var root = require('../config/config.js').root;
-var viewPath = root + '/public';
+var viewPath = root + '/views';
 
 var render = coViews(viewPath, {
     map: {
