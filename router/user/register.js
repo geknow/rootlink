@@ -7,14 +7,15 @@ const responser = require('./../../lib/responser');
 const indentifyCode = require("../../lib/identifyCode");
 const cache = require('../../instance/cache');
 const User = db.models.User;
+const logger = require("../../log/index").logger;
 
 module.exports = router=> {
     
     router.get('/register', async (ctx,next) => {
-        ctx.body = await ctx.render("index");
+        responser.success(ctx);
     });
     
-    router.post('/user/register', async(ctx, next)=> {
+    router.post('/register', async(ctx, next)=> {
         let body = ctx.request.body;
         ctx.checkBody("email").isEmail();
         if(ctx.errors){
@@ -27,7 +28,7 @@ module.exports = router=> {
             responser.reject(ctx,"参数不全");
             return;
         }
-        console.log((await User.findOne({
+        let u = (await User.findOne({
             where: {
                 $or: [
                     {
@@ -38,19 +39,8 @@ module.exports = router=> {
                     }
                 ]
             }
-        })));
-        if(await User.findOne({
-                where: {
-                    $or: [
-                        {
-                            email: body.email
-                        },
-                        {
-                            username: body.username
-                        }
-                    ]
-                }
-        })){//如果存在同用户名或者同邮箱
+        }));
+        if(u){//如果存在同用户名或者同邮箱
             responser.reject(ctx,"用户名或者邮箱已经存在");
             return;
         }
@@ -65,10 +55,10 @@ module.exports = router=> {
         user.password = body.password;
         //todo: 把link和user存在redis里面，验证邮箱来得到link，从而取出user，写入数据库
         //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
-        console.log(key);
+        logger.debug(key);
         cache.jsetex(key,60 * 60,user);
-        ctx.body = await ctx.render("index",{
-            key: key
-        });
+        responser.success(ctx,{
+            key:key
+        })
     });
 };

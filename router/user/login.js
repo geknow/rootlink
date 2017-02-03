@@ -5,14 +5,16 @@ const db = require('./../../model/index');
 const helper = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
+const logger = require("../../log/index").logger;
 
 module.exports = router => {
 
     router.get('/login', async(ctx, next) => {
-        ctx.body = await ctx.render("index",{});
+        responser.success(ctx);
     });
 
-    router.post('/user/login', async(ctx, next) => {
+    router.post('/login', async(ctx, next) => {
+        logger.debug("/api/login");
         let body = ctx.request.body;
         let user;
         if (body.username)
@@ -33,7 +35,7 @@ module.exports = router => {
         
         if (user) {
             let LoginToken = helper.login(ctx, user);
-            ctx.redirect("/user/index");
+            responser.success(ctx);
             //todo: 
             EvenImit.emit("user_login");
         } else {
@@ -44,6 +46,7 @@ module.exports = router => {
     });
     
     router.get("/user/index", async (ctx, next) => {
-        ctx.body = await ctx.render("index",{}); 
+        let user = await auth.user(ctx);
+        responser.success(ctx,user);
     });
 };

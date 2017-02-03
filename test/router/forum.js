@@ -1,13 +1,13 @@
 /**
- * Created by webhugo on 12/26/16.
+ * Created by webhugo on 2/3/17.
  */
 const config = require('./../../config/config');
 var should = require('should');
 let agent = require('superagent').agent();
 
-var token ;
+var topicId;
 
-describe('Device', function () {
+describe('Forum', function () {
     this.timeout(7000);     // extend timeout
 
     describe("login()", function () {
@@ -26,9 +26,9 @@ describe('Device', function () {
     });
 
 
-    describe("getDevice()", function () {
-        it("getDevice", function (done) {
-            agent.get('localhost:' + config.server.port + '/api/device/all')
+    describe("getForumAll()", function () {
+        it("getForumAll", function (done) {
+            agent.get('localhost:' + config.server.port + '/api/forum/index')
 
                 .end((err, res) => {
                     if (!err && !res.body.error)
@@ -37,28 +37,28 @@ describe('Device', function () {
         })
     });
 
-
-    describe("addDevice()", function () {
-        it("addDevice", function (done) {
-            agent.post('localhost:' + config.server.port + '/api/device/add')
+    describe("addTopic()", function () {
+        it("addTopic", function (done) {
+            agent.post('localhost:' + config.server.port + '/api/forum/addTopic')
                 .send({
-                    name: "1",
-                    label: "1"
+                    text: "addtopic"
                 })
                 .end((err, res) => {
                     if (!err && !res.body.error)
                         done();
-                    token = res.body.msg.token;
+                    topicId = res.body.msg.PostId;
                 })
         })
     });
 
 
-    describe("delDevice()", function () {
-        it("delDevice", function (done) {
-            agent.post('localhost:' + config.server.port + '/api/device/delete')
+    describe("addComment()", function () {
+        it("addComment", function (done) {
+            agent.post('localhost:' + config.server.port + '/api/forum/addComment')
                 .send({
-                    token: token
+                    text: "addComment",
+                    id: topicId,
+                    type: 1
                 })
                 .end((err, res) => {
                     if (!err && !res.body.error)
@@ -67,6 +67,14 @@ describe('Device', function () {
         })
     });
 
+
+    describe("getComment()", function () {
+        it("getComment", function (done) {
+            agent.get('localhost:' + config.server.port + '/api/forum/getComment?id=' + topicId)
+                .end((err, res) => {
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
 });
-
-

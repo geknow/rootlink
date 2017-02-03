@@ -5,6 +5,9 @@ var path = require('path');
 var fs = require('fs');
 
 let config = {
+    // 调试开关
+    debug: false,
+    isRender: true,
     db: {
         name: 'postgres',
         username: 'postgres',
@@ -73,7 +76,7 @@ let config = {
         };
     },
     Jpush: {
-        appKey:" 69f971273db1f9ead66a524d",
+        appKey: " 69f971273db1f9ead66a524d",
         masterSecret: "7a45e7ee58dc2c8187e68f08"
     },
     videoUrl: {

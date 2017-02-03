@@ -2,6 +2,7 @@
  * Created by webhugo on 16-11-20.
  */
 var log4js = require("log4js");
+var DEBUG = require("../config/config").debug;
 log4js.configure({
 
     appenders: [
@@ -23,7 +24,7 @@ log4js.configure({
     replaceConsole: true,   //替换console.log
     levels:{
         dateFileLog: 'debug',
-        console: 'debug'
+        console: DEBUG ? 'debug': 'error'
     }
 });
 

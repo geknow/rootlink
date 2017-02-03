@@ -33,12 +33,10 @@ module.exports = router => {
             responser.catchErr(ctx, e);
             return;
         }
-        responser.success(ctx, {
-            list: list
-        });
+        responser.success(ctx, list);
     });
     
-    router.post("/blog/add", async (ctx, next) => {
+    router.post("/admin/blog/add", async (ctx, next) => {
         let user = await auth.user(ctx);
         if(!user || user.type !== 1){
             responser.reject(ctx,"权限不够");

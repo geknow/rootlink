@@ -8,6 +8,7 @@ const router = new Router({
 const utilx = require('../lib/utilx');
 const render = require('../instance/render');
 const responser = require("../lib/responser");
+const logger = require("../log/index").logger;
 
 router.use(async (ctx, next) => {
     try{
@@ -17,7 +18,7 @@ router.use(async (ctx, next) => {
         };
         await next();
     }catch (e){
-        console.log(e);
+        logger.debug(e);
         ctx.body = responser.catchErr(ctx,e);
     }
 });

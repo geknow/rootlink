@@ -12,7 +12,7 @@ const EvenImit = require('../../instance/EvenImit');
 module.exports = router => {
     router.get("/device/all", async(ctx, next) => {
         let user = ctx.currentUser;
-        user =  user || (await auth.user(ctx));
+        user = user || (await auth.user(ctx));
         if (!user) {
             responser.reject(ctx, "没登录");
             return;
@@ -58,7 +58,7 @@ module.exports = router => {
             responser.catchErr(ctx, "参数缺失");
             return;
         } else
-            responser.success(ctx,device);
+            responser.success(ctx, device);
     });
 
     router.post("/device/delete", async(ctx, next) => {
@@ -66,7 +66,7 @@ module.exports = router => {
         let token = body.token;
         let count;
         let error;
-        try{
+        try {
             count = await Device.destroy({
                 where: {
                     token: token
@@ -77,17 +77,16 @@ module.exports = router => {
                     DeviceId: null
                 }
             })
-        }catch (e){
+        } catch (e) {
             error = e;
         }
-        console.log(count);
-        if(error) {
-            responser.catchErr(ctx,error);
+        if (error) {
+            responser.catchErr(ctx, error);
             return;
-        }else if(!count){
-            responser.reject(ctx,"token 错误");
+        } else if (!count) {
+            responser.reject(ctx, "token 错误");
             return;
         }
-        responser.success(ctx,count);
+        responser.success(ctx, count);
     });
 };
