@@ -63,7 +63,7 @@ Response:{
 }
 ```
 
-#博客模块
+#公告模块
 ###获取接口:
 **/blog/index**
 Method:GET
@@ -220,9 +220,8 @@ Response:{
 
 
 
-#论坛模块(需要登录)
-##获取帖子 添加帖子 回复帖子,获取帖子回复,点赞帖子
-###获取帖子接口:
+#评论模块(需要登录)
+###获取评论接口:
 **/forum/index**
 **Method:GET**
 ```json
@@ -238,7 +237,7 @@ Response:{
 ```
 
 
-###添加帖子接口:
+###添加评论接口:
 **/forum/addTopic**
 **Method:POST**
 ```json
@@ -258,12 +257,12 @@ Response:{
 ```
 
 
-###回复帖子接口（可搜索）:
+###回复评论接口（可搜索）:
 **/forum/addComment**
 **Method:GE**
 ```json
 RequestData:{
-    id: INT, //null(false) 回复的帖子的id，可以是楼主，也可以是某个帖子
+    id: INT, //null(false) 回复的帖子的id，可以是楼主，也可以是某个评论
     text: INT, //null(false)
     type: INT //null(false) 1是回复楼主，2是回复某个帖子
 }
@@ -278,7 +277,7 @@ Response:{
 ```
 
 
-###获取帖子回复接口:
+###获取评论回复接口:
 **/forum/getComment**
 **Method:GET**
 ```json

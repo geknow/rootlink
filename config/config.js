@@ -6,7 +6,7 @@ var fs = require('fs');
 
 let config = {
     // 调试开关
-    debug: false,
+    debug: true,
     isRender: true,
     db: {
         name: 'postgres',
