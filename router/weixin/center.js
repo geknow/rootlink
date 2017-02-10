@@ -7,7 +7,7 @@ const request = require('superagent');
 const xml = require('../../lib/xml');
 let crypto = require("crypto");
 const js2xmlparser = require("js2xmlparser");
-let logger = require("../log/index").logger;
+let logger = require("../../log/index").logger;
 
 const checkSignature = function (query) {
     let timestamp = query.timestamp
