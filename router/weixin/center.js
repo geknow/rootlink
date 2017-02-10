@@ -7,6 +7,7 @@ const request = require('superagent');
 const xml = require('../../lib/xml');
 let crypto = require("crypto");
 const js2xmlparser = require("js2xmlparser");
+let logger = require("../log/index").logger;
 
 const checkSignature = function (query) {
     let timestamp = query.timestamp
@@ -28,7 +29,7 @@ module.exports = router => {
      * 微信测试接口 GET
      */
     router.get("/weixin", async(ctx, next) => {
-        console.log("Authentic");
+        logger.debug("Authentic");
         let query = ctx.request.query;
         let echostr = query.echostr;
         ctx.body = checkSignature(query) ? echostr : "invalid";
@@ -40,8 +41,8 @@ module.exports = router => {
      */
     router.post("/weixin", async(ctx, next) => {
         let data = await xml(ctx);
-        console.log(data);
-        console.log(data.xml.MsgType);
+        logger.debug(data);
+        logger.debug(data.xml.MsgType);
         let type = data.xml.MsgType;
         if (type == "text") {//文本信息
             let returnData = {
@@ -87,9 +88,9 @@ module.exports = router => {
         request.get(url)
             .end((e, res) => {
                 if (e)
-                    console.log(e);
+                    logger.debug(e);
                 else
-                    console.log(res.body);
+                    logger.debug(res.body);
             })
     });
 
@@ -106,10 +107,10 @@ module.exports = router => {
                     resolve(res.text);
                 });
         }).then((text) => {
-            console.log(text);
+            logger.debug(text);
             text = JSON.parse(text);
             let openId = text.openid;//得到用户的openId，和用户的邮箱绑定起来
-            console.log(openId);
+            logger.debug(openId);
         });
         ctx.body = "绑定"
     })

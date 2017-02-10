@@ -8,6 +8,6 @@ require("babel-core/register")({
         "stage-0"
     ]
 });
-require('babel-polyfill');
-require('./index.js');
+require("babel-polyfill");
+require("./index.js");
 // require('./test/router/user')

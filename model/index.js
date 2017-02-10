@@ -4,8 +4,9 @@
 var Sequelize = require('sequelize');
 var config = require('../config/config');
 var utilx = require('../lib/utilx');
+let logger = require("../log/index").logger;
 
-console.log(config.db.toString());
+logger.debug(config.db.toString());
 var sequelize = new Sequelize(
     config.db.toString(), {
         quoteIdentifiers: true

@@ -1,29 +1,20 @@
 /**
  * Created by webhugo on 12/26/16.
  */
-const config = require('./../../config/config');
-var should = require('should');
-let agent = require('superagent').agent();
+var common = require('./common');
+
+var evalString = '';
+Object.keys(common).forEach((e,i) => {
+    evalString += `var ${e} = common.${e};`;
+});
+if(typeof(evalString) !== 'undefined' || evalString !== null){
+    eval(evalString);
+}
 
 var token ;
 
 describe('Device', function () {
     this.timeout(7000);     // extend timeout
-
-    describe("login()", function () {
-        it("logined", function (done) {
-            var url = 'localhost:' + config.server.port + '/api/login';
-            agent.post(url)
-                .send({
-                    password: "123",
-                    username: "name3"
-                })
-                .end((err, res) => {
-                    if (!err && !res.body.error)
-                        done()
-                });
-        })
-    });
 
 
     describe("getDevice()", function () {

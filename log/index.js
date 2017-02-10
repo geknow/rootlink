@@ -22,9 +22,9 @@ log4js.configure({
         }//日期文件格式
     ],
     replaceConsole: true,   //替换console.log
-    levels:{
+    levels: {
         dateFileLog: 'debug',
-        console: DEBUG ? 'debug': 'error'
+        console: DEBUG ? 'debug' : 'error'
     }
 });
 
@@ -34,6 +34,6 @@ var consoleLog = log4js.getLogger('console');
 //不同模式对应不同
 exports.logger = consoleLog;
 
-exports.use = function(app) {
-    app.use(log4js.connectLogger(dateFileLog, {level:'INFO', format:':method :url'}));
+exports.use = function (app) {
+    app.use(log4js.connectLogger(dateFileLog, {level: 'INFO', format: ':method :url'}));
 };

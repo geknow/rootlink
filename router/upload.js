@@ -13,6 +13,7 @@ var config = require('../config/config');
 var url = require('url');
 var Course = db.models.Course;
 var responser = require('../lib/responser');
+let logger = require("../log/index").logger;
 
 var uploadDir = path.join('/home/user/static');//同时创建public和upload会出错，得先有public文件夹
 
@@ -49,7 +50,7 @@ var upload = multer({
 module.exports = (router) => {
 
     router.post('/admin/course/upload', upload.single('course'), async(ctx, next) => {
-        console.log('/course/upload');
+        logger.debug('/course/upload');
         var newname = ctx.req.file.filename;
         var size = ctx.req.file.size;
         size = size / 1E+6;

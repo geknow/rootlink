@@ -7,7 +7,7 @@ PROJECT = "node project"
 NODE_E = "development"
 #入口js文件
 MAIN =  ./babel.app.js
-TESTS=./test.js
+TESTS= ./test/router/*.js
 MIGRATE = ./model/migrate.js
 TIMEOUT = 10000
 
