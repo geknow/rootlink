@@ -32,7 +32,7 @@ log4js.configure({
 var dateFileLog = log4js.getLogger('dateFileLog');
 var consoleLog = log4js.getLogger('console');
 //不同模式对应不同
-exports.logger = consoleLog;
+exports.logger = dateFileLog;
 
 exports.use = function (app) {
     app.use(log4js.connectLogger(dateFileLog, {level: 'INFO', format: ':method :url'}));

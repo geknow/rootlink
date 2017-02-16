@@ -37,7 +37,7 @@ app.use(async(ctx, next) => {
             ctx.body = await render("index", {});
         }
     } catch (e) {
-        //logger.error(e);//在生产模式下把错误输入到文件中
+        logger.error(e);//在生产模式下把错误输入到文件中
         responser.catchErr(ctx, e);
     }
 });
