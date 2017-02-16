@@ -46,7 +46,7 @@ app.use(async(ctx, next) => {
                     ctx.body.cookies = {
                         'LoginToken': {
                             value: ctx.currentUser.LoginToken,
-                            expires: new Date(+1000 * 60 * 30),
+                            expires: new Date(new Date().getTime() +1000 * 60 * 30),
                             path: url,
                         }
                     }
