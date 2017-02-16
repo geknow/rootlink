@@ -18,20 +18,21 @@ module.exports = {
      * @param user
      * @param ifKeep
      */
-    login: (ctx, user, ifKeep) => {
-        const LoginToken = hash().update(user.getDataValue('id').toString()).digest('hex');
-        const username = user.getDataValue('username');
+    login: (ctx, user) => {
+        const LoginToken = hash().update(user['id'].toString()).digest('hex');
+        const username = user['username'];
         ctx.currentUser = {
             username: username,
-            id: user.getDataValue('id')
+            id: user["id"],
+            LoginToken
         };
         ctx.cookies.set(cookieName, LoginToken, {
-            maxAge: ifKeep ? 7 * 24 * 3600 * 1000 : 0
+            maxAge: 30* 60 * 1000//30分钟过期
         });
         
-        let newUer = clone(user.dataValues);
-        delete newUer.password;//删除密码
-        cache.set(LoginToken, JSON.stringify(newUer));
+        // let newUer = clone(user.dataValues);
+        // delete newUer.password;//删除密码
+        cache.set(LoginToken, JSON.stringify(user));
         return LoginToken;
     },
     logout: async(ctx) => {
@@ -53,6 +54,8 @@ module.exports = {
         try {
             var token = ctx.cookies.get(cookieName);
             var user = cache.jget(token);
+            ctx.currentUser = user;
+            ctx.currentUser.LoginToken = token;
         } catch (e) {
             error = e;
         }

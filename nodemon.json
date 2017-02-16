@@ -1,6 +1,6 @@
 {
   "verbose": true,
-  "ignore": ["test/*","public","views"],
+  "ignore": ["test/*","public","views","log"],
   "execMap": {
     "rb": "ruby",
     "pde": "processing --sketch={{pwd}} --run"

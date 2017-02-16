@@ -2,6 +2,7 @@
  * Created by webhugo on 12/26/16.
  */
 var common = require('./common');
+var ip = common.ip;
 
 var evalString = '';
 Object.keys(common).forEach((e,i) => {
@@ -19,9 +20,9 @@ describe('Device', function () {
 
     describe("getDevice()", function () {
         it("getDevice", function (done) {
-            agent.get('localhost:' + config.server.port + '/api/device/all')
-
+            agent.get(ip + ":" + config.server.port + '/api/device/all')
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error)
                         done();
                 })
@@ -31,12 +32,13 @@ describe('Device', function () {
 
     describe("addDevice()", function () {
         it("addDevice", function (done) {
-            agent.post('localhost:' + config.server.port + '/api/device/add')
+            agent.post(ip + ":" + config.server.port + '/api/device/add')
                 .send({
                     name: "1",
                     label: "1"
                 })
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error)
                         done();
                     token = res.body.msg.token;
@@ -47,11 +49,12 @@ describe('Device', function () {
 
     describe("delDevice()", function () {
         it("delDevice", function (done) {
-            agent.post('localhost:' + config.server.port + '/api/device/delete')
+            agent.post(ip + ":"  + config.server.port + '/api/device/delete')
                 .send({
                     token: token
                 })
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error)
                         done();
                 })

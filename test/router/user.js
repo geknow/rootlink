@@ -29,6 +29,7 @@ describe('User', function () {
                     type: 1
                 })
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error) {
                         key = res.body.msg.key;
                         done();
@@ -42,6 +43,7 @@ describe('User', function () {
             let url = 'localhost:' + config.server.port + '/api/validate/email/' + key;
             agent.get(url)
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error)
                         done();
                 });
@@ -57,6 +59,7 @@ describe('User', function () {
                     username: u
                 })
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error)
                         done();
                 });

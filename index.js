@@ -19,7 +19,6 @@ app.use(async(ctx, next) => {
     try {
         let url = ctx.request.url;
         if (/\/api/.test(url)) {//自定义路由
-            let url = ctx.request.url;
             //todo: 权限过滤
             if (/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url)
                 || /\/sensor/.test(url) || /\/admin/.test(url) || /\/forum/.test(url)) {
@@ -27,6 +26,8 @@ app.use(async(ctx, next) => {
                 if (!user) {
                     ctx.redirect("/");
                     return;
+                }else{
+                    auth.login(ctx,user);//延长过期时间
                 }
             }
         }
@@ -35,6 +36,22 @@ app.use(async(ctx, next) => {
         if (ctx.body === undefined) {//当和自定义路由不匹配时,而且不是静态文件请求时,返回index.html
             logger.debug("not found");
             ctx.body = await render("index", {});
+        }else{
+
+            let url = ctx.request.url;
+            if (/\/api/.test(url)) {//自定义路由
+                //todo: 权限过滤
+                if (/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url)
+                    || /\/sensor/.test(url) || /\/admin/.test(url) || /\/forum/.test(url)) {
+                    ctx.body.cookies = {
+                        'LoginToken': {
+                            value: ctx.currentUser.LoginToken,
+                            expires: new Date(+1000 * 60 * 30),
+                            path: url,
+                        }
+                    }
+                }
+            }
         }
     } catch (e) {
         logger.error(e);//在生产模式下把错误输入到文件中
