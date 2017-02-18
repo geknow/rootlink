@@ -217,3 +217,21 @@ Response:{
     msg: {count: }
 }
 ```
+
+###验证登录接口:
+**/loginValidate**
+Method:GET
+```json
+RequestData:{
+
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {loginStatus: true || false }
+}
+```
+

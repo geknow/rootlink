@@ -23,12 +23,22 @@ describe('First', function () {
                     username: "name3"
                 })
                 .end((err, res) => {
-                    console.log(res.body);
                     if (!err && !res.body.error)
                         done()
                 });
         })
     });
+
+    describe("loginValidate()", function () {
+        it("loginValidated", function (done) {
+            var url = ip + ":" + config.server.port + '/api/loginValidate';
+            agent.get(url)
+                .end((err, res) => {
+                    console.log(res.body);
+                    done();
+                })
+        })
+    })
 
 });
 

@@ -6,6 +6,7 @@ const helper = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 const logger = require("../../log/index").logger;
+const auth = require("../../helper/auth");
 
 module.exports = router => {
 
@@ -50,4 +51,17 @@ module.exports = router => {
         let user = await auth.user(ctx);
         responser.success(ctx,user);
     });
+
+    router.get("/loginValidate", async(ctx,next) => {
+        logger.debug("/loginValidate");
+        let user = ctx.currentUser || (await auth.user(ctx));
+       if(user){
+           responser.success(ctx,{
+               loginStatus: true
+           })
+       }else{
+           responser.success(ctx,{})
+           loginStatus: false
+       }
+    })
 };
