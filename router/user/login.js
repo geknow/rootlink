@@ -41,6 +41,12 @@ module.exports = router => {
             if ( user && (new Date() - user.expireTime) / D > 30) {
                 await user.destroy();
                 user = null;
+            }else if(user){
+                user = await db.models.User.findOne({
+                    where: {
+                        id : user.userId
+                    }
+                })
             }
 
         } else if (body.username) {
@@ -74,7 +80,8 @@ module.exports = router => {
                 //产生新的token
                 await db.models.RememberPass.create({
                     token: Token,
-                    expireTime: new Date()
+                    expireTime: new Date(),
+                    userId: user.id
                 });
                 //旧的token删除
                 if (BodyToken) {

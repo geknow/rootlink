@@ -55,6 +55,7 @@ module.exports = router => {
             error = e;
         }
         if (error) {
+            console.log(error);
             responser.catchErr(ctx, "参数缺失");
             return;
         } else

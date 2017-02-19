@@ -13,7 +13,8 @@ module.exports = function (sequelize, DataTypes) {
 
     var RememberPass = sequelize.define('RememberPass', {
         token : shortDataTypes.String(),
-        expireTime: shortDataTypes.Date()
+        expireTime: shortDataTypes.Date(),
+        userId: shortDataTypes.Int()
     }, {
         timestamps: true,
         associate: function (models) {

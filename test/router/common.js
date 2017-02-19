@@ -5,8 +5,8 @@ console.warn("在test之前，把config目录下的config.js 的isRender改为fa
 const config = require('./../../config/config');
 var should = require('should');
 let agent = require('superagent').agent();//保存cookie
-let ip = require("../../config/config").server.ip;
-// let ip = "localhost";
+// let ip = require("../../config/config").server.ip;
+let ip = "localhost";
 let token ;
 
 describe('First', function () {
