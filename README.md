@@ -24,7 +24,7 @@ Response:{
  *   500-Internal Server Error
 
 #用户模块
-##登陆和注册
+##登陆和注册和退出
 ###注册接口:
 **/register**
 Method:POST
@@ -50,7 +50,15 @@ Method:POST
 RequestData:{
      username: STRING,
      email: STRING//二者必须至少有其一
+     
      password: STRING
+     remenberMe: boolean //(false)
+}
+或者
+RequestData:{
+     token: STRING
+     
+     remenberMe: boolean //(默认true)
 }
 ```
 响应格式:
@@ -59,7 +67,46 @@ cookies:LoginToken=......................
 Response:{
     error: STRING,
     status: INTERGER,
-    msg: {LoginToken : STRING}
+    msg: {
+    	LoginToken : STRING,
+    	token: STRING //选择记住密码时不为null,最多记住30天,但是每次登录都会更新token
+    }
+}
+```
+
+###退出登录接口:
+**/logout**
+Method:POST
+```json
+RequestData:{
+    token: STRING //null(allow)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {
+    	loginStatus: false
+    }
+}
+```
+
+###验证登录接口:
+**/loginValidate**
+Method:GET
+```json
+RequestData:{
+	
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {loginStatus: true || false }
 }
 ```
 
@@ -218,20 +265,5 @@ Response:{
 }
 ```
 
-###验证登录接口:
-**/loginValidate**
-Method:GET
-```json
-RequestData:{
 
-}
-```
-响应格式:
-```json
-Response:{
-    error: STRING,
-    status: INTERGER,
-    msg: {loginStatus: true || false }
-}
-```
 

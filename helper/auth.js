@@ -29,16 +29,20 @@ module.exports = {
         ctx.cookies.set(cookieName, LoginToken, {
             maxAge: 30* 60 * 1000//30分钟过期
         });
-        
-        // let newUer = clone(user.dataValues);
-        // delete newUer.password;//删除密码
+
+
         cache.set(LoginToken, JSON.stringify(user));
         return LoginToken;
     },
     logout: async(ctx) => {
+        let token = ctx.cookies.get(cookieName);
+        if(token === null || token === undefined)
+            return;
         ctx.cookies.set(cookieName, null, {
-            expires: new Date('2000-1-1')
+            maxAge: 0
         });
+        ctx.currentUser = null;
+        await cache.del(token);
     },
     getUsername: async loginToken=> {
         let username = await cache.get(loginToken);

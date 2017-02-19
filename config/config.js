@@ -11,8 +11,10 @@ let config = {
     db: {
         name: 'postgres',
         username: 'postgres',
-        host: "118.89.28.157",
-        pwd: 'oureda',
+        // host: "118.89.28.157",
+        host:"127.0.0.1",
+        // pwd: 'oureda',
+        pwd: 'csc',
         database: 'yeelink',
         toString() {
             return `${this.name}://${this.username}:${this.pwd}@${this.host}/${this.database}`;
@@ -40,6 +42,7 @@ let config = {
         host: '127.0.0.1',
         pwd: ''
     },
+    tokenExpire: 30 ,//数据库token过期时间30天
     root: __dirname + '/../',
     server: {
         ip: '118.89.28.157',
@@ -85,7 +88,7 @@ let config = {
     sensorsValue: [1, 2, 3, 4]
 };
 
-if (process.env.NODE_ENV == 'development') {
+if (process.env.NODE_ENV == 'production') {
     config.db.host = '118.89.28.157';
     config.server.ip = '127.0.0.1';
     config.server.port = '6743';
