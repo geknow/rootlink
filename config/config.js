@@ -11,10 +11,10 @@ let config = {
     db: {
         name: 'postgres',
         username: 'postgres',
-        // host: "118.89.28.157",
-        host:"127.0.0.1",
-        // pwd: 'oureda',
-        pwd: 'csc',
+        host: "118.89.28.157",
+        // host:"127.0.0.1",
+        pwd: 'oureda',
+        // pwd: 'csc',
         database: 'yeelink',
         toString() {
             return `${this.name}://${this.username}:${this.pwd}@${this.host}/${this.database}`;
