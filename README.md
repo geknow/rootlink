@@ -1,12 +1,31 @@
-#url : 
-#port : 
+## 部署前端流程
 
-###注意：
-*所有路由，除了静态文件的请求，都需要加上/api,例如注册: /api/register*
-*修改了登录注册的路由*
-*博客的添加路由改变*
+### clone 前端代码
+将前端代码 [rootlink](https://github.com/Means88/rootlink) 放于项目同级目录，如
+```
+- code
+|- yeelink
+|- rootlink
+```
 
-#通用响应格式
+### 执行脚本
+在前端目录下，执行 `npm run release`
+
+### 其他情况
+代码不在同级目录的，执行 `npm run release -- -b [后端代码路径]`。
+脚本会判断两个项目的 `package.json` 中的 `version` 属性，如果后端代码不能兼容前端代码（[语义化版本号](http://semver.org/lang/zh-CN/)），会发出警告。
+在开发阶段，`version` 一直使用 `1.0.0`，在发行之后，根据语义化版本号发行版本。
+
+
+# url :
+# port :
+
+### 注意：
+* 所有路由，除了静态文件的请求，都需要加上/api,例如注册: /api/register*
+* 修改了登录注册的路由*
+* 博客的添加路由改变*
+
+# 通用响应格式
 ```json
 Response:{
     error: STRING,
@@ -23,9 +42,9 @@ Response:{
  *   5xx-Server Error
  *   500-Internal Server Error
 
-#用户模块
-##登陆和注册和退出
-###注册接口:
+# 用户模块
+## 登陆和注册和退出
+### 注册接口:
 **/register**
 Method:POST
 ```json
@@ -43,7 +62,8 @@ Response:{
     msg: {link : "邮箱验证链接"}
 }
 ```
-###登录接口:
+
+### 登录接口:
 **/login**
 Method:POST
 ```json
@@ -74,7 +94,7 @@ Response:{
 }
 ```
 
-###退出登录接口:
+### 退出登录接口:
 **/logout**
 Method:POST
 ```json
@@ -93,7 +113,7 @@ Response:{
 }
 ```
 
-###验证登录接口:
+### 验证登录接口:
 **/loginValidate**
 Method:GET
 ```json
@@ -110,8 +130,8 @@ Response:{
 }
 ```
 
-#公告模块
-###获取接口:
+# 公告模块
+### 获取接口:
 **/blog/index**
 Method:GET
 ```json
@@ -129,7 +149,7 @@ Response:{
 }
 ```
 
-###添加接口:
+### 添加接口:
 **/admin/blog/add**
 **管理员才有的功能：测试账号name3 密码123**
 Method:POST
@@ -148,8 +168,8 @@ Response:{
 ```
 
 
-#设备模块
-###获取接口:
+# 设备模块
+### 获取接口:
 **/device/all**
 Method:GET
 ```json
@@ -166,7 +186,7 @@ Response:{
 }
 ```
 
-###添加接口:
+### 添加接口:
 **/device/add**
 Method:POST
 ```json
@@ -185,7 +205,7 @@ Response:{
 }
 ```
 
-###删除接口:
+### 删除接口:
 **/device/delete**
 Method:POST
 ```json
@@ -204,8 +224,8 @@ Response:{
 
 
 
-#传感器模块
-###获取接口:
+# 传感器模块
+### 获取接口:
 **/sensor/all**
 Method:GET
 ```json
@@ -223,7 +243,7 @@ Response:{
 ```
 
 
-###添加接口:
+### 添加接口:
 **/sensor/add**
 Method:POST
 ```json
@@ -248,7 +268,7 @@ Response:{
 }
 ```
 
-###删除接口:
+### 删除接口:
 **/sensor/add**
 Method:POST
 ```json
