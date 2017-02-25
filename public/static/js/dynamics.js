@@ -1,1 +1,0 @@
-var father=document.getElementById("container_l"),son=document.getElementById("article_content");father.style.height=son.offsetHeight+140+"px";
