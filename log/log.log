@@ -1,0 +1,305 @@
+[2017-02-16 13:26:08.691] [DEBUG] dateFileLog - postgres://postgres:oureda@118.89.28.157/yeelink
+[2017-02-16 13:26:36.290] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:26:36.311] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:31:01.930] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:31:01.932] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:49:40.274] [DEBUG] dateFileLog - postgres://postgres:oureda@118.89.28.157/yeelink
+[2017-02-16 13:49:41.695] [DEBUG] dateFileLog - /
+[2017-02-16 13:49:41.702] [DEBUG] dateFileLog - not found
+[2017-02-16 13:49:41.875] [DEBUG] dateFileLog - /
+[2017-02-16 13:49:41.876] [DEBUG] dateFileLog - not found
+[2017-02-16 13:49:41.977] [DEBUG] dateFileLog - /
+[2017-02-16 13:49:41.978] [DEBUG] dateFileLog - not found
+[2017-02-16 13:49:42.079] [DEBUG] dateFileLog - /
+[2017-02-16 13:49:42.081] [DEBUG] dateFileLog - not found
+[2017-02-16 13:49:44.040] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:49:44.057] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:49:44.138] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 13:49:44.194] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 13:49:44.256] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 13:49:44.305] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 13:49:44.368] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 13:49:44.426] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 13:50:26.609] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:50:26.611] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:51:44.903] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:51:44.904] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:54:56.915] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:54:56.918] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:55:07.427] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:55:07.441] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:55:42.503] [DEBUG] dateFileLog - postgres://postgres:oureda@118.89.28.157/yeelink
+[2017-02-16 13:56:11.738] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:56:11.744] [DEBUG] dateFileLog - /api/login
+[2017-02-16 13:58:58.091] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 13:58:58.106] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:01:47.208] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 14:01:47.209] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:05:53.291] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 14:05:53.292] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:11:23.524] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 14:11:23.525] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:11:43.476] [DEBUG] dateFileLog - /api/login/
+[2017-02-16 14:11:43.478] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:18:57.898] [DEBUG] dateFileLog - /weixin?signature=b0d7a01619be1c67a04be3328b0ad68dc2765f13&timestamp=1487225937&nonce=1018494018&openid=os_wWwBz-W5p638Zq7WF1nw8BW_g
+[2017-02-16 14:18:57.899] [DEBUG] dateFileLog - not found
+[2017-02-16 14:18:59.304] [DEBUG] dateFileLog - /weixin/lock?code=021LMKg40XzsMF153Ri40UdNg40LMKgf&state=123
+[2017-02-16 14:18:59.313] [DEBUG] dateFileLog - not found
+[2017-02-16 14:18:59.588] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.css
+[2017-02-16 14:18:59.642] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:19:08.248] [DEBUG] dateFileLog - /weixin/lock
+[2017-02-16 14:19:08.250] [DEBUG] dateFileLog - not found
+[2017-02-16 14:19:08.385] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:19:12.000] [DEBUG] dateFileLog - /weixin?signature=7d917ffec3fa327ecd8b585f8024ae33701e6f3e&timestamp=1487225951&nonce=1408505401&openid=os_wWwBz-W5p638Zq7WF1nw8BW_g
+[2017-02-16 14:19:12.001] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:10.401] [DEBUG] dateFileLog - /db
+[2017-02-16 14:21:10.402] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:10.907] [DEBUG] dateFileLog - /admin/web
+[2017-02-16 14:21:10.908] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:10.956] [DEBUG] dateFileLog - /db/phpMyAdmin
+[2017-02-16 14:21:10.957] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:20.184] [DEBUG] dateFileLog - /mysql/dbadmin
+[2017-02-16 14:21:20.185] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:20.190] [DEBUG] dateFileLog - /admin/web
+[2017-02-16 14:21:20.191] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:20.201] [DEBUG] dateFileLog - /db/phpMyAdmin
+[2017-02-16 14:21:20.202] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:20.223] [DEBUG] dateFileLog - /program
+[2017-02-16 14:21:20.224] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:20.263] [DEBUG] dateFileLog - /db
+[2017-02-16 14:21:20.265] [DEBUG] dateFileLog - not found
+[2017-02-16 14:21:20.271] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:21:20.284] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:21:20.321] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:21:20.353] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:21:20.361] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:22:25.174] [DEBUG] dateFileLog - /admin/db
+[2017-02-16 14:22:25.175] [DEBUG] dateFileLog - not found
+[2017-02-16 14:22:25.275] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:24:22.212] [DEBUG] dateFileLog - /db/myadmin
+[2017-02-16 14:24:22.214] [DEBUG] dateFileLog - not found
+[2017-02-16 14:24:22.408] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:26:59.099] [DEBUG] dateFileLog - /admin/phpmyadmin
+[2017-02-16 14:26:59.100] [DEBUG] dateFileLog - not found
+[2017-02-16 14:26:59.260] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:44:34.107] [DEBUG] dateFileLog - /api/register
+[2017-02-16 14:50:34.213] [DEBUG] dateFileLog - /database
+[2017-02-16 14:50:34.214] [DEBUG] dateFileLog - not found
+[2017-02-16 14:50:34.496] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 14:54:15.228] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:54:15.231] [DEBUG] dateFileLog - /api/login
+[2017-02-16 14:54:15.318] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 14:54:15.375] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 14:54:15.451] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 14:54:15.517] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 14:54:15.583] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 14:54:15.650] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 14:58:06.138] [DEBUG] dateFileLog - /
+[2017-02-16 14:58:06.140] [DEBUG] dateFileLog - not found
+[2017-02-16 15:08:26.134] [DEBUG] dateFileLog - /mysql/admin
+[2017-02-16 15:08:26.135] [DEBUG] dateFileLog - not found
+[2017-02-16 15:08:26.149] [DEBUG] dateFileLog - /shopdb
+[2017-02-16 15:08:26.150] [DEBUG] dateFileLog - not found
+[2017-02-16 15:08:26.284] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:08:26.322] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:13:44.056] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:13:44.059] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:13:44.128] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:13:44.176] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:13:44.230] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:13:44.287] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:13:44.344] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:13:44.397] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:15:03.511] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:15:03.512] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:15:03.578] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:15:03.636] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:15:03.685] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:15:04.040] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:15:04.098] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:15:04.161] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:16:16.542] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:16:16.544] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:16:16.664] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:16:16.724] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:16:16.863] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:16:16.942] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:16:17.016] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:16:17.157] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:20:07.118] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:20:07.119] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:20:07.191] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:20:07.254] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:20:07.306] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:20:07.362] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:20:07.414] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:20:07.475] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:20:21.826] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:20:21.827] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:20:21.905] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:20:21.962] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:20:22.018] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:20:22.069] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:20:22.125] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:20:22.176] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:20:41.579] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:20:41.580] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:20:41.682] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:20:41.737] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:20:41.792] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:20:41.890] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:20:41.948] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:20:42.022] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:21:17.246] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:21:17.247] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:21:17.329] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:21:17.383] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:21:17.437] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:21:17.490] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:21:17.540] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:21:17.607] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:21:31.780] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:21:31.781] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:21:31.848] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:21:31.898] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:21:31.946] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:21:31.992] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:21:32.042] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:21:32.088] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:21:46.066] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:21:46.066] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:21:46.126] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:21:46.178] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:21:46.234] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:21:46.285] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:21:46.335] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:21:46.386] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:22:13.353] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:22:13.354] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:22:13.418] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:22:13.466] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:22:13.512] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:22:13.566] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:22:13.622] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:22:13.678] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:22:47.955] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:22:47.955] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:22:48.023] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:22:48.074] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:22:48.126] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:22:48.185] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:22:48.237] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:22:48.299] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:22:57.751] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:22:57.751] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:22:57.814] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:22:57.860] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:22:57.918] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:22:57.964] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:22:58.016] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:22:58.068] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:23:12.037] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:23:12.040] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:23:12.116] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:23:12.166] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:23:12.216] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:23:12.268] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:23:12.322] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:23:12.370] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:28:55.050] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:28:55.051] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:28:55.132] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:28:55.188] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:28:55.243] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:28:55.294] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:28:55.347] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:28:55.397] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:29:47.174] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:29:47.175] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:29:47.257] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:29:47.312] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:29:47.367] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:29:47.419] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:29:47.472] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:29:47.521] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:30:33.479] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:30:33.479] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:30:33.543] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:30:33.901] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:30:33.972] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:30:47.625] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:30:47.626] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:30:47.693] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:30:47.754] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:30:47.812] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:32:30.221] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:32:30.228] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:32:30.301] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:32:30.365] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:32:30.426] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:33:16.575] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:33:16.576] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:33:16.643] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:33:16.994] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:33:17.061] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:34:12.827] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:34:12.827] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:34:12.900] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:34:12.966] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:34:13.023] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:34:18.661] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:34:18.662] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:34:18.723] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:34:18.776] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:34:18.831] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:34:18.889] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:34:18.942] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:34:19.002] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:36:04.697] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:36:04.700] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:36:04.783] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:36:04.852] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:36:04.903] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:36:04.956] [DEBUG] dateFileLog - /api/sensor/all?deviceId=1
+[2017-02-16 15:36:05.007] [DEBUG] dateFileLog - /api/sensor/add
+[2017-02-16 15:36:05.056] [DEBUG] dateFileLog - /api/sensor/delete
+[2017-02-16 15:37:45.621] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:37:45.621] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:37:45.690] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:37:45.741] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:37:45.804] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:37:52.459] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:37:52.459] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:37:52.529] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:37:52.589] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:37:52.643] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:38:08.183] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:38:08.183] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:38:08.253] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:38:08.306] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:38:08.367] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:38:21.240] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:38:21.241] [DEBUG] dateFileLog - /api/login
+[2017-02-16 15:38:21.314] [DEBUG] dateFileLog - /api/device/all
+[2017-02-16 15:38:21.668] [DEBUG] dateFileLog - /api/device/add
+[2017-02-16 15:38:21.726] [DEBUG] dateFileLog - /api/device/delete
+[2017-02-16 15:45:02.654] [DEBUG] dateFileLog - /
+[2017-02-16 15:45:02.655] [DEBUG] dateFileLog - not found
+[2017-02-16 15:45:12.145] [DEBUG] dateFileLog - /
+[2017-02-16 15:45:12.145] [DEBUG] dateFileLog - not found
+[2017-02-16 15:45:12.170] [DEBUG] dateFileLog - /
+[2017-02-16 15:45:12.171] [DEBUG] dateFileLog - not found
+[2017-02-16 15:45:12.178] [DEBUG] dateFileLog - /
+[2017-02-16 15:45:12.179] [DEBUG] dateFileLog - not found
+[2017-02-16 15:45:12.250] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:45:12.290] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:45:12.337] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:46:51.146] [DEBUG] dateFileLog - /sensor/all
+[2017-02-16 15:46:51.147] [DEBUG] dateFileLog - not found
+[2017-02-16 15:46:51.308] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:49:43.163] [DEBUG] dateFileLog - /
+[2017-02-16 15:49:43.164] [DEBUG] dateFileLog - not found
+[2017-02-16 15:49:43.170] [DEBUG] dateFileLog - /admin/sqladmin
+[2017-02-16 15:49:43.171] [DEBUG] dateFileLog - not found
+[2017-02-16 15:49:43.278] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
+[2017-02-16 15:49:43.285] [DEBUG] dateFileLog - /static/index-a29a527f216e6b6c6c53.js
