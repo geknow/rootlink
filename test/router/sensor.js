@@ -19,7 +19,7 @@ describe('Sensor', function () {
 
     describe("getSensor()", function () {
         it("getSensor", function (done) {
-            agent.get(ip + ":" + config.server.port + '/api/sensor/all?deviceId=1')
+            agent.get(ip + ":" + config.server.port + '/api/sensor/all?deviceId=1&key=4hl0fe')
                 .end((err, res) => {
                     console.log(res.body);
                     if (!err && !res.body.error)
@@ -30,7 +30,7 @@ describe('Sensor', function () {
 
     describe("addSensor()", function () {
         it("addSensor", function (done) {
-            agent.post(ip + ":" + config.server.port + '/api/sensor/add')
+            agent.post(ip + ":" + config.server.port + '/api/sensor/add?key=4hl0fe')
                 .send({
                     name: "数值类型传感器",
                     label: "1",
@@ -48,7 +48,7 @@ describe('Sensor', function () {
 
     describe("delSensor()", function () {
         it("delSensor", function (done) {
-            agent.post(ip + ":" + config.server.port + '/api/sensor/delete')
+            agent.post(ip + ":" + config.server.port + '/api/sensor/delete?key=4hl0fe')
                 .send({
                     sensorId: sensorId
                 })

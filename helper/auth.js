@@ -55,9 +55,10 @@ module.exports = {
      */
     user: async(ctx) => {
         let error;
+        let user;
         try {
             var token = ctx.cookies.get(cookieName);
-            var user = cache.jget(token);
+            user = await cache.jget(token);
             ctx.currentUser = user;
             ctx.currentUser.LoginToken = token;
         } catch (e) {

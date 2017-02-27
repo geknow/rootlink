@@ -26,7 +26,8 @@ app.use(async(ctx, next) => {
                 || /\/sensor/.test(url) || /\/admin/.test(url) || /\/forum/.test(url)) {
                 let body = ctx.request.body;
                 let query = ctx.request.query;
-                let key = (body && body.key)  || (query && query.key);//为了嵌入式硬件
+                let key = (query && query.key) || (body && body.key);//为了嵌入式硬件
+
 
                 let user = ctx.currentUser || (await auth.user(ctx)) || (await User.findOne({where: {key}}));
                 if (!user) {
