@@ -77,8 +77,8 @@ RequestData:{
 }
 或者
 RequestData:{
-     token: STRING
-     
+     token: STRING //会过期，用于前端记住密码选项
+     key: STRING， //用于嵌入式设备的权限登录，此key可通过/user/updateKey修改，否则永不过期
      remenberMe: boolean //(默认true)
 }
 ```
@@ -128,6 +128,23 @@ Response:{
     error: STRING,
     status: INTERGER,
     msg: {loginStatus: true || false }
+}
+```
+
+### 更改key接口: 用于嵌入式设备
+**/user/updateKey**
+Method:GET
+```json
+RequestData:{
+
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {key:STRING}
 }
 ```
 
@@ -281,6 +298,83 @@ Response:{
     msg: {count: }
 }
 ```
+
+
+
+# 触发器模块
+### 某触发器状态接口:
+**/trigger/status**
+Method:GET
+```json
+RequestData:{
+     triggerId: INT //allowNull(false),
+
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {status:}
+}
+```
+
+### 添加触发器接口:
+**/trigger/add**
+Method:GET
+```json
+RequestData:{
+     name: STRING //allowNull(false)
+     status: INT(只能是1 或者 0)，默认是0
+
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {trigger:}
+}
+```
+
+
+### 删除触发器接口:
+**/trigger/delete**
+Method:GET
+```json
+RequestData:{
+     triggerId:
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
+}
+```
+
+### 更改触发器状态接口:
+**/trigger/delete**
+Method:GET
+```json
+RequestData:{
+     triggerId:
+     status: INT//只能是1 或者 0
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {status:}
+}
+```
+
 
 
 

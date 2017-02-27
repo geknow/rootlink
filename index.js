@@ -23,7 +23,7 @@ app.use(async(ctx, next) => {
         if (/\/api/.test(url)) {//自定义路由
             //todo: 权限过滤
             if (/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url)
-                || /\/sensor/.test(url) || /\/admin/.test(url) || /\/forum/.test(url)) {
+                || /\/sensor/.test(url) || /\/admin/.test(url) || /\/forum/.test(url) || /\/trigger/.test(url)) {
                 let body = ctx.request.body;
                 let query = ctx.request.query;
                 let key = (query && query.key) || (body && body.key);//为了嵌入式硬件

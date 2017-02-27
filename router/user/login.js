@@ -9,6 +9,7 @@ const logger = require("../../log/index").logger;
 const auth = require("../../helper/auth");
 const utilx = require("../../lib/utilx");
 const expireTime = require("../../config/config").tokenExpire;
+const User = db.models.User;
 const RememberPass = db.models.RememberPass;
 // token过期时间30天
 const D = 86400000;
@@ -38,13 +39,13 @@ module.exports = router => {
                 }
             });
             //token已经有30天,删除token
-            if ( user && (new Date() - user.expireTime) / D > 30) {
+            if (user && (new Date() - user.expireTime) / D > 30) {
                 await user.destroy();
                 user = null;
-            }else if(user){
+            } else if (user) {
                 user = await db.models.User.findOne({
                     where: {
-                        id : user.userId
+                        id: user.userId
                     }
                 })
             }
@@ -94,9 +95,11 @@ module.exports = router => {
 
                 token = Token;
             }
+
             responser.success(ctx, {
                 token: token || BodyToken,
-                LoginToken
+                LoginToken,
+                key: user.key || null
             });
             //todo: 
             EvenImit.emit("user_login");
@@ -144,5 +147,33 @@ module.exports = router => {
         responser.success(ctx, {
             loginStatus: false
         });
+    });
+
+    router.post("/user/updateKey", async(ctx, next)=> {
+        logger.debug("/updateKey");
+        let error;
+        let key = utilx.getRandomString(6);
+
+        try {
+            await User.update(
+                {
+                    key: key
+                },
+                {
+                    where: {
+                        id: ctx.currentUser.id
+                    }
+                }
+            )
+        }catch (e){
+            error = e;
+        }
+        if(error){
+            responser.catchErr(ctx,error);
+        }else{
+            responser.success(ctx,{
+                key
+            });
+        }
     })
 };
