@@ -10,6 +10,7 @@ var config = require('../config/config');
 var url = require('url');
 
 
+
 function *addUser() {
     for (var i = 0; i < 5; i++) {
         var user = {
@@ -18,7 +19,8 @@ function *addUser() {
             email: i + "@qq.com",
             desc: "一些介绍",
             type: i % 2,
-            avatar: '/default_avatar.jpg'
+            avatar: '/default_avatar.jpg',
+            key: utilx.getRandomString(6)
         };
         yield db.models.User.create(user);
     }

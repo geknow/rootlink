@@ -64,18 +64,18 @@ module.exports = router => {
 
     router.post("/device/delete", async(ctx, next) => {
         let body = ctx.request.body;
-        let token = body.token;
+        let deviceId = body.deviceId;
         let count;
         let error;
         try {
             count = await Device.destroy({
                 where: {
-                    token: token
+                    id: deviceId
                 }
             });
             await Sensor.destroy({
                 where: {
-                    DeviceId: null
+                    DeviceId: deviceId
                 }
             })
         } catch (e) {
@@ -85,7 +85,7 @@ module.exports = router => {
             responser.catchErr(ctx, error);
             return;
         } else if (!count) {
-            responser.reject(ctx, "token 错误");
+            responser.reject(ctx, "deviceId 错误");
             return;
         }
         responser.success(ctx, count);

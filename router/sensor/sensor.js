@@ -7,6 +7,7 @@ const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 const config = require('../../config/config');
+const type = require("./../../name.json").type;
 
 
 module.exports = router => {
@@ -20,13 +21,6 @@ module.exports = router => {
                     DeviceId: deviceId
                 }
             });
-            sensors.forEach((sensor) => {
-                config.sensorsValue.forEach((i) => {
-                    if (sensor["value" + i])
-                        return;
-                    delete sensor["value" + i];
-                })
-            })
         } catch (e) {
             error = e;
         }
@@ -40,18 +34,22 @@ module.exports = router => {
     router.post("/sensor/add", async(ctx, next) => {
         let body = ctx.request.body;
         let error;
+        let ok = false;
+        type.forEach((name) => {
+            if (name == body.name)
+                ok = true;
+        });
+        if (!ok) {
+            responser.catchErr(ctx, "类型错误");
+            return;
+        }
         let sensor = {
             name: body.name,
             label: body.label,
-            value: body.value,
+            unit: body.name === "GPS" ? null : body.unit,
             description: body.description,
             DeviceId: body.deviceId
         };
-        config.sensorsValue.forEach((ele) => {
-            if (body["value" + ele]) {
-                sensor["value" + ele] = body["value" + ele];
-            }
-        });
         try {
             sensor = await Sensor.create(sensor)
         } catch (e) {
@@ -82,7 +80,7 @@ module.exports = router => {
             responser.catchErr(ctx, error);
             return;
         } else if (!count) {
-            responser.reject(ctx, "token 错误");
+            responser.reject(ctx, "sensorId 错误");
             return;
         }
         responser.success(ctx, count);

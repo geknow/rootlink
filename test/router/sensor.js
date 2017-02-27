@@ -32,8 +32,9 @@ describe('Sensor', function () {
         it("addSensor", function (done) {
             agent.post(ip + ":" + config.server.port + '/api/sensor/add')
                 .send({
-                    name: "1",
+                    name: "数值类型传感器",
                     label: "1",
+                    unit: "C",
                     deviceId: 2
                 })
                 .end((err, res) => {

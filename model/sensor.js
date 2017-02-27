@@ -6,13 +6,9 @@ var shortDataTypes = sequelizex.DataTypes;
 
 module.exports = function(sequelize,DataTypes) {
     return sequelize.define("Sensor", {
-        //温度传感器 湿度传感器 GPS
+        //数值类型传感器 GPS
         name : shortDataTypes.String(100,false),
-        value: shortDataTypes.Double(),//默认value
-        value1: shortDataTypes.String(40,true),
-        value2: shortDataTypes.String(40,true),
-        value3: shortDataTypes.String(40,true),
-        value4: shortDataTypes.String(40,true),
+        unit: shortDataTypes.String(10,true),//单位 数值类型的单位是用户自己设定，只有一个，例如 摄氏度，GPS类型是经纬度（固定）
         label: shortDataTypes.String(100,false),
         description: shortDataTypes.Text(true)
     }, {

@@ -13,6 +13,8 @@ const config = require('./config/config');
 var logger = require('./log/index').logger;
 const render = require("./instance/render");
 const auth = require("./helper/auth");
+const db = require("./model/index");
+const User = db.models.User;
 
 
 app.use(async(ctx, next) => {
@@ -22,12 +24,16 @@ app.use(async(ctx, next) => {
             //todo: 权限过滤
             if (/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url)
                 || /\/sensor/.test(url) || /\/admin/.test(url) || /\/forum/.test(url)) {
-                let user = ctx.currentUser || (await auth.user(ctx));
+                let body = ctx.request.body;
+                let query = ctx.request.query;
+                let key = (body && body.key)  || (query && query.key);//为了嵌入式硬件
+
+                let user = ctx.currentUser || (await auth.user(ctx)) || (await User.findOne({where: {key}}));
                 if (!user) {
                     ctx.redirect("/");
                     return;
-                }else{
-                    auth.login(ctx,user);//延长过期时间
+                } else {
+                    auth.login(ctx, user);//延长过期时间
                 }
             }
         }
@@ -36,7 +42,7 @@ app.use(async(ctx, next) => {
         if (ctx.body === undefined) {//当和自定义路由不匹配时,而且不是静态文件请求时,返回index.html
             logger.debug("not found");
             ctx.body = await render("index", {});
-        }else{
+        } else {
 
             let url = ctx.request.url;
             if (/\/api/.test(url)) {//自定义路由
@@ -46,7 +52,7 @@ app.use(async(ctx, next) => {
                     ctx.body.cookies = {
                         'LoginToken': {
                             value: ctx.currentUser.LoginToken,
-                            expires: new Date(new Date().getTime() +1000 * 60 * 30),
+                            expires: new Date(new Date().getTime() + 1000 * 60 * 30),
                             path: url,
                         }
                     }

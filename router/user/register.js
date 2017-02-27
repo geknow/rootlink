@@ -8,6 +8,7 @@ const indentifyCode = require("../../lib/identifyCode");
 const cache = require('../../instance/cache');
 const User = db.models.User;
 const logger = require("../../log/index").logger;
+const utilx = require("../../lib/utilx");
 
 module.exports = router=> {
     
@@ -48,7 +49,8 @@ module.exports = router=> {
             username: body.username,
             email: body.email,
             avatar: '', //todo : get update avatar
-            type: body.type === 'OurEDA_admin' ? 1 : 0
+            type: body.type === 'OurEDA_admin' ? 1 : 0,
+            key: utilx.getRandomString(6)
         };
         let key = indentifyCode.sendMail(JSON.stringify(user));
         // todo: 上面生成key是不存放密码的，在redis才存放密码

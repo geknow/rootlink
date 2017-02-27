@@ -6,10 +6,6 @@ var shortDataTypes = sequelizex.DataTypes;
 
 module.exports = function(sequelize,DataTypes) {
     return sequelize.define('Device',{
-        token: {
-            type: DataTypes.UUID,
-            defaultValue:DataTypes.UUIDV4
-        },
         name : shortDataTypes.String(100,false),
         label: shortDataTypes.String(100,false),
         description: shortDataTypes.Text(true)

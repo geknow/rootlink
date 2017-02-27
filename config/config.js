@@ -84,8 +84,7 @@ let config = {
     },
     videoUrl: {
         url: "http://210.30.100.4/static"
-    },
-    sensorsValue: [1, 2, 3, 4]
+    }
 };
 
 if (process.env.NODE_ENV == 'production') {

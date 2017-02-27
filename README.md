@@ -24,6 +24,7 @@
 * 所有路由，除了静态文件的请求，都需要加上/api,例如注册: /api/register*
 * 修改了登录注册的路由*
 * 博客的添加路由改变*
+* 嵌入式设备要添加 key
 
 # 通用响应格式
 ```json
@@ -210,7 +211,7 @@ Response:{
 Method:POST
 ```json
 RequestData:{
-     token:  //allowNull(false)
+     deviceId:  //allowNull(false)
 }
 ```
 响应格式:
@@ -252,11 +253,7 @@ RequestData:{
      label: STRING //allowNull(false),
      description: STRING //allowNull(true),
      deviceId: INT //allowNull(false),
-     value: STRING //allowNull(false),
-     value1: STRING //allowNull(true),
-     value2: STRING //allowNull(true),
-     value3: STRING //allowNull(true),
-     value4: STRING //allowNull(true),
+     unit: STRING //单位 数值类型的单位是用户自己设定，只有一个，例如 摄氏度，GPS类型是经纬度（固定,不需要传参）
 }
 ```
 响应格式:

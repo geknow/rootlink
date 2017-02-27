@@ -12,7 +12,7 @@ if(typeof(evalString) !== 'undefined' || evalString !== null){
     eval(evalString);
 }
 
-var token ;
+var DeviceId ;
 
 describe('Device', function () {
     this.timeout(7000);     // extend timeout
@@ -41,7 +41,7 @@ describe('Device', function () {
                     console.log(res.body);
                     if (!err && !res.body.error)
                         done();
-                    token = res.body.msg.token;
+                    DeviceId = res.body.msg.id;
                 })
         })
     });
@@ -51,7 +51,7 @@ describe('Device', function () {
         it("delDevice", function (done) {
             agent.post(ip + ":"  + config.server.port + '/api/device/delete')
                 .send({
-                    token: token
+                    deviceId: DeviceId
                 })
                 .end((err, res) => {
                     console.log(res.body);
