@@ -46,6 +46,22 @@ describe('Sensor', function () {
         })
     });
 
+
+    describe("addSensorV()", function () {
+        it("addSensorV", function (done) {
+            agent.post(ip + ":" + config.server.port + '/api/sensor/upload?key=4hl0fe')
+                .send({
+                    value1: "11",
+                    sensorId: sensorId
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
     describe("delSensor()", function () {
         it("delSensor", function (done) {
             agent.post(ip + ":" + config.server.port + '/api/sensor/delete?key=4hl0fe')

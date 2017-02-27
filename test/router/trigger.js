@@ -24,10 +24,10 @@ describe('Trigger', function () {
                     name: "haha"
                 })
                 .end((err, res) => {
+                    console.log(res.body);
                     triggerId = res.body.msg.trigger.id;
                     if (!err && !res.body.error)
                         done();
-                    sensorId = res.body.msg.id;
                 })
         })
     });
@@ -52,6 +52,7 @@ describe('Trigger', function () {
         it("getTrigger", function (done) {
             agent.get(ip + ":" + config.server.port + '/api/trigger/status?triggerId='+triggerId+'&key=4hl0fe')
                 .end((err, res) => {
+                    console.log(res.body);
                     if (!err && !res.body.error)
                         done();
                 })

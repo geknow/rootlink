@@ -8,7 +8,7 @@ let agent = require('superagent').agent();//保存cookie
 // let ip = require("../../config/config").server.ip;
 let ip = "localhost";
 let token ;
-
+let key;
 describe('First', function () {
     this.timeout(7000);     // extend timeout
 
@@ -34,9 +34,22 @@ describe('First', function () {
         })
     });
 
+    describe('getKey()',function () {
+        it("getKeyed()",function (done) {
+            var url = 'localhost:' + config.server.port + '/api/user/getKey';
+            agent.get(url)
+                .end((err, res) => {
+                    console.log(res.body);
+                    key = res.body.msg.key;
+                    if (!err && !res.body.error)
+                        done();
+                });
+        })
+    });
+
     describe('updateKey()',function () {
         it("updateKeyed()",function (done) {
-            var url = 'localhost:' + config.server.port + '/api/user/updateKey';
+            var url = 'localhost:' + config.server.port + '/api/user/updateKey?key='+key;
             agent.post(url)
                 .end((err, res) => {
                     console.log(res.body);
@@ -44,7 +57,8 @@ describe('First', function () {
                         done();
                 });
         })
-    })
+    });
+
 
     describe("loginValidate()", function () {
         it("loginValidated", function (done) {

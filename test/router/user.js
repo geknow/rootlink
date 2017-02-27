@@ -20,7 +20,7 @@ describe('User', function () {
 
     describe("register()", function () {
         it("registered", function (done) {
-            var url = 'localhost:' + config.server.port + '/api/register';
+            var url = ip + ":" + config.server.port + '/api/register';
             agent.post(url)
                 .send({
                     password: p,
@@ -40,7 +40,7 @@ describe('User', function () {
 
     describe("validate()", function () {
         it("validated", function (done) {
-            let url = 'localhost:' + config.server.port + '/api/validate/email/' + key;
+            let url = ip + ":" + config.server.port + '/api/validate/email/' + key;
             agent.get(url)
                 .end((err, res) => {
                     console.log(res.body);
@@ -52,13 +52,14 @@ describe('User', function () {
 
     describe('login()', function () {
         it('logined', function (done) {
-            var url = 'localhost:' + config.server.port + '/api/login';
+            var url = ip + ":" + config.server.port + '/api/login';
             agent.post(url)
                 .send({
                     password: p,
                     username: u
                 })
                 .end((err, res) => {
+                    console.log(err);
                     console.log(res.body);
                     if (!err && !res.body.error)
                         done();

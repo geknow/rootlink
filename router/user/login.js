@@ -153,7 +153,6 @@ module.exports = router => {
         logger.debug("/updateKey");
         let error;
         let key = utilx.getRandomString(6);
-
         try {
             await User.update(
                 {
@@ -175,5 +174,17 @@ module.exports = router => {
                 key
             });
         }
+    });
+
+    router.get("/user/getKey", async(ctx,next) => {
+        let key = await User.findOne({
+            where:{
+                id: ctx.currentUser.id
+            },
+            attributes: ["key"]
+        });
+        responser.success(ctx,{
+            key
+        })
     })
 };

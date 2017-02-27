@@ -300,9 +300,30 @@ Response:{
 ```
 
 
+### 上传数据接口:
+**/sensor/upload**
+Method:POST
+```json
+RequestData:{
+     sensorId: INT //allowNull(false)
+     value1: STRING
+     value2: STRING
+     ...
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: { }
+}
+```
+
+
 
 # 触发器模块
-### 某触发器状态接口:
+### 获取某触发器状态接口:
 **/trigger/status**
 Method:GET
 ```json
@@ -316,7 +337,7 @@ RequestData:{
 Response:{
     error: STRING,
     status: INTERGER,
-    msg: {status:}
+    msg: {trigger:}
 }
 ```
 
@@ -358,7 +379,7 @@ Response:{
 ```
 
 ### 更改触发器状态接口:
-**/trigger/delete**
+**/trigger/control**
 Method:GET
 ```json
 RequestData:{

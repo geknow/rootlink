@@ -20,6 +20,7 @@ const User = db.models.User;
 app.use(async(ctx, next) => {
     try {
         let url = ctx.request.url;
+
         if (/\/api/.test(url)) {//自定义路由
             //todo: 权限过滤
             if (/\/user/.test(url) || /\/device/.test(url) || /\/device/.test(url)
