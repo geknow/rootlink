@@ -192,6 +192,9 @@ Method:POST
 ```json
 RequestData:{
      text : String //allowNull(false) 
+     time : String //allowNull(false) 
+     label : String //allowNull(false) 
+     title : String //allowNull(false) 
 }
 ```
 响应格式:

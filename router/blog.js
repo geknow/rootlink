@@ -5,7 +5,7 @@ const db = require('./../model/index');
 const auth = require('./../helper/auth');
 const responser = require('./../lib/responser');
 const Blog = db.models.Blog;
-const utilx = require('../lib/utilx');
+const logger = require("../log/index").logger;
 
 module.exports = router => {
     /**
@@ -26,10 +26,11 @@ module.exports = router => {
         conditions.limit = count;
         conditions.offset = (page - 1) * count;
         conditions.order = [['createdAt', 'DESC']]
-        
+        let list;
         try {
-            var list = await Blog.findAll(conditions);
+            list = await Blog.findAll(conditions);
         } catch (e) {
+            logger.error(e);
             responser.catchErr(ctx, e);
             return;
         }
@@ -44,18 +45,22 @@ module.exports = router => {
         }
         let body = ctx.request.body;
         let text = body.text;
-        let error;
+        let time = body.time;
+        let title = body.title;
+        let label = body.label;
         try{
             await Blog.create({
-                text: text
+                text,
+                title,
+                time,
+                label
             });
         }catch (e){
-            error = e;
-        }
-        if(error){
-            responser.catchErr(ctx,error);
+            logger.error(e);
+            responser.catchErr(ctx,e);
             return;
         }
+
         responser.success(ctx);
     });
 };
