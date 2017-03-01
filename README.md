@@ -73,13 +73,13 @@ RequestData:{
      email: STRING//二者必须至少有其一
      
      password: STRING
-     remenberMe: boolean //(false)
+     rememberMe: boolean //(false)
 }
 或者
 RequestData:{
      token: STRING //会过期，用于前端记住密码选项
      key: STRING， //用于嵌入式设备的权限登录，此key可通过/user/updateKey修改，否则永不过期
-     remenberMe: boolean //(默认true)
+     rememberMe: boolean //(默认true)
 }
 ```
 响应格式:
@@ -133,6 +133,24 @@ Response:{
 
 ### 更改key接口: 用于嵌入式设备
 **/user/updateKey**
+Method:GET
+```json
+RequestData:{
+
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {key:STRING}
+}
+```
+
+
+### 获取key接口: 
+**/user/getKey**
 Method:GET
 ```json
 RequestData:{
@@ -380,10 +398,10 @@ Response:{
 
 ### 更改触发器状态接口:
 **/trigger/control**
-Method:GET
+Method:POST
 ```json
 RequestData:{
-     triggerId:
+     triggerId: INT //触发器的id
      status: INT//只能是1 或者 0
 }
 ```
