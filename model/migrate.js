@@ -31,7 +31,7 @@ function *addBlog() {
     for (var i = 0; i < 5; i++) {
         var blog = {
             text: "blog text" + i,
-            name: "blog name" + i,
+            time: "blog time" + i,
             title: "blog title" + i,
             label: "blog label" + i,
         };

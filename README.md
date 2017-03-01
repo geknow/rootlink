@@ -419,4 +419,77 @@ Response:{
 
 
 
+# 用户添加指令模块
+### 添加指令接口:
+**/directive/add**
+Method:POST
+```json
+RequestData:{
+     operation: String //allowNull(false),命令
+	operationUrl: String //链接
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
+}
+```
+
+### 更新指令接口:
+**/directive/update**
+Method:POST
+```json
+RequestData:{
+     operation: String //allowNull(false),命令
+	operationUrl: String //链接
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
+}
+```
+
+### 获取指令接口:
+**/directive/update**
+Method:GET
+```json
+RequestData:{
+     operation: String //allowNull(false),命令
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {operationUrl:}
+}
+```
+
+
+### 删除指令接口:
+**/directive/delete**
+Method:POST
+```json
+RequestData:{
+     operation: String //allowNull(false),命令
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
+}
+```
+
+
 

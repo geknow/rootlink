@@ -19,8 +19,6 @@ module.exports = function(sequelize,DataTypes) {
         associate: function (models) {
             models.Sensor.belongsTo(models.Device,{foreignKey : "DeviceId"});
 
-            models.Sensor.hasMany(models.Directive);
-
         },
         instanceMethods: {}
     })  

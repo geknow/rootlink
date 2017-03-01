@@ -32,6 +32,14 @@ module.exports = router => {
         let user;
         let token = null;
         let BodyToken = body.token || null;
+
+        let name = body.username;
+        let email,username;
+        if(!BodyToken){
+            email = name.includes("@") ? name : null;
+            username = !name.includes("@") ? name: null;
+        }
+
         if (BodyToken) {
             user = await RememberPass.findOne({
                 where: {
@@ -50,17 +58,17 @@ module.exports = router => {
                 })
             }
 
-        } else if (body.username) {
+        } else if (username) {
             user = await db.models.User.findOne({
                 where: {
-                    username: body.username,
+                    username: username,
                     password: body.password
                 }
             });
-        } else if (body.email) {
+        } else if (email) {
             user = await db.models.User.findOne({
                 where: {
-                    email: body.email,
+                    email: email,
                     password: body.password
                 }
             })
@@ -149,7 +157,7 @@ module.exports = router => {
         });
     });
 
-    router.post("/user/updateKey", async(ctx, next)=> {
+    router.post("/user/updateKey", async(ctx, next) => {
         logger.debug("/updateKey");
         let error;
         let key = utilx.getRandomString(6);
@@ -164,26 +172,26 @@ module.exports = router => {
                     }
                 }
             )
-        }catch (e){
+        } catch (e) {
             error = e;
         }
-        if(error){
-            responser.catchErr(ctx,error);
-        }else{
-            responser.success(ctx,{
+        if (error) {
+            responser.catchErr(ctx, error);
+        } else {
+            responser.success(ctx, {
                 key
             });
         }
     });
 
-    router.get("/user/getKey", async(ctx,next) => {
+    router.get("/user/getKey", async(ctx, next) => {
         let key = await User.findOne({
-            where:{
+            where: {
                 id: ctx.currentUser.id
             },
             attributes: ["key"]
         });
-        responser.success(ctx,{
+        responser.success(ctx, {
             key
         })
     })
