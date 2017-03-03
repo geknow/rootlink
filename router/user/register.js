@@ -11,38 +11,71 @@ const logger = require("../../log/index").logger;
 const utilx = require("../../lib/utilx");
 
 module.exports = router=> {
-    
-    router.get('/register', async (ctx,next) => {
+
+    router.get('/register', async(ctx, next) => {
         responser.success(ctx);
     });
-    
+
+    router.get("/register/getCode", async(ctx, next) => {
+        let query = ctx.request.query;
+        ctx.checkQuery("email").isEmail();
+        if (ctx.errors) {
+            responser.reject(ctx, "邮箱错误");
+            return;
+        }
+        let code;
+        let email = query.email;
+        try {
+            let u = (await User.findOne({
+                where: {
+                    email: query.email
+                }
+            }));
+            if (u) {//如果存在同邮箱
+                responser.reject(ctx, "邮箱已经存在");
+                return;
+            }
+            code = utilx.getRandomString(6);
+            indentifyCode.sendMail(code, email);
+            cache.jsetex(code, 60 * 60, email);
+        } catch (e) {
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
+        }
+        responser.success(ctx,{
+            // code: code
+        })
+    });
+
     router.post('/register', async(ctx, next)=> {
         let body = ctx.request.body;
         ctx.checkBody("email").isEmail();
-        if(ctx.errors){
-            responser.reject(ctx,"邮箱错误");
+        if (ctx.errors) {
+            responser.reject(ctx, "邮箱错误");
             return;
         }
         ctx.checkBody("username").notEmpty();
         ctx.checkBody("password").notEmpty();
-        if(ctx.errors){
-            responser.reject(ctx,"参数不全");
+        if (ctx.errors) {
+            responser.reject(ctx, "参数不全");
             return;
         }
+
+        let code = body.code;
+        let email = await cache.jget(code);
+        if (email !== body.email) {
+            responser.reject(ctx, "验证码错误");
+            return;
+        }
+
         let u = (await User.findOne({
             where: {
-                $or: [
-                    {
-                        email: body.email
-                    },
-                    {
-                        username: body.username
-                    }
-                ]
+                username: body.username
             }
         }));
-        if(u){//如果存在同用户名或者同邮箱
-            responser.reject(ctx,"用户名或者邮箱已经存在");
+        if (u) {//如果存在同用户名或者同邮箱
+            responser.reject(ctx, "用户名已经存在");
             return;
         }
         let user = {
@@ -52,15 +85,27 @@ module.exports = router=> {
             type: body.type === 'OurEDA_admin' ? 1 : 0,
             key: utilx.getRandomString(6)
         };
-        let key = indentifyCode.sendMail(JSON.stringify(user));
-        // todo: 上面生成key是不存放密码的，在redis才存放密码
-        user.password = body.password;
-        //todo: 把link和user存在redis里面，验证邮箱来得到link，从而取出user，写入数据库
-        //todo: 根据user来生成对应路由，只有邮箱验证之后才写入数据库
-        logger.debug(key);
-        cache.jsetex(key,60 * 60,user);
-        responser.success(ctx,{
-            key:key
-        })
+
+
+        let error;
+        user = await db.models.User.create(user).catch(err=> {
+            error = err;
+        });
+        if (user) {
+            let LoginToken = helper.login(ctx, user);
+            responser.success(ctx, {
+                LoginToken: LoginToken
+            });
+        } else {
+            let errorInfo;
+            if (error && /SequelizeUniqueConstraintError/.test(error.toString())) {
+                errorInfo = 'Username has been used';
+            }
+            if (errorInfo)
+                responser.reject(ctx, errorInfo, 403);
+            else
+                responser.catchErr(ctx, error, 500);
+        }
+        responser.success(ctx)
     });
 };

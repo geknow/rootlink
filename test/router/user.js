@@ -11,62 +11,46 @@ if(typeof(evalString) !== 'undefined' || evalString !== null){
     eval(evalString);
 }
 
-var u = new Date().toString().substr(16, 8);
-var p = new Date().toString();
+let code;
+
 var key = "";
 
 describe('User', function () {
     this.timeout(7000);     // extend timeout
 
-    describe("register()", function () {
-        it("registered", function (done) {
-            var url = ip + ":" + config.server.port + '/api/register';
-            agent.post(url)
-                .send({
-                    password: p,
-                    email: Math.random().toString().substr(2, 4) + "@qq.com",
-                    username: u,
-                    type: 1
-                })
-                .end((err, res) => {
-                    console.log(res.body);
-                    if (!err && !res.body.error) {
-                        key = res.body.msg.key;
-                        done();
-                    }
-                });
-        })
-    });
-
-    describe("validate()", function () {
-        it("validated", function (done) {
-            let url = ip + ":" + config.server.port + '/api/validate/email/' + key;
+    describe('getCode()', function () {
+        it('getCode', function (done) {
+            var url = ip + ":" + config.server.port + '/api/register/getCode?email=18940874730@163.com';
             agent.get(url)
                 .end((err, res) => {
                     console.log(res.body);
-                    if (!err && !res.body.error)
-                        done();
-                });
-        });
-    });
-
-    describe('login()', function () {
-        it('logined', function (done) {
-            var url = ip + ":" + config.server.port + '/api/login';
-            agent.post(url)
-                .send({
-                    password: p,
-                    username: u
-                })
-                .end((err, res) => {
-                    console.log(err);
-                    console.log(res.body);
+                    // code = res.body.msg.code;
                     if (!err && !res.body.error)
                         done();
                 });
         })
     });
 
+
+    // describe("register()", function () {
+    //     it("registered", function (done) {
+    //         var url = ip + ":" + config.server.port + '/api/register';
+    //         agent.post(url)
+    //             .send({
+    //                 password: 123,
+    //                 email: "18940874730@163.com",
+    //                 username: "hugo",
+    //                 type: 1,
+    //                 code: code
+    //             })
+    //             .end((err, res) => {
+    //                 console.log(res.body);
+    //                 if (!err && !res.body.error) {
+    //                     done();
+    //                 }
+    //             });
+    //     })
+    // });
 
 });
 

@@ -46,12 +46,10 @@ Response:{
 # 用户模块
 ## 登陆和注册和退出
 ### 注册接口:
-**/register**
-Method:POST
+**/register/getKey**//获取验证码
+Method:GET
 ```json
 RequestData:{
-    username: STRING,
-    password: STRING,
     email: STRING
 }
 ```
@@ -60,7 +58,28 @@ RequestData:{
 Response:{
     error: STRING,
     status: INTERGER,
-    msg: {link : "邮箱验证链接"}
+    msg: {}
+}
+```
+
+
+
+**/register**
+Method:POST
+```json
+RequestData:{
+    username: STRING,
+    password: STRING,
+    email: STRING,
+    code: STRING //验证码
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
 }
 ```
 
