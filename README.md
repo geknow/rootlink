@@ -69,8 +69,7 @@ Response:{
 Method:POST
 ```json
 RequestData:{
-     username: STRING,
-     email: STRING//二者必须至少有其一
+     username: STRING,／／无论是username还是email都是这个
      
      password: STRING
      rememberMe: boolean //(false)
@@ -346,11 +345,11 @@ Response:{
 # 触发器模块
 ### 获取某触发器状态接口:
 **/trigger/status**
+//如果是嵌入式设备 /trigger/status?q=1,前端不需要管
 Method:GET
 ```json
 RequestData:{
      triggerId: INT //allowNull(false),
-
 }
 ```
 响应格式:

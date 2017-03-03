@@ -8,6 +8,7 @@ const Sensor = db.models.Sensor;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
+const logger = require("../../log/index").logger;
 
 module.exports = router => {
     router.get("/device/all", async(ctx, next) => {
@@ -40,8 +41,7 @@ module.exports = router => {
 
     router.post("/device/add", async(ctx, next) => {
         let body = ctx.request.body;
-        let user = ctx.currentUser;
-        user = user || (await auth.user(ctx));
+        let user = ctx.currentUser || (await auth.user(ctx));
         let error;
         let device;
         try {
@@ -55,9 +55,8 @@ module.exports = router => {
             error = e;
         }
         if (error) {
-            console.log(error);
-            responser.catchErr(ctx, "参数缺失");
-            return;
+            logger.error(error);
+            responser.catchErr(ctx, error);
         } else
             responser.success(ctx, device);
     });

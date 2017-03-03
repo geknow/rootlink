@@ -50,7 +50,7 @@ describe('Trigger', function () {
 
     describe("getTrigger()", function () {
         it("getTrigger", function (done) {
-            agent.get(ip + ":" + config.server.port + '/api/trigger/status?triggerId='+triggerId+'&key=4hl0fe')
+            agent.get(ip + ":" + config.server.port + '/api/trigger/status?triggerId='+triggerId+'&key=4hl0fe'+"&q=1")
                 .end((err, res) => {
                     console.log(res.body);
                     if (!err && !res.body.error)

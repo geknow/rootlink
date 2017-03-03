@@ -73,7 +73,7 @@ let config = {
             + `background: -webkit-gradient(white,darkseagreen);`
             + `background: -moz-gradient(white,darkseagreen);`
             + `background: -o-gradient(white,darkseagreen);`
-            + `background: linear-gradient(white,darkseagreen);"><h1>欢迎使用OurEDA Bag</h1>`
+            + `background: linear-gradient(white,darkseagreen);"><h1>欢迎使用RootLink</h1>`
             + `<p>${link}</p><p>若您不知道这封邮件从何而来`
             + `, 请将其忽略, 对给您带来的不便深表歉意.</p></div>` // html 内容
         };

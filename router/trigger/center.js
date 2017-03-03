@@ -10,7 +10,8 @@ module.exports = router => {
     router.get("/trigger/status", async(ctx, next) => {
         let query = ctx.request.query;
         let triggerId = query.triggerId;
-        let trigger, error;
+        let q = query.q;
+        let trigger;
         if (ctx.currentUser.id && triggerId) {
             try {
                 trigger = await Trigger.findOne({
@@ -20,10 +21,13 @@ module.exports = router => {
                     }
                 })
             } catch (e) {
-                error = e;
+                responser.catchErr(ctx, e);
+                return;
             }
-            if (error) {
-                responser.catchErr(ctx, error);
+            if (q) {
+                responser.success(ctx,{
+                    status: trigger.status ? 1: 0
+                })
             } else {
                 responser.success(ctx, {
                     trigger
@@ -31,6 +35,7 @@ module.exports = router => {
             }
         }
     });
+
 
     router.post("/trigger/add", async(ctx, next) => {
         let name = ctx.request.body.name;
