@@ -13,13 +13,14 @@ module.exports = function (sequelize, DataTypes) {
         avatar: shortDataTypes.String(),//头像
         // 0 => normalUser   1=>adminer
         type: shortDataTypes.Int(0),//管理员  或  普通用户
-        key: shortDataTypes.String()//用于嵌入式设备的获取权限的值,注册时随机生成
+        key: shortDataTypes.String(),//用于嵌入式设备的获取权限的值,注册时随机生成
+        userId: {
+            type: DataTypes.STRING(40), defaultValue: DataTypes.UUIDV4, primaryKey: true
+        }
     }, {
         updatedAt: false,
         associate: function (models) {
-            models.User.hasMany(models.Device);
-            
-            models.User.hasMany(models.Directive);
+
         },
         instanceMethods: {}
     });

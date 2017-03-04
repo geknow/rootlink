@@ -12,12 +12,12 @@ module.exports = router => {
         let triggerId = query.triggerId;
         let q = query.q;
         let trigger;
-        if (ctx.currentUser.id && triggerId) {
+        if (ctx.currentUser.userId && triggerId) {
             try {
                 trigger = await Trigger.findOne({
                     where: {
-                        id: triggerId,
-                        UserId: ctx.currentUser.id
+                        triggerId,
+                        UserId: ctx.currentUser.userId
                     }
                 })
             } catch (e) {
@@ -25,8 +25,8 @@ module.exports = router => {
                 return;
             }
             if (q) {
-                responser.success(ctx,{
-                    status: trigger.status ? 1: 0
+                responser.success(ctx, {
+                    status: trigger.status ? 1 : 0
                 })
             } else {
                 responser.success(ctx, {
@@ -40,46 +40,45 @@ module.exports = router => {
     router.post("/trigger/add", async(ctx, next) => {
         let name = ctx.request.body.name;
         let status = ctx.request.body.status || false;
-        let error, trigger;
-        if (name && ctx.currentUser.id) {
+        let deviceId = ctx.request.body.deviceId;
+
+        let trigger;
+
+        if (name && ctx.currentUser.userId && deviceId) {
             try {
                 trigger = await Trigger.create({
                     name,
-                    UserId: ctx.currentUser.id,
-                    status: status
+                    UserId: ctx.currentUser.userId,
+                    status: status,
+                    DeviceId: deviceId
                 })
             } catch (e) {
-                error = e;
+                responser.catchErr(ctx, e);
+                return;
             }
-            if (error) {
-                responser.catchErr(ctx, error);
-            } else {
-                responser.success(ctx, {
-                    trigger
-                })
-            }
+
+            responser.success(ctx, {
+                trigger
+            })
+
         }
     });
 
     router.post("/trigger/delete", async(ctx, next) => {
         let triggerId = ctx.request.body.triggerId;
-        let error;
         try {
             await Trigger.destroy({
                 where: {
-                    UserId: ctx.currentUser.id,
-                    id: triggerId
+                    UserId: ctx.currentUser.userId,
+                    triggerId: triggerId
                 }
             })
         } catch (e) {
-            error = e;
+            responser.catchErr(ctx, e);
+            return;
         }
 
-        if (error) {
-            responser.catchErr(ctx, error);
-        } else {
-            responser.success(ctx);
-        }
+        responser.success(ctx);
     });
 
     router.post("/trigger/control", async(ctx, next) => {
@@ -87,15 +86,15 @@ module.exports = router => {
         let triggerId = ctx.request.body.triggerId;
 
         let error, trigger;
-        if ((status === 0 || status === 1 ) && ctx.currentUser.id) {
+        if ((status === 0 || status === 1 ) && ctx.currentUser.userId) {
             try {
                 status = parseInt(status);
                 trigger = await Trigger.update({
                     status: status === 1
                 }, {
                     where: {
-                        id: triggerId,
-                        UserId: ctx.currentUser.id
+                        triggerId: triggerId,
+                        UserId: ctx.currentUser.userId
                     }
                 })
             } catch (e) {

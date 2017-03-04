@@ -11,12 +11,14 @@ var shortDataTypes = sequelizex.DataTypes;
 module.exports = function(sequelize,DataTypes) {
     return sequelize.define("Directive", {
         operation : shortDataTypes.String(100,false),
-        operationUrl: shortDataTypes.String(100,false)
+        operationUrl: shortDataTypes.String(100,false),
+        directiveId: {
+            type: DataTypes.STRING(40), defaultValue: DataTypes.UUIDV4, primaryKey: true
+        }
     }, {
         updatedAt: false,
         associate: function (models) {
             models.Directive.belongsTo(models.User,{foreignKey : "UserId"});
-
         },
         instanceMethods: {}
     })

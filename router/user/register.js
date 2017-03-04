@@ -44,7 +44,7 @@ module.exports = router=> {
             return;
         }
         responser.success(ctx,{
-            // code: code
+            code: code
         })
     });
 
@@ -83,7 +83,7 @@ module.exports = router=> {
             email: body.email,
             avatar: '', //todo : get update avatar
             type: body.type === 'OurEDA_admin' ? 1 : 0,
-            key: utilx.getRandomString(6)
+            key: utilx.getRandomString(32)
         };
 
 

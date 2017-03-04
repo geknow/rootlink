@@ -35,7 +35,7 @@ module.exports = router => {
 
         let name = body.username;
         let email,username;
-        if(!BodyToken){
+        if(!BodyToken && name){
             email = name.includes("@") ? name : null;
             username = !name.includes("@") ? name: null;
         }
@@ -53,7 +53,7 @@ module.exports = router => {
             } else if (user) {
                 user = await db.models.User.findOne({
                     where: {
-                        id: user.userId
+                        userId: user.userId
                     }
                 })
             }
@@ -87,10 +87,12 @@ module.exports = router => {
             } else if (rememberMe) {//如果用户选择记住密码,更新token
                 let Token = utilx.generatorToken(new Date().getTime().toString());
                 //产生新的token
+                console.log(Token);
+                console.log(user.userId);
                 await db.models.RememberPass.create({
                     token: Token,
                     expireTime: new Date(),
-                    userId: user.id
+                    userId: user.userId
                 });
                 //旧的token删除
                 if (BodyToken) {
@@ -107,7 +109,8 @@ module.exports = router => {
             responser.success(ctx, {
                 token: token || BodyToken,
                 LoginToken,
-                key: user.key || null
+                key: user.key || null,
+                userId: user.userId
             });
             //todo: 
             EvenImit.emit("user_login");
@@ -160,7 +163,7 @@ module.exports = router => {
     router.post("/user/updateKey", async(ctx, next) => {
         logger.debug("/updateKey");
         let error;
-        let key = utilx.getRandomString(6);
+        let key = utilx.getRandomString(32);
         try {
             await User.update(
                 {
@@ -168,7 +171,7 @@ module.exports = router => {
                 },
                 {
                     where: {
-                        id: ctx.currentUser.id
+                        userId: ctx.currentUser.userId
                     }
                 }
             )
@@ -187,12 +190,12 @@ module.exports = router => {
     router.get("/user/getKey", async(ctx, next) => {
         let key = await User.findOne({
             where: {
-                id: ctx.currentUser.id
+                userId: ctx.currentUser.userId
             },
             attributes: ["key"]
         });
         responser.success(ctx, {
-            key
+            key: key.key
         })
     })
 };

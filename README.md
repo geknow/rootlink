@@ -249,7 +249,6 @@ Method:POST
 ```json
 RequestData:{
      name: STRING //allowNull(false),
-     label: STRING //allowNull(false),
      description: STRING //allowNull(true)
 }
 ```
@@ -268,6 +267,25 @@ Method:POST
 ```json
 RequestData:{
      deviceId:  //allowNull(false)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {count: }
+}
+```
+
+### 更新接口:
+**/device/update**
+Method:POST
+```json
+RequestData:{
+     deviceId:  //allowNull(false)
+     name: STRING,
+     description: STRING
 }
 ```
 响应格式:
@@ -306,7 +324,27 @@ Method:POST
 ```json
 RequestData:{
      name: STRING //allowNull(false),
-     label: STRING //allowNull(false),
+     description: STRING //allowNull(true),
+     deviceId: INT //allowNull(false),
+     unit: STRING //单位 数值类型的单位是用户自己设定，只有一个，例如 摄氏度，GPS类型是经纬度（固定,不需要传参）
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {sensor: }
+}
+```
+
+
+### 更新接口:
+**/sensor/update**
+Method:POST
+```json
+RequestData:{
+     name: STRING //allowNull(false),
      description: STRING //allowNull(true),
      deviceId: INT //allowNull(false),
      unit: STRING //单位 数值类型的单位是用户自己设定，只有一个，例如 摄氏度，GPS类型是经纬度（固定,不需要传参）
@@ -359,6 +397,23 @@ Response:{
 }
 ```
 
+
+### 获取数据接口:
+**/sensor/getValue**
+Method:GET
+```json
+RequestData:{
+     sensorId: INT //allowNull(false)
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: { }
+}
+```
 
 
 # 触发器模块
@@ -475,11 +530,11 @@ Response:{
 ```
 
 ### 获取指令接口:
-**/directive/update**
+**/directive/all**
 Method:GET
 ```json
 RequestData:{
-     operation: String //allowNull(false),命令
+
 }
 ```
 响应格式:
@@ -487,7 +542,9 @@ RequestData:{
 Response:{
     error: STRING,
     status: INTERGER,
-    msg: {operationUrl:}
+    msg: {
+
+    }
 }
 ```
 

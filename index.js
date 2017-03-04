@@ -35,7 +35,7 @@ app.use(async(ctx, next) => {
                     ctx.redirect("/");
                     return;
                 } else {
-                    auth.login(ctx, user);//延长过期时间
+                    await auth.login(ctx, user);//延长过期时间
                 }
             }
         }

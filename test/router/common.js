@@ -21,77 +21,13 @@ describe('First', function () {
             agent.post(url)
                 .send({
                     password: "123",
-                    username: "name2",
+                    username: "name4",
                     rememberMe: true
                 })
                 .end((err, res) => {
 
                     console.log(res.body);
                     token = res.body.msg.token;
-                    if (!err && !res.body.error)
-                        done()
-                });
-        })
-    });
-
-    describe('getKey()',function () {
-        it("getKeyed()",function (done) {
-            var url = 'localhost:' + config.server.port + '/api/user/getKey';
-            agent.get(url)
-                .end((err, res) => {
-                    console.log(res.body);
-                    key = res.body.msg.key;
-                    if (!err && !res.body.error)
-                        done();
-                });
-        })
-    });
-
-    describe('updateKey()',function () {
-        it("updateKeyed()",function (done) {
-            var url = 'localhost:' + config.server.port + '/api/user/updateKey?key='+key;
-            agent.post(url)
-                .end((err, res) => {
-                    console.log(res.body);
-                    if (!err && !res.body.error)
-                        done();
-                });
-        })
-    });
-
-
-    describe("loginValidate()", function () {
-        it("loginValidated", function (done) {
-            var url = ip + ":" + config.server.port + '/api/loginValidate';
-            agent.get(url)
-                .end((err, res) => {
-                    console.log(res.body);
-                    done();
-                })
-        })
-    });
-
-    describe("logout()", function () {
-        it("logouted", function (done) {
-            var url = ip + ":" + config.server.port + '/api/logout';
-            agent.post(url)
-                .end((err, res) => {
-                    console.log(res.body);
-                    done();
-                })
-        })
-    });
-
-    describe('login()', function () {
-        it('logined', function (done) {
-            var url = ip + ":" + config.server.port + '/api/login';
-            agent.post(url)
-                .send({
-                    token: token,
-                    rememberMe: true
-                })
-                .end((err, res) => {
-                    console.log(res.body);
                     if (!err && !res.body.error)
                         done()
                 });

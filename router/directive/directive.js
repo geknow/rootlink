@@ -20,7 +20,7 @@ module.exports = router => {
         try {
             let directive = await Directive.findOne({
                 where: {
-                    UserId: user.id,
+                    UserId: user.userId,
                     operation
                 }
             });
@@ -31,7 +31,7 @@ module.exports = router => {
             await Directive.create({
                 operation,
                 operationUrl,
-                UserId: user.id
+                UserId: user.userId
             })
         }catch (e){
             logger.error(e);
@@ -42,19 +42,14 @@ module.exports = router => {
         responser.success(ctx);
     });
 
-    router.get("/directive/get", async(ctx,next) => {
-        let query = ctx.request.query;
+    router.get("/directive/all", async(ctx,next) => {
 
-        let operation = query.operation;
-
-        let operationUrl;
+        let operations;
         try{
-           operationUrl = await Directive.findOne({
+           operations = await Directive.findOne({
                 where: {
-                    operation,
-                    UserId: ctx.currentUser.id
-                },
-                attributes: ["operationUrl"]
+                    UserId: ctx.currentUser.userId
+                }
             });
         }catch (e){
             logger.error(e);
@@ -62,7 +57,7 @@ module.exports = router => {
             return;
         }
         responser.success(ctx,{
-            operationUrl
+            operations
         })
     });
 
@@ -71,16 +66,16 @@ module.exports = router => {
 
         let operation = body.operation;
         let operaionUrl = body.operationUrl;
-        console.log(operation);
-        console.log(operaionUrl);
-        console.log(ctx.currentUser);
+        logger.debug(operation);
+        logger.debug(operaionUrl);
+        logger.debug(ctx.currentUser);
         try{
             await Directive.update({
                 operaionUrl
             },{
                 where: {
                     operation,
-                    UserId: ctx.currentUser.id
+                    UserId: ctx.currentUser.userId
                 }
             })
         }catch (e){
@@ -98,7 +93,7 @@ module.exports = router => {
             await Directive.destroy({
                 where: {
                     operation,
-                    UserId: ctx.currentUser.id
+                    UserId: ctx.currentUser.userId
                 }
             })
         }catch (e){

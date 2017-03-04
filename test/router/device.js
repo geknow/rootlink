@@ -18,8 +18,8 @@ describe('Device', function () {
     this.timeout(7000);     // extend timeout
 
 
-    describe("getDevice()", function () {
-        it("getDevice", function (done) {
+    describe("allDevice()", function () {
+        it("allDevice", function (done) {
             agent.get(ip + ":" + config.server.port + '/api/device/all')
                 .end((err, res) => {
                     console.log(res.body);
@@ -35,13 +35,13 @@ describe('Device', function () {
             agent.post(ip + ":" + config.server.port + '/api/device/add')
                 .send({
                     name: "1",
-                    label: "1"
+                    description: "1"
                 })
                 .end((err, res) => {
                     console.log(res.body);
                     if (!err && !res.body.error)
                         done();
-                    DeviceId = res.body.msg.id;
+                    DeviceId = res.body.msg.deviceId;
                 })
         })
     });

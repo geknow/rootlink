@@ -15,9 +15,28 @@ if (typeof(evalString) !== 'undefined' || evalString !== null) {
 }
 
 var str = new Date().toTimeString();
-
+var userId;
 describe('Directive', function () {
     this.timeout(7000);     // extend timeout
+
+    describe('login()', function () {
+        it('logined', function (done) {
+            var url = ip + ":" + config.server.port + '/api/login';
+            agent.post(url)
+                .send({
+                    password: "123",
+                    username: "name4",
+                    rememberMe: true
+                })
+                .end((err, res) => {
+
+                    console.log(res.body);
+                    userId = res.body.msg.userId;
+                    if (!err && !res.body.error)
+                        done()
+                });
+        })
+    });
 
     describe("addDirective()", function () {
         it("addDirective", function (done) {
@@ -25,7 +44,7 @@ describe('Directive', function () {
                 .send({
                     operation: str,
                     operationUrl: "http://www.baidu.com",
-                    UserId: 1
+                    UserId: userId
                 })
                 .end((err, res) => {
                     console.log(res.body);
@@ -36,9 +55,9 @@ describe('Directive', function () {
     });
 
 
-    describe("getDirective()", function () {
-        it("getDirective", function (done) {
-            agent.get(ip + ":" + config.server.port + '/api/directive/get?operation=' + str + "&UserId=1")
+    describe("allDirective()", function () {
+        it("allDirective", function (done) {
+            agent.get(ip + ":" + config.server.port + '/api/directive/all')
                 .end((err, res) => {
                     console.log(res.body);
                     if (!err && !res.body.error)
@@ -53,7 +72,7 @@ describe('Directive', function () {
                 .send({
                     operation: str,
                     operationUrl: "http://www.google.com",
-                    UserId: 1
+                    UserId: userId
                 })
                 .end((err, res) => {
                     console.log(res.body);
@@ -69,7 +88,7 @@ describe('Directive', function () {
             agent.post(ip + ":" + config.server.port + '/api/directive/delete')
                 .send({
                     operation: str,
-                    UserId: 1
+                    UserId: userId
                 })
                 .end((err, res) => {
                     console.log(res.body);

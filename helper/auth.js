@@ -19,11 +19,11 @@ module.exports = {
      * @param ifKeep
      */
     login: (ctx, user) => {
-        const LoginToken = hash().update(user['id'].toString()).digest('hex');
+        const LoginToken = hash().update(user['userId'].toString()).digest('hex');
         const username = user['username'];
         ctx.currentUser = {
             username: username,
-            id: user["id"],
+            userId: user["userId"],
             LoginToken
         };
         ctx.cookies.set(cookieName, LoginToken, {

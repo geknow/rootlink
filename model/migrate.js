@@ -10,7 +10,7 @@ var config = require('../config/config');
 var url = require('url');
 
 
-
+var UserId;
 function *addUser() {
     for (var i = 0; i < 5; i++) {
         var user = {
@@ -20,9 +20,10 @@ function *addUser() {
             desc: "一些介绍",
             type: i % 2,
             avatar: '/default_avatar.jpg',
-            key: utilx.getRandomString(6)
+            key: utilx.getRandomString(32)
         };
-        yield db.models.User.create(user);
+        user = yield db.models.User.create(user);
+        UserId = user.userId;
     }
 }
 
@@ -38,24 +39,28 @@ function *addBlog() {
         yield db.models.Blog.create(blog);
     }
 }
-
+var deviceId ;
 function *addDevice() {
     for (var i = 0; i < 5; i++) {
         var device = {
             name: "name" + i,
-            label: i,
-            UserId: 1
+            description: i,
+            UserId: UserId,
         };
-        yield db.models.Device.create(device);
+
+        device = yield db.models.Device.create(device);
+        deviceId = device.deviceId;
     }
 }
 function *addSensor() {
     for (var i = 0; i < 5; i++) {
         var sensor = {
             name: "name" + i,
-            label: i,
-            DeviceId: 1,
-            value: 1
+            description: i,
+            DeviceId: deviceId,
+            value: 1,
+            UserId: UserId,
+            unit: "经纬度"
         };
         yield db.models.Sensor.create(sensor);
     }
