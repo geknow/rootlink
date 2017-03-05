@@ -56,7 +56,7 @@ module.exports = router => {
     router.post("/device/delete", async(ctx, next) => {
         let body = ctx.request.body;
         let deviceId = body.deviceId;
-        console.log(deviceId);
+        logger.debug(deviceId);
         let count;
         try {
             count = await Device.destroy({

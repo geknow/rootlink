@@ -23,7 +23,7 @@ log4js.configure({
     ],
     replaceConsole: true,   //替换console.log
     levels: {
-        dateFileLog: 'debug',
+        dateFileLog: 'error',
         console: DEBUG ? 'debug' : 'error'
     }
 });
@@ -37,5 +37,5 @@ let env = process.env.NODE_ENV;
 exports.logger = env == "production" ? dateFileLog : consoleLog;
 
 exports.use = function (app) {
-    app.use(log4js.connectLogger(dateFileLog, {level: 'INFO', format: ':method :url'}));
+    app.use(log4js.connectLogger(dateFileLog, {level: 'DEBUG', format: ':method :url'}));
 };

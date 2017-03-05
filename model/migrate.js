@@ -15,7 +15,7 @@ function *addUser() {
     for (var i = 0; i < 5; i++) {
         var user = {
             username: 'name' + i,
-            password: '123',
+            password: utilx.generatorToken("123"),
             email: i + "@qq.com",
             desc: "一些介绍",
             type: i % 2,

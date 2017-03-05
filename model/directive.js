@@ -10,7 +10,7 @@ var shortDataTypes = sequelizex.DataTypes;
  */
 module.exports = function(sequelize,DataTypes) {
     return sequelize.define("Directive", {
-        operation : shortDataTypes.String(100,false),
+        operation : shortDataTypes.String(20,false),
         operationUrl: shortDataTypes.String(100,false),
         directiveId: {
             type: DataTypes.STRING(40), defaultValue: DataTypes.UUIDV4, primaryKey: true

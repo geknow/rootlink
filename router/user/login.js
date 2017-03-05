@@ -62,14 +62,14 @@ module.exports = router => {
             user = await db.models.User.findOne({
                 where: {
                     username: username,
-                    password: body.password
+                    password: utilx.generatorToken(body.password.toString())
                 }
             });
         } else if (email) {
             user = await db.models.User.findOne({
                 where: {
                     email: email,
-                    password: body.password
+                    password: utilx.generatorToken(body.password.toString())
                 }
             })
         }
@@ -87,8 +87,8 @@ module.exports = router => {
             } else if (rememberMe) {//如果用户选择记住密码,更新token
                 let Token = utilx.generatorToken(new Date().getTime().toString());
                 //产生新的token
-                console.log(Token);
-                console.log(user.userId);
+                logger.debug(Token);
+                logger.debug(user.userId);
                 await db.models.RememberPass.create({
                     token: Token,
                     expireTime: new Date(),

@@ -78,14 +78,15 @@ module.exports = router=> {
             responser.reject(ctx, "用户名已经存在");
             return;
         }
+
         let user = {
             username: body.username,
             email: body.email,
             avatar: '', //todo : get update avatar
             type: body.type === 'OurEDA_admin' ? 1 : 0,
-            key: utilx.getRandomString(32)
+            key: utilx.getRandomString(32),
+            password: utilx.generatorToken(body.password.toString())//加密密码
         };
-
 
         let error;
         user = await db.models.User.create(user).catch(err=> {
@@ -106,6 +107,5 @@ module.exports = router=> {
             else
                 responser.catchErr(ctx, error, 500);
         }
-        responser.success(ctx)
     });
 };
