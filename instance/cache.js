@@ -3,6 +3,7 @@
  */
 var redis = require('redis');
 var redisCoWrapper = require('co-redis');
+var logger = require("../log/index").logger;
 
 // var log = require('./log');
 var globalConfig = require('../config/config');
@@ -49,6 +50,7 @@ redisCo.del = async function (key) {
     try{
         await redisCo.del(key);
     }catch (e){
+        logger.error(e);
         return false;
     }
     return true;

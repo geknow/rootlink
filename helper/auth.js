@@ -6,6 +6,7 @@ var util = require('util');
 var db = require('../model/index');
 var cookieName = 'LoginToken';
 let crypto = require('crypto');
+const logger = require("../log/index").logger;
 let clone = require('../lib/utilx').ObjectClone;
 let hash = ()=> {
     return crypto.createHash('sha1');
@@ -36,6 +37,8 @@ module.exports = {
     },
     logout: async(ctx) => {
         let token = ctx.cookies.get(cookieName);
+        logger.debug(token);
+        logger.debug("+++++++++++++");
         if(token === null || token === undefined)
             return;
         ctx.cookies.set(cookieName, null, {

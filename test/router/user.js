@@ -107,7 +107,6 @@ describe('User', function () {
             var url = ip + ":" + config.server.port + '/api/logout';
             agent.post(url)
                 .end((err, res) => {
-                    console.log(err);
                     console.log(res.body);
                     if (!err && !res.body.error)
                         done();
