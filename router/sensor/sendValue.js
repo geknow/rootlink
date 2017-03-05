@@ -12,31 +12,34 @@ const logger = require("../../log/index").logger;
 
 module.exports = router => {
     router.post("/sensor/upload", async(ctx, next) => {
-        logger.debug("/sensor/upload");
-        let body = ctx.request.body;
-        let sensorId = body.sensorId;
 
-
-        if (!sensorId) {
-            responser.reject(ctx, "sensorId null");
-            return;
-        }
-        //查出对应的deviceid
-        let DeviceId = await Sensor.findOne({
-            where: {
-                sensorId: sensorId
-            },
-            attributes: ["DeviceId"]
-        });
-
-        let senV = {
-            SensorId: sensorId,
-            DeviceId: DeviceId.DeviceId
-        };
-        sensorV.forEach(name => {
-            senV[name] = body[name];
-        });
         try {
+            logger.debug("/sensor/upload");
+            let body = ctx.request.body;
+            let sensorId = body.sensorId;
+
+
+            if (!sensorId) {
+                throw Error("sensorId null");
+            }
+
+            //查出对应的deviceid
+            let DeviceId = await Sensor.findOne({
+                where: {
+                    sensorId: sensorId
+                },
+                attributes: ["DeviceId"]
+            });
+
+            let senV = {
+                SensorId: sensorId,
+                DeviceId: DeviceId.DeviceId
+            };
+            sensorV.forEach(name => {
+                senV[name] = body[name];
+            });
+
+
             await SensorValue.create(senV);
         } catch (e) {
             logger.error(e);
@@ -48,10 +51,12 @@ module.exports = router => {
     });
 
     router.get("/sensor/getValue", async(ctx, next) => {
-        let query = ctx.request.query;
-        let sensorId = query.sensorId;
+
         let sensorVs;
         try{
+            let query = ctx.request.query;
+            let sensorId = query.sensorId;
+
             sensorVs = await SensorValue.findAll({
                 where: {
                     SensorId: sensorId

@@ -34,47 +34,55 @@ module.exports = router => {
         let BodyToken = body.token || null;
 
         let name = body.username;
-        let email,username;
-        if(!BodyToken && name){
-            email = name.includes("@") ? name : null;
-            username = !name.includes("@") ? name: null;
-        }
+        let email, username,Token;
 
-        if (BodyToken) {
-            user = await RememberPass.findOne({
-                where: {
-                    token: BodyToken
+
+        try {
+            if (!BodyToken && name) {
+                email = name.includes("@") ? name : null;
+                username = !name.includes("@") ? name : null;
+            }
+
+            if (BodyToken) {
+                user = await RememberPass.findOne({
+                    where: {
+                        token: BodyToken
+                    }
+                });
+                //token已经有30天,删除token
+                if (user && (new Date() - user.expireTime) / D > 30) {
+                    await user.destroy();
+                    user = null;
+                } else if (user) {
+                    user = await db.models.User.findOne({
+                        where: {
+                            userId: user.userId
+                        }
+                    })
                 }
-            });
-            //token已经有30天,删除token
-            if (user && (new Date() - user.expireTime) / D > 30) {
-                await user.destroy();
-                user = null;
-            } else if (user) {
+
+            } else if (username) {
                 user = await db.models.User.findOne({
                     where: {
-                        userId: user.userId
+                        username: username,
+                        password: utilx.generatorToken(body.password.toString())
+                    }
+                });
+            } else if (email) {
+                user = await db.models.User.findOne({
+                    where: {
+                        email: email,
+                        password: utilx.generatorToken(body.password.toString())
                     }
                 })
             }
 
-        } else if (username) {
-            user = await db.models.User.findOne({
-                where: {
-                    username: username,
-                    password: utilx.generatorToken(body.password.toString())
-                }
-            });
-        } else if (email) {
-            user = await db.models.User.findOne({
-                where: {
-                    email: email,
-                    password: utilx.generatorToken(body.password.toString())
-                }
-            })
-        }
 
-        if (user) {
+            if (!user) {
+                throw Error("Login Failed");
+            }
+
+
             let LoginToken = helper.login(ctx, user);
             let rememberMe = body.rememberMe || false;
             //如果用户不选择记住密码，删除token
@@ -85,7 +93,7 @@ module.exports = router => {
                     }
                 });
             } else if (rememberMe) {//如果用户选择记住密码,更新token
-                let Token = utilx.generatorToken(new Date().getTime().toString());
+                Token = utilx.generatorToken(new Date().getTime().toString());
                 //产生新的token
                 logger.debug(Token);
                 logger.debug(user.userId);
@@ -102,9 +110,10 @@ module.exports = router => {
                         }
                     });
                 }
-
-                token = Token;
             }
+            token = Token;
+
+
 
             responser.success(ctx, {
                 token: token || BodyToken,
@@ -112,14 +121,14 @@ module.exports = router => {
                 key: user.key || null,
                 userId: user.userId
             });
-            //todo: 
+            //todo:
             EvenImit.emit("user_login");
-        } else {
-            logger.error("Login Failed");
-            responser.catchErr(ctx, {
-                error: 'Login Failed'
-            });
+
+        } catch (e) {
+            logger.error(e);
+            responser.catchErr(ctx, e);
         }
+
     });
 
     router.get("/user/index", async(ctx, next) => {
@@ -153,7 +162,9 @@ module.exports = router => {
                 }
             });
         } catch (e) {
-
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
         }
         responser.success(ctx, {
             loginStatus: false
@@ -162,7 +173,6 @@ module.exports = router => {
 
     router.post("/user/updateKey", async(ctx, next) => {
         logger.debug("/updateKey");
-        let error;
         let key = utilx.getRandomString(32);
         try {
             await User.update(
@@ -176,24 +186,29 @@ module.exports = router => {
                 }
             )
         } catch (e) {
-            error = e;
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
         }
-        if (error) {
-            responser.catchErr(ctx, error);
-        } else {
-            responser.success(ctx, {
-                key
-            });
-        }
+        responser.success(ctx, {
+            key
+        });
     });
 
     router.get("/user/getKey", async(ctx, next) => {
-        let key = await User.findOne({
-            where: {
-                userId: ctx.currentUser.userId
-            },
-            attributes: ["key"]
-        });
+        let key;
+        try {
+            key = await User.findOne({
+                where: {
+                    userId: ctx.currentUser.userId
+                },
+                attributes: ["key"]
+            });
+        } catch (e) {
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
+        }
         responser.success(ctx, {
             key: key.key
         })

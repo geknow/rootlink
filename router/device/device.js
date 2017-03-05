@@ -15,21 +15,21 @@ const isEmptyObject = require("../../lib/utilx").isEmptyObject;
 
 module.exports = router => {
     router.get("/device/all", async(ctx, next) => {
-        let user = ctx.currentUser;
-        user = user || (await auth.user(ctx));
-        if (!user) {
-            responser.reject(ctx, "没登录");
-            return;
-        }
-        // let user = {id: 1}; //测试
+
         let devices;
         try {
+            let user = ctx.currentUser;
+            user = user || (await auth.user(ctx));
+            if (!user) {
+                throw Error("没登录");
+            }
             devices = await Device.findAll({
                 where: {
                     UserId: user.userId
                 }
             });
         } catch (e) {
+            logger.error(e);
             responser.catchErr(ctx, e);
             return;
         }
@@ -37,10 +37,11 @@ module.exports = router => {
     });
 
     router.post("/device/add", async(ctx, next) => {
-        let body = ctx.request.body;
-        let user = ctx.currentUser || (await auth.user(ctx));
         let device;
         try {
+            let body = ctx.request.body;
+            let user = ctx.currentUser || (await auth.user(ctx));
+
             device = await Device.create({
                 name: body.name,
                 description: body.description,
@@ -49,21 +50,28 @@ module.exports = router => {
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
+            return;
         }
         responser.success(ctx, device);
     });
 
     router.post("/device/delete", async(ctx, next) => {
-        let body = ctx.request.body;
-        let deviceId = body.deviceId;
-        logger.debug(deviceId);
         let count;
         try {
+            let body = ctx.request.body;
+            let deviceId = body.deviceId;
+            logger.debug(deviceId);
+
             count = await Device.destroy({
                 where: {
                     deviceId: deviceId
                 }
             });
+
+            if (!count) {
+                throw Error("deviceId 错误");
+            }
+
             await Sensor.destroy({
                 where: {
                     DeviceId: deviceId
@@ -79,13 +87,11 @@ module.exports = router => {
                     DeviceId: deviceId
                 }
             })
+
+
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
-            return;
-        }
-        if (!count) {
-            responser.reject(ctx, "deviceId 错误");
             return;
         }
         responser.success(ctx, count);
@@ -93,17 +99,20 @@ module.exports = router => {
 
 
     router.post("/device/update", async(ctx, next) => {
-        let body = ctx.request.body;
-        let user = ctx.currentUser || (await auth.user(ctx));
-        let error;
+
         let device = {};
-        body.name ? device.name = body.name : null;
-        body.description ? device.description = body.description : null;
-        if (isEmptyObject(device)) {
-            responser.reject(ctx, "nothing update");
-            return;
-        }
+
         try {
+            let body = ctx.request.body;
+            let user = ctx.currentUser || (await auth.user(ctx));
+
+            body.name ? device.name = body.name : null;
+            body.description ? device.description = body.description : null;
+
+            if (isEmptyObject(device)) {
+                throw Error("nothing update");
+            }
+
             device = await Device.update(device, {
                 where: {
                     UserId: user.id,
@@ -111,12 +120,11 @@ module.exports = router => {
                 }
             })
         } catch (e) {
-            error = e;
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
         }
-        if (error) {
-            logger.error(error);
-            responser.catchErr(ctx, error);
-        } else
-            responser.success(ctx, device);
+
+        responser.success(ctx, device);
     })
 };

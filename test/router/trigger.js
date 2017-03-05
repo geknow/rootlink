@@ -32,7 +32,7 @@ describe('Trigger', function () {
 
     describe('getKey()',function () {
         it("getKeyed()",function (done) {
-            var url = 'localhost:' + config.server.port + '/api/user/getKey';
+            var url = ip+':' + config.server.port + '/api/user/getKey';
             agent.get(url)
                 .end((err, res) => {
                     console.log(res.body);
@@ -46,6 +46,7 @@ describe('Trigger', function () {
 
     describe("addTrigger()", function () {
         it("addTrigger", function (done) {
+            console.log(deviceId);
             agent.post(ip + ":" + config.server.port + '/api/trigger/add?key='+key)
                 .send({
                     name: "haha",

@@ -50,22 +50,25 @@ module.exports = router=> {
 
     router.post('/register', async(ctx, next)=> {
         let body = ctx.request.body;
-        ctx.checkBody("email").isEmail();
-        if (ctx.errors) {
-            responser.reject(ctx, "邮箱错误");
-            return;
-        }
-        ctx.checkBody("username").notEmpty();
-        ctx.checkBody("password").notEmpty();
-        if (ctx.errors) {
-            responser.reject(ctx, "参数不全");
-            return;
-        }
+        try{
+            ctx.checkBody("email").isEmail();
+            if (ctx.errors) {
+                throw Error("邮箱错误");
+            }
+            ctx.checkBody("username").notEmpty();
+            ctx.checkBody("password").notEmpty();
+            if (ctx.errors) {
+                throw Error("参数不齐");
+            }
 
-        let code = body.code;
-        let email = await cache.jget(code);
-        if (email !== body.email) {
-            responser.reject(ctx, "验证码错误");
+            let code = body.code;
+            let email = await cache.jget(code);
+            if (email !== body.email) {
+                throw Error("验证码错误");
+            }
+        }catch (e){
+            logger.error(e);
+            responser.catchErr(ctx, e);
             return;
         }
 

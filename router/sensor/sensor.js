@@ -14,11 +14,13 @@ const logger = require("../../log/index").logger;
 
 module.exports = router => {
     router.get("/sensor/all", async(ctx, next) => {
-        let deviceId = ctx.request.query.deviceId;
-        logger.debug(deviceId);
-        logger.debug("----------")
+
         let sensors;
         try {
+            let deviceId = ctx.request.query.deviceId;
+            logger.debug(deviceId);
+            logger.debug("----------");
+
             sensors = await Sensor.findAll({
                 where: {
                     DeviceId: deviceId
@@ -33,25 +35,27 @@ module.exports = router => {
     });
 
     router.post("/sensor/add", async(ctx, next) => {
-        let body = ctx.request.body;
-        let ok = false;
-        type.forEach((name) => {
-            if (name == body.name)
-                ok = true;
-        });
-        if (!ok) {
-            responser.catchErr(ctx, "类型错误");
-            return;
-        }
-        let sensor = {
-            name: body.name,
-            unit: body.name === "GPS" ? null : body.unit,
-            description: body.description,
-            DeviceId: body.deviceId,
-            UserId: ctx.currentUser.userId
-        };
-        logger.debug(sensor);
+        let sensor;
+
         try {
+            let body = ctx.request.body;
+            let ok = false;
+            type.forEach((name) => {
+                if (name == body.name)
+                    ok = true;
+            });
+            if (!ok) {
+                throw Error("类型错误");
+            }
+            sensor = {
+                name: body.name,
+                unit: body.name === "GPS" ? null : body.unit,
+                description: body.description,
+                DeviceId: body.deviceId,
+                UserId: ctx.currentUser.userId
+            };
+            logger.debug(sensor);
+
             sensor = await Sensor.create(sensor)
         } catch (e) {
             logger.error(e);
@@ -62,57 +66,64 @@ module.exports = router => {
     });
 
     router.post("/sensor/delete", async(ctx, next) => {
-        let body = ctx.request.body;
-        let sensorId = body.sensorId;
+
         let count;
         try {
+            let body = ctx.request.body;
+            let sensorId = body.sensorId;
+
             count = await Sensor.destroy({
                 where: {
                     sensorId
                 }
             });
+            if (!count) {
+                throw Error("sensorId 错误");
+            }
+
             await SensorValue.destroy({
                 where: {
                     SensorId: sensorId
                 }
             })
         } catch (e) {
+            logger.error(e);
             responser.catchErr(ctx, e);
             return;
         }
-        if (!count) {
-            responser.reject(ctx, "sensorId 错误");
-            return;
-        }
+
         responser.success(ctx, count);
     });
 
     router.post("/sensor/update", async(ctx, next) => {
-        let body = ctx.request.body;
-        let ok = false;
-        type.forEach((name) => {
-            if (name == body.name)
-                ok = true;
-        });
-        if (!ok) {
-            responser.catchErr(ctx, "类型错误");
-            return;
-        }
         let sensor = {};
 
-        body.name ? sensor.name = body.name : null;
-        body.unit === "GPS" ? sensor.unit = body.unit : null;
-        body.description ? sensor.description = body.description : null;
-        body.DeviceId ? sensor.DeviceId = body.DeviceId : null;
-        sensor.UserId = ctx.currentUser.id;
 
-        if (isEmptyObject(sensor)) {
-            responser.reject(ctx, "参数缺失");
-            return;
-        }
         try {
+
+            let body = ctx.request.body;
+            let ok = false;
+            type.forEach((name) => {
+                if (name == body.name)
+                    ok = true;
+            });
+            if (!ok) {
+                throw Error("类型错误");
+            }
+
+            body.name ? sensor.name = body.name : null;
+            body.unit === "GPS" ? sensor.unit = body.unit : null;
+            body.description ? sensor.description = body.description : null;
+            body.DeviceId ? sensor.DeviceId = body.DeviceId : null;
+            sensor.UserId = ctx.currentUser.id;
+
+            if (isEmptyObject(sensor)) {
+                throw Error("参数缺失");
+            }
+
             sensor = await Sensor.create(sensor)
         } catch (e) {
+            logger.error(e);
             responser.catchErr(ctx, e);
             return;
         }

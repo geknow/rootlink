@@ -77,9 +77,10 @@ describe('User', function () {
 
     describe('getKey()',function () {
         it("getKeyed()",function (done) {
-            var url = 'localhost:' + config.server.port + '/api/user/getKey';
+            var url = ip+':' + config.server.port + '/api/user/getKey';
             agent.get(url)
                 .end((err, res) => {
+                    console.log(err);
                     console.log(res.body);
                     key = res.body.msg.key;
                     if (!err && !res.body.error)
@@ -90,7 +91,7 @@ describe('User', function () {
 
     describe('updateKey()',function () {
         it("updateKeyed()",function (done) {
-            var url = 'localhost:' + config.server.port + '/api/user/updateKey?key='+key;
+            var url = ip+':' + config.server.port + '/api/user/updateKey?key='+key;
             agent.post(url)
                 .end((err, res) => {
                     console.log(res.body);
@@ -106,8 +107,10 @@ describe('User', function () {
             var url = ip + ":" + config.server.port + '/api/logout';
             agent.post(url)
                 .end((err, res) => {
+                    console.log(err);
                     console.log(res.body);
-                    done();
+                    if (!err && !res.body.error)
+                        done();
                 })
         })
     });

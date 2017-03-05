@@ -13,11 +13,14 @@ const logger = require("../../log/index").logger;
 
 module.exports = router => {
     router.post("/directive/add", async(ctx, next) => {
-        let body = ctx.request.body;
-        let operation = body.operation;
-        let operationUrl = body.operationUrl;
-        let user = ctx.currentUser;
+
         try {
+            let body = ctx.request.body;
+            let operation = body.operation;
+            let operationUrl = body.operationUrl;
+            let user = ctx.currentUser;
+
+
             let directive = await Directive.findOne({
                 where: {
                     UserId: user.userId,
@@ -62,14 +65,17 @@ module.exports = router => {
     });
 
     router.post("/directive/update",async (ctx,next) => {
-        let body = ctx.request.body;
 
-        let operation = body.operation;
-        let operaionUrl = body.operationUrl;
-        logger.debug(operation);
-        logger.debug(operaionUrl);
-        logger.debug(ctx.currentUser);
         try{
+            let body = ctx.request.body;
+
+            let operation = body.operation;
+            let operaionUrl = body.operationUrl;
+            logger.debug(operation);
+            logger.debug(operaionUrl);
+            logger.debug(ctx.currentUser);
+
+
             await Directive.update({
                 operaionUrl
             },{
@@ -87,9 +93,11 @@ module.exports = router => {
     });
 
     router.post("/directive/delete" ,async (ctx, next) => {
-        let body = ctx.request.body;
-        let operation = body.operation;
+
         try{
+            let body = ctx.request.body;
+            let operation = body.operation;
+
             await Directive.destroy({
                 where: {
                     operation,

@@ -5,6 +5,7 @@
 const db = require('./../../model/index');
 const Trigger = db.models.Trigger;
 const responser = require('./../../lib/responser');
+const logger = require("../../log/index").logger;
 
 module.exports = router => {
     router.get("/trigger/status", async(ctx, next) => {
@@ -12,27 +13,30 @@ module.exports = router => {
         let triggerId = query.triggerId;
         let q = query.q;
         let trigger;
-        if (ctx.currentUser.userId && triggerId) {
-            try {
-                trigger = await Trigger.findOne({
-                    where: {
-                        triggerId,
-                        UserId: ctx.currentUser.userId
-                    }
-                })
-            } catch (e) {
-                responser.catchErr(ctx, e);
-                return;
+
+        try {
+            if (!ctx.currentUser.userId || !triggerId) {
+                throw Error("triggerId is null");
             }
-            if (q) {
-                responser.success(ctx, {
-                    status: trigger.status ? 1 : 0
-                })
-            } else {
-                responser.success(ctx, {
-                    trigger
-                })
-            }
+            trigger = await Trigger.findOne({
+                where: {
+                    triggerId,
+                    UserId: ctx.currentUser.userId
+                }
+            })
+        } catch (e) {
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
+        }
+        if (q) {
+            responser.success(ctx, {
+                status: trigger.status ? 1 : 0
+            });
+        } else {
+            responser.success(ctx, {
+                trigger
+            });
         }
     });
 
@@ -44,24 +48,27 @@ module.exports = router => {
 
         let trigger;
 
-        if (name && ctx.currentUser.userId && deviceId) {
-            try {
-                trigger = await Trigger.create({
-                    name,
-                    UserId: ctx.currentUser.userId,
-                    status: status,
-                    DeviceId: deviceId
-                })
-            } catch (e) {
-                responser.catchErr(ctx, e);
-                return;
+        try {
+            if (!name || !ctx.currentUser.userId || !deviceId) {
+                throw Error("name or deviceId null")
             }
-
-            responser.success(ctx, {
-                trigger
+            trigger = await Trigger.create({
+                name,
+                UserId: ctx.currentUser.userId,
+                status: status,
+                DeviceId: deviceId
             })
-
+        } catch (e) {
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
         }
+
+        responser.success(ctx, {
+            trigger
+        });
+
+
     });
 
     router.post("/trigger/delete", async(ctx, next) => {
@@ -74,6 +81,7 @@ module.exports = router => {
                 }
             })
         } catch (e) {
+            logger.error(e);
             responser.catchErr(ctx, e);
             return;
         }
@@ -85,11 +93,10 @@ module.exports = router => {
         let status = ctx.request.body.status;
         let triggerId = ctx.request.body.triggerId;
 
-        let error, trigger;
         if ((status === 0 || status === 1 ) && ctx.currentUser.userId) {
             try {
                 status = parseInt(status);
-                trigger = await Trigger.update({
+                await Trigger.update({
                     status: status === 1
                 }, {
                     where: {
@@ -98,16 +105,16 @@ module.exports = router => {
                     }
                 })
             } catch (e) {
-                error = e;
+                responser.catchErr(ctx, e);
+                return;
             }
 
-            if (error) {
-                responser.catchErr(ctx, error);
-            } else {
-                responser.success(ctx, {
-                    status: status === 1
-                });
-            }
+            responser.success(ctx, {
+                status: status === 1
+            });
+            return;
         }
+        logger.error("status error");
+        responser.reject(ctx, "status error");
     });
 };
