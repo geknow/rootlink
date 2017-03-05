@@ -22,7 +22,7 @@ describe('Trigger', function () {
             agent.get(ip + ":" + config.server.port + '/api/device/all')
                 .end((err, res) => {
                     console.log(res.body);
-                    deviceId = res.body.msg[0].deviceId;
+                    // deviceId = res.body.msg[0].deviceId;
                     if (!err && !res.body.error)
                         done();
                 })

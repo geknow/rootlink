@@ -153,9 +153,10 @@ module.exports = router => {
 
     router.post("/logout", async(ctx, next) => {
         logger.debug("/logout");
-        await auth.logout(ctx);
-        let token = ctx.request.body.token;
+
         try {
+            await auth.logout(ctx);
+            let token = ctx.request.body.token;
             await RememberPass.destroy({
                 where: {
                     token

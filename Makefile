@@ -18,7 +18,7 @@ devStart:
 	@nodemon ${MAIN}
 proStart:
 	@export NODE_ENV=${pro_NODE_E};
-	@node ${MAIN}
+	@pm2 start ${MAIN}
 proRestart:
 	@export NODE_ENV=${pro_NODE_E};
 	@pm2 restart ${MAIN}
