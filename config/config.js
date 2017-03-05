@@ -6,15 +6,13 @@ var fs = require('fs');
 
 let config = {
     // 调试开关
-    debug: false,
+    debug: true,
     isRender: false,
     db: {
         name: 'postgres',
         username: 'postgres',
         host: "118.89.28.157",
-        // host:"127.0.0.1",
         pwd: 'oureda',
-        // pwd: 'csc',
         database: 'yeelink',
         toString() {
             return `${this.name}://${this.username}:${this.pwd}@${this.host}/${this.database}`;
@@ -88,10 +86,5 @@ let config = {
     sensorValue: ['value1','value2']
 };
 
-if (process.env.NODE_ENV == 'production') {
-    config.db.host = '118.89.28.157';
-    config.server.ip = '127.0.0.1';
-    config.server.port = '6743';
-}
 
 module.exports = config;
