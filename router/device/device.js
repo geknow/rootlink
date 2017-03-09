@@ -45,7 +45,7 @@ module.exports = router => {
             device = await Device.create({
                 name: body.name,
                 description: body.description,
-                UserId: user.id
+                UserId: user.userId
             })
         } catch (e) {
             logger.error(e);
@@ -115,7 +115,7 @@ module.exports = router => {
 
             device = await Device.update(device, {
                 where: {
-                    UserId: user.id,
+                    UserId: user.userId,
                     DeviceId: body.deviceId
                 }
             })
