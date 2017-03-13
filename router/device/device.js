@@ -116,7 +116,7 @@ module.exports = router => {
             device = await Device.update(device, {
                 where: {
                     UserId: user.userId,
-                    DeviceId: body.deviceId
+                    deviceId: body.deviceId
                 }
             })
         } catch (e) {
