@@ -114,6 +114,8 @@ describe('User', function () {
         })
     });
 
+
+
     describe('login()', function () {
         it('logined', function (done) {
             var url = ip + ":" + config.server.port + '/api/login';

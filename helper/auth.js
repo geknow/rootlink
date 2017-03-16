@@ -62,8 +62,11 @@ module.exports = {
         try {
             var token = ctx.cookies.get(cookieName);
             user = await cache.jget(token);
-            ctx.currentUser = user;
-            ctx.currentUser.LoginToken = token;
+            if(user !== undefined){
+                ctx.currentUser = user;
+                ctx.currentUser.LoginToken = token;
+            }
+
         } catch (e) {
             error = e;
         }

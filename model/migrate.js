@@ -18,7 +18,7 @@ function *addUser() {
             password: utilx.generatorToken("123"),
             email: i + "@qq.com",
             desc: "一些介绍",
-            type: i % 2,
+            type: 1,
             avatar: '/default_avatar.jpg',
             key: utilx.getRandomString(32)
         };

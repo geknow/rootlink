@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
 
     var User = sequelize.define('User', {
         username: shortDataTypes.String(20, false, undefined, true),
-        password: shortDataTypes.String(20,false),
+        password: shortDataTypes.String(50,false),
         email: shortDataTypes.String(20, false, undefined, true),
         avatar: shortDataTypes.String(50),//头像
         // 0 => normalUser   1=>adminer

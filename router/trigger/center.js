@@ -8,6 +8,30 @@ const responser = require('./../../lib/responser');
 const logger = require("../../log/index").logger;
 
 module.exports = router => {
+
+    router.get("/trigger/all",async (ctx, next) => {
+        let query = ctx.request.query;
+        let deviceId = query.deviceId;
+        let triggers = null;
+        try{
+            if(!deviceId){
+                throw Error("deviceId is null");
+            }
+            triggers = await Trigger.findAll({
+                where: {
+                    UserId: ctx.currentUser.userId,
+                    DeviceId: deviceId
+                }
+            })
+        }catch (e){
+            logger.error(e);
+            responser.catchErr(ctx,e);
+            return;
+        }
+        responser.success(ctx,triggers);
+    });
+
+
     router.get("/trigger/status", async(ctx, next) => {
         let query = ctx.request.query;
         let triggerId = query.triggerId;
@@ -89,13 +113,16 @@ module.exports = router => {
         responser.success(ctx);
     });
 
-    router.post("/trigger/control", async(ctx, next) => {
-        let status = ctx.request.body.status;
-        let triggerId = ctx.request.body.triggerId;
+    router.get("/trigger/control", async(ctx, next) => {
+        let status = ctx.request.query.status;
+        let triggerId = ctx.request.query.triggerId;
 
-        if ((status === 0 || status === 1 ) && ctx.currentUser.userId) {
             try {
                 status = parseInt(status);
+                if ((status !== 0 && status !== 1 ) || !ctx.currentUser.userId){
+                    throw Error("status not valid")
+                }
+
                 await Trigger.update({
                     status: status === 1
                 }, {
@@ -112,9 +139,6 @@ module.exports = router => {
             responser.success(ctx, {
                 status: status === 1
             });
-            return;
-        }
-        logger.error("status error");
-        responser.reject(ctx, "status error");
+
     });
 };

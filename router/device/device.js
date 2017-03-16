@@ -14,11 +14,29 @@ const logger = require("../../log/index").logger;
 const isEmptyObject = require("../../lib/utilx").isEmptyObject;
 
 module.exports = router => {
+
+    router.get("/device/get", async(ctx,next) => {
+        let deviceId = ctx.query.deviceId;
+        try{
+            let device = await Device.findOne({
+                where: {
+                    deviceId
+                }
+            });
+            responser.success(ctx,device);
+        }catch (e){
+            logger.error(e);
+            responser.catchErr(ctx,e);
+        }
+    });
+
+
     router.get("/device/all", async(ctx, next) => {
 
         let devices;
         try {
             let user = ctx.currentUser;
+            logger.debug(user);
             user = user || (await auth.user(ctx));
             if (!user) {
                 throw Error("没登录");

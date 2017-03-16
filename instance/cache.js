@@ -48,7 +48,10 @@ redisCo.jget = async function (key) {
 };
 redisCo.del = async function (key) {
     try{
-        await redisCo.del(key);
+        logger.debug("del");
+        // await redisCo.del(key);
+        await redisCo.set(key, undefined);
+        logger.debug("delOver")
     }catch (e){
         logger.error(e);
         return false;

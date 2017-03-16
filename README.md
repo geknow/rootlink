@@ -243,6 +243,25 @@ Response:{
 }
 ```
 
+
+### 获取单个设备接口:
+**/device/get**
+Method:GET
+```json
+RequestData:{
+     deviceId: 
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {}
+}
+```
+
+
 ### 添加接口:
 **/device/add**
 Method:POST
@@ -437,7 +456,7 @@ Response:{
 
 ### 添加触发器接口:
 **/trigger/add**
-Method:GET
+Method:POST
 ```json
 RequestData:{
      name: STRING //allowNull(false)
@@ -453,6 +472,27 @@ Response:{
     msg: {trigger:}
 }
 ```
+
+
+
+### 获取某设备所有触发器接口:
+**/trigger/all**
+Method:GET
+```json
+RequestData:{
+     deviceId: 
+
+}
+```
+响应格式:
+```json
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: {triggers:}
+}
+```
+
 
 
 ### 删除触发器接口:
@@ -474,7 +514,7 @@ Response:{
 
 ### 更改触发器状态接口:
 **/trigger/control**
-Method:POST
+Method:GET
 ```json
 RequestData:{
      triggerId: INT //触发器的id
@@ -499,7 +539,9 @@ Method:POST
 ```json
 RequestData:{
      operation: String //allowNull(false),命令
-	operationUrl: String //链接
+	 status: ,//0 或者 1
+	 triggerId: ,
+	 operation: String //名字
 }
 ```
 响应格式:
@@ -516,8 +558,10 @@ Response:{
 Method:POST
 ```json
 RequestData:{
-     operation: String //allowNull(false),命令
-	operationUrl: String //链接
+     	operation: String //allowNull(false),命令
+     	 status: ,//0 或者 1
+     	 triggerId: ,
+     	 operation: String //名字
 }
 ```
 响应格式:

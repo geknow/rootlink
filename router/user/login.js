@@ -165,8 +165,10 @@ module.exports = router => {
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
+            logger.debug("fuck");
             return;
         }
+        logger.debug("ok");
         responser.success(ctx, {
             loginStatus: false
         });

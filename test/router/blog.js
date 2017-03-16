@@ -31,7 +31,7 @@ describe('Blog', function () {
             agent.post(url)
                 .send({
                     password: "123",
-                    username: "name1"
+                    username: "name4"
                 })
                 .end((err, res) => {
                     console.log(err);

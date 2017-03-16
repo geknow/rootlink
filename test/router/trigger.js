@@ -44,6 +44,7 @@ describe('Trigger', function () {
     });
 
 
+
     describe("addTrigger()", function () {
         it("addTrigger", function (done) {
             console.log(deviceId);
@@ -61,13 +62,21 @@ describe('Trigger', function () {
         })
     });
 
+    describe("allTrigger()", function () {
+        it("addTrigger", function (done) {
+            console.log(deviceId);
+            agent.get(ip + ":" + config.server.port + '/api/trigger/all?key='+key+"&deviceId="+deviceId)
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
     describe("controlTrigger()", function () {
         it("controlTrigger", function (done) {
-            agent.post(ip + ":" + config.server.port + '/api/trigger/control?key='+key)
-                .send({
-                    triggerId: triggerId,
-                    status: 1
-                })
+            agent.get(ip + ":" + config.server.port + '/api/trigger/control?key='+key+"&triggerId="+triggerId+"&status=1")
                 .end((err, res) => {
                     console.log(res.body);
                     if (!err && !res.body.error)

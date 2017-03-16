@@ -10,17 +10,40 @@ const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 const logger = require("../../log/index").logger;
+const utilx = require("../../lib/utilx");
+const jointStr = utilx.jointStr;
 
 module.exports = router => {
-    router.post("/directive/add", async(ctx, next) => {
+    router.get("/:str",async (ctx, next) => {
+        let str = ctx.params.str;
+        logger.debug(str);
+        str = utilx.getStrInfo(str);
+        logger.debug(str);
+        ctx.redirect(str)
+    });
 
+
+    router.post("/directive/add", async(ctx, next) => {
+        let operationUrl;
         try {
             let body = ctx.request.body;
+            let triggerId = body.triggerId;
+            let u = await User.findOne({
+                where: {
+                    userId: ctx.currentUser.userId
+                },
+                attributes: ["key"]
+            });
+            let key = u.key;
+
+            let status = body.status;
+            status = parseInt(status);
+            if((status !== 0 && status !== 1 ) || !triggerId){
+                throw Error("参数缺失或错误");
+            }
+
             let operation = body.operation;
-            let operationUrl = body.operationUrl;
             let user = ctx.currentUser;
-
-
             let directive = await Directive.findOne({
                 where: {
                     UserId: user.userId,
@@ -30,7 +53,7 @@ module.exports = router => {
             if(directive){
                 throw Error("operation exist");
             }
-
+            operationUrl = jointStr(status,triggerId,key);
             await Directive.create({
                 operation,
                 operationUrl,
@@ -42,7 +65,7 @@ module.exports = router => {
             return;
         }
 
-        responser.success(ctx);
+        responser.success(ctx,operationUrl);
     });
 
     router.get("/directive/all", async(ctx,next) => {
@@ -65,19 +88,30 @@ module.exports = router => {
     });
 
     router.post("/directive/update",async (ctx,next) => {
-
+        let operationUrl;
         try{
             let body = ctx.request.body;
 
             let operation = body.operation;
-            let operaionUrl = body.operationUrl;
-            logger.debug(operation);
-            logger.debug(operaionUrl);
-            logger.debug(ctx.currentUser);
 
+            let status = body.status;
+            let triggerId = body.triggerId;
+            let u = await User.findOne({
+                where: {
+                    userId: ctx.currentUser.userId
+                },
+                attributes: ["key"]
+            });
+            let key = u.key;
+            status = parseInt(status);
+            if((status !== 0 && status !== 1 ) || !triggerId){
+                throw Error("参数缺失或错误");
+            }
+
+            operationUrl = jointStr(status,triggerId,key);
 
             await Directive.update({
-                operaionUrl
+                operationUrl
             },{
                 where: {
                     operation,
@@ -89,7 +123,7 @@ module.exports = router => {
             responser.catchErr(ctx,e);
             return;
         }
-        responser.success(ctx)
+        responser.success(ctx,operationUrl)
     });
 
     router.post("/directive/delete" ,async (ctx, next) => {

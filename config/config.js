@@ -85,6 +85,8 @@ let config = {
     },
     sensorValue: ['value1','value2']
 };
-
+if(process.env.NODE_ENV == "development"){
+    config.server.ip = "localhost"
+}
 
 module.exports = config;

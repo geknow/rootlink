@@ -46,6 +46,17 @@ describe('Device', function () {
         })
     });
 
+    describe("getDevice()", function () {
+        it("getDevice", function (done) {
+            agent.get(ip + ":" + config.server.port + '/api/device/get?deviceId='+DeviceId)
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
 
     describe("delDevice()", function () {
         it("delDevice", function (done) {
