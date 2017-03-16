@@ -9,6 +9,7 @@ const utilx = require('../lib/utilx');
 const render = require('../instance/render');
 const responser = require("../lib/responser");
 const logger = require("../log/index").logger;
+const auth = require("../helper/auth");
 
 router.use(async (ctx, next) => {
     try{
@@ -23,6 +24,20 @@ router.use(async (ctx, next) => {
     }
 });
 
+//不知道为什么get方法放在/user/login.js会出错
+router.get("/loginValidate", async(ctx, next) => {
+    logger.debug("/loginValidate/");
+    let user = ctx.currentUser || (await auth.user(ctx));
+    if (user) {
+        responser.success(ctx, {
+            loginStatus: true
+        })
+    } else {
+        responser.success(ctx, {
+            loginStatus: false
+        });
+    }
+});
 
 utilx.autoImport(__dirname, (tmpPath) => {   // 自动引入
     require(tmpPath)(router);

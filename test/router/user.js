@@ -55,83 +55,97 @@ describe('User', function () {
     //     })
     // });
 
-    describe('login()', function () {
-        it('logined', function (done) {
-            var url = ip + ":" + config.server.port + '/api/login';
-            agent.post(url)
-                .send({
-                    password: "123",
-                    username: "name4",
-                    rememberMe: true
-                })
-                .end((err, res) => {
+    // describe('login()', function () {
+    //     it('logined', function (done) {
+    //         var url = ip + ":" + config.server.port + '/api/login';
+    //         agent.post(url)
+    //             .send({
+    //                 password: "123",
+    //                 username: "name4",
+    //                 rememberMe: true
+    //             })
+    //             .end((err, res) => {
+    //
+    //                 console.log(res.body);
+    //                 token = res.body.msg.token;
+    //                 if (!err && !res.body.error)
+    //                     done()
+    //             });
+    //     })
+    // });
 
-                    console.log(res.body);
-                    token = res.body.msg.token;
-                    if (!err && !res.body.error)
-                        done()
-                });
-        })
-    });
-
-
-    describe('getKey()',function () {
-        it("getKeyed()",function (done) {
-            var url = ip+':' + config.server.port + '/api/user/getKey';
+    describe('loginValidate()',function () {
+        it("loginValidate()",function (done) {
+            var url = ip+':' + config.server.port + '/api/loginValidate';
+            console.log(url);
             agent.get(url)
                 .end((err, res) => {
-                    console.log(err);
+
                     console.log(res.body);
-                    key = res.body.msg.key;
+
                     if (!err && !res.body.error)
                         done();
                 });
         })
     });
 
-    describe('updateKey()',function () {
-        it("updateKeyed()",function (done) {
-            var url = ip+':' + config.server.port + '/api/user/updateKey?key='+key;
-            agent.post(url)
-                .end((err, res) => {
-                    console.log(res.body);
-                    if (!err && !res.body.error)
-                        done();
-                });
-        })
-    });
-
-
-    describe("logout()", function () {
-        it("logouted", function (done) {
-            var url = ip + ":" + config.server.port + '/api/logout';
-            agent.post(url)
-                .end((err, res) => {
-                    console.log(res.body);
-                    if (!err && !res.body.error)
-                        done();
-                })
-        })
-    });
-
-
-
-    describe('login()', function () {
-        it('logined', function (done) {
-            var url = ip + ":" + config.server.port + '/api/login';
-            agent.post(url)
-                .send({
-                    token: token,
-                    rememberMe: true
-                })
-                .end((err, res) => {
-                    console.log(token);
-                    console.log(res.body);
-                    if (!err && !res.body.error)
-                        done()
-                });
-        })
-    });
+    // describe('getKey()',function () {
+    //     it("getKeyed()",function (done) {
+    //         var url = ip+':' + config.server.port + '/api/user/getKey';
+    //         agent.get(url)
+    //             .end((err, res) => {
+    //                 console.log(err);
+    //                 console.log(res.body);
+    //                 key = res.body.msg.key;
+    //                 if (!err && !res.body.error)
+    //                     done();
+    //             });
+    //     })
+    // });
+    //
+    // describe('updateKey()',function () {
+    //     it("updateKeyed()",function (done) {
+    //         var url = ip+':' + config.server.port + '/api/user/updateKey?key='+key;
+    //         agent.post(url)
+    //             .end((err, res) => {
+    //                 console.log(res.body);
+    //                 if (!err && !res.body.error)
+    //                     done();
+    //             });
+    //     })
+    // });
+    //
+    //
+    // describe("logout()", function () {
+    //     it("logouted", function (done) {
+    //         var url = ip + ":" + config.server.port + '/api/logout';
+    //         agent.post(url)
+    //             .end((err, res) => {
+    //                 console.log(res.body);
+    //                 if (!err && !res.body.error)
+    //                     done();
+    //             })
+    //     })
+    // });
+    //
+    //
+    //
+    // describe('login()', function () {
+    //     it('logined', function (done) {
+    //         var url = ip + ":" + config.server.port + '/api/login';
+    //         agent.post(url)
+    //             .send({
+    //                 token: token,
+    //                 rememberMe: true
+    //             })
+    //             .end((err, res) => {
+    //                 console.log(token);
+    //                 console.log(res.body);
+    //                 if (!err && !res.body.error)
+    //                     done()
+    //             });
+    //     })
+    // });
 
 
 });

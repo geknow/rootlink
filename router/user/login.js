@@ -136,19 +136,6 @@ module.exports = router => {
         responser.success(ctx, user);
     });
 
-    router.get("/loginValidate", async(ctx, next) => {
-        logger.debug("/loginValidate");
-        let user = ctx.currentUser || (await auth.user(ctx));
-        if (user) {
-            responser.success(ctx, {
-                loginStatus: true
-            })
-        } else {
-            responser.success(ctx, {
-                loginStatus: false
-            });
-        }
-    });
 
 
     router.post("/logout", async(ctx, next) => {
