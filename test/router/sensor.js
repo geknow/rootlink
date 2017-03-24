@@ -19,6 +19,24 @@ var sensorId ,deviceId = "";
 describe('Sensor', function () {
     this.timeout(7000);     // extend timeout
 
+    describe('login()', function () {
+        it('logined', function (done) {
+            var url = ip + ":" + config.server.port + '/api/login';
+            agent.post(url)
+                .send({
+                    password: "123",
+                    username: "name4",
+                    rememberMe: true
+                })
+                .end((err, res) => {
+
+                    console.log(res.body);
+                    token = res.body.msg.token;
+                    if (!err && !res.body.error)
+                        done()
+                });
+        })
+    });
     describe("allDevice()", function () {
         it("allDevice", function (done) {
             agent.get(ip + ":" + config.server.port + '/api/device/all')
@@ -49,7 +67,7 @@ describe('Sensor', function () {
             agent.get(ip + ":" + config.server.port + '/api/sensor/all?deviceId='+deviceId+'&key='+key)
                 .end((err, res) => {
                     console.log(res.body);
-                    sensorId = res.body.msg.sensorId;
+                    sensorId = res.body.msg[0].sensorId;
                     if (!err && !res.body.error)
                         done();
                 })
@@ -84,6 +102,17 @@ describe('Sensor', function () {
                     value1: "11",
                     sensorId: sensorId
                 })
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
+    describe("getSensorV()", function () {
+        it("getSensorV", function (done) {
+            agent.get(ip + ":" + config.server.port + '/api/sensor/getValue?sensorId='+sensorId+'&key='+key)
                 .end((err, res) => {
                     console.log(res.body);
                     if (!err && !res.body.error)

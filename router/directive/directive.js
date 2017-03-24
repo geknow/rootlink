@@ -5,16 +5,19 @@ const db = require('./../../model/index');
 const User = db.models.User;
 const Device = db.models.Device;
 const Sensor = db.models.Sensor;
+const Trigger = db.models.Trigger;
 const Directive = db.models.Directive;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 const logger = require("../../log/index").logger;
 const utilx = require("../../lib/utilx");
-const jointStr = utilx.jointStr;
+const generatorStr = utilx.generatorStr;
+const async = require("async");
+var server = require("../../config/config").server;
 
 module.exports = router => {
-    router.get("/:str",async (ctx, next) => {
+    router.get("/:str", async(ctx, next) => {
         let str = ctx.params.str;
         logger.debug(str);
         str = utilx.getStrInfo(str);
@@ -27,7 +30,16 @@ module.exports = router => {
         let operationUrl;
         try {
             let body = ctx.request.body;
+            let operation = body.operation;
+            let sensorId = body.sensorId;
             let triggerId = body.triggerId;
+            if (!!sensorId && !!triggerId) {
+                throw Error("sensorId和triggerId都存在");
+            }
+            if (!operation) {
+                throw Error("operation null");
+            }
+
             let u = await User.findOne({
                 where: {
                     userId: ctx.currentUser.userId
@@ -36,13 +48,21 @@ module.exports = router => {
             });
             let key = u.key;
 
-            let status = body.status;
-            status = parseInt(status);
-            if((status !== 0 && status !== 1 ) || !triggerId){
-                throw Error("参数缺失或错误");
+
+            if (!!sensorId) {
+                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/sensor/getValue?sensorId=${sensorId}&key=${key}`);
+            } else if (!!triggerId) {
+                let status = body.status;
+                status = parseInt(status);
+                if (status !== 0 && status !== 1) {
+                    throw Error("status参数错误");
+                }
+                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/trigger/control?status=${status}&triggerId=${triggerId}&key=${key}`);
+            } else {
+                throw Error("sensorId或triggerId缺失");
             }
 
-            let operation = body.operation;
+
             let user = ctx.currentUser;
             let directive = await Directive.findOne({
                 where: {
@@ -50,52 +70,109 @@ module.exports = router => {
                     operation
                 }
             });
-            if(directive){
+            if (directive) {
                 throw Error("operation exist");
             }
-            operationUrl = jointStr(status,triggerId,key);
+
             await Directive.create({
                 operation,
                 operationUrl,
-                UserId: user.userId
+                UserId: user.userId,
+                TriggerId: triggerId,
+                SensorId: sensorId
             })
-        }catch (e){
+        } catch (e) {
             logger.error(e);
-            responser.catchErr(ctx,e);
+            responser.catchErr(ctx, e);
             return;
         }
 
-        responser.success(ctx,operationUrl);
+        responser.success(ctx, operationUrl);
     });
 
-    router.get("/directive/all", async(ctx,next) => {
+    router.get("/directive/all", async(ctx, next) => {
 
-        let operations;
-        try{
-           operations = await Directive.findOne({
+        let directives;
+        try {
+            let operations = await Directive.findOne({
                 where: {
                     UserId: ctx.currentUser.userId
-                }
+                },
+                attributes: ["operation", "directiveId", "UserId", "TriggerId", "SensorId"]
             });
-        }catch (e){
+
+            directives = [{
+                operation: operations.operation,
+                directiveId: operations.directiveId,
+                UserId: operations.UserId,
+                TriggerId: operations.TriggerId,
+                SensorId: operations.SensorId
+            }];
+            let p = new Promise((resolve, reject) => {
+                async.eachSeries(directives, async(operation, callback) => {
+                    let sensorId = operation.SensorId;
+                    let triggerId = operation.TriggerId;
+
+                    if (!!sensorId) {
+                        Sensor.findOne({
+                            where: {
+                                sensorId
+                            }
+                        }).then((sensor) => {
+                            operation.sensor = sensor;
+                            callback()
+                        });
+                    } else if (!!triggerId) {
+                        Trigger.findOne({
+                            where: {
+                                triggerId
+                            }
+                        }).then((trigger) => {
+                            operation.trigger = {
+                                name: trigger.name,
+                                status: trigger.status,
+                                triggerId: trigger.triggerId,
+                                DeviceId: trigger.DeviceId,
+                                UserId: trigger.UserId
+                            };
+                            callback();
+                        })
+                    }
+                }, function (err) {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(directives);
+                });
+            });
+
+            directives = await p;
+            responser.success(ctx, {
+                directives
+            })
+
+
+        } catch (e) {
             logger.error(e);
-            responser.catchErr(ctx,e);
+            responser.catchErr(ctx, e);
             return;
         }
-        responser.success(ctx,{
-            operations
-        })
+
+
     });
 
-    router.post("/directive/update",async (ctx,next) => {
+    router.post("/directive/update", async(ctx, next) => {
         let operationUrl;
-        try{
+        try {
             let body = ctx.request.body;
 
             let operation = body.operation;
 
             let status = body.status;
             let triggerId = body.triggerId;
+            let sensorId = body.sensorId;
+
+
             let u = await User.findOne({
                 where: {
                     userId: ctx.currentUser.userId
@@ -103,32 +180,40 @@ module.exports = router => {
                 attributes: ["key"]
             });
             let key = u.key;
-            status = parseInt(status);
-            if((status !== 0 && status !== 1 ) || !triggerId){
-                throw Error("参数缺失或错误");
-            }
 
-            operationUrl = jointStr(status,triggerId,key);
+            if (!!sensorId) {
+                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/sensor/getValue?sensorId=${sensorId}&key=${key}`);
+            } else if (!!triggerId) {
+                status = parseInt(status);
+                if ((status !== 0 && status !== 1 ) || !triggerId) {
+                    throw Error("参数缺失或错误");
+                }
+
+                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/trigger/control?status=${status}&triggerId=${triggerId}&key=${key}`);
+
+            } else {
+                throw Error("参数缺失");
+            }
 
             await Directive.update({
                 operationUrl
-            },{
+            }, {
                 where: {
                     operation,
                     UserId: ctx.currentUser.userId
                 }
             })
-        }catch (e){
+        } catch (e) {
             logger.error(e);
-            responser.catchErr(ctx,e);
+            responser.catchErr(ctx, e);
             return;
         }
-        responser.success(ctx,operationUrl)
+        responser.success(ctx, operationUrl)
     });
 
-    router.post("/directive/delete" ,async (ctx, next) => {
+    router.post("/directive/delete", async(ctx, next) => {
 
-        try{
+        try {
             let body = ctx.request.body;
             let operation = body.operation;
 
@@ -138,9 +223,9 @@ module.exports = router => {
                     UserId: ctx.currentUser.userId
                 }
             })
-        }catch (e){
+        } catch (e) {
             logger.error(e);
-            responser.catchErr(ctx,e);
+            responser.catchErr(ctx, e);
             return;
         }
         responser.success(ctx);

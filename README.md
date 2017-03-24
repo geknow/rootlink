@@ -539,9 +539,11 @@ Method:POST
 ```json
 RequestData:{
      operation: String //allowNull(false),命令
+	 
 	 status: ,//0 或者 1
-	 triggerId: ,
-	 operation: String //名字
+     triggerId: ,
+     或者
+     sensorId:
 }
 ```
 响应格式:
@@ -559,9 +561,11 @@ Method:POST
 ```json
 RequestData:{
      	operation: String //allowNull(false),命令
+     	
      	 status: ,//0 或者 1
      	 triggerId: ,
-     	 operation: String //名字
+  		 或者
+  		 sensorId: 
 }
 ```
 响应格式:

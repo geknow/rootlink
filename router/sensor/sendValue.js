@@ -38,8 +38,8 @@ module.exports = router => {
             sensorV.forEach(name => {
                 senV[name] = body[name];
             });
-
-
+            console.log("===============================");
+            console.log(senV);
             await SensorValue.create(senV);
         } catch (e) {
             logger.error(e);
@@ -56,7 +56,9 @@ module.exports = router => {
         try{
             let query = ctx.request.query;
             let sensorId = query.sensorId;
-
+            if(!sensorId){
+                throw Error("sensorId 缺失");
+            }
             sensorVs = await SensorValue.findAll({
                 where: {
                     SensorId: sensorId

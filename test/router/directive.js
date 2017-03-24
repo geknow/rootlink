@@ -20,7 +20,7 @@ var deviceId;
 var key;
 var triggerId;
 var operationUrl;
-
+var sensorId;
 
 describe('Directive', function () {
     this.timeout(7000);     // extend timeout
@@ -179,6 +179,105 @@ describe('Directive', function () {
                 })
         })
     });
+
+
+    describe("addSensor()", function () {
+        it("addSensor", function (done) {
+            console.log(deviceId);
+            agent.post(ip + ":" + config.server.port + '/api/sensor/add?key='+key)
+                .send({
+                    name: "数值类型传感器",
+                    description: "1",
+                    unit: "C",
+                    deviceId: deviceId
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                    sensorId = res.body.msg.sensorId;
+
+                })
+        })
+    });
+
+    describe("addDirective()", function () {
+        it("addDirective", function (done) {
+            agent.post(ip + ":" + config.server.port + '/api/directive/add')
+                .send({
+                    operation: str,
+                    sensorId,
+                    UserId: userId
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    operationUrl = res.body.msg;
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
+    describe("doDirective()", function () {
+        it("doDirective", function (done) {
+            console.log(operationUrl);
+            agent.get(operationUrl)
+                .end((err, res) => {
+                    console.log(res.body);
+                    operationUrl = res.body.msg;
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
+    describe("updateDirective()", function () {
+        it("updateDirective", function (done) {
+            agent.post(ip + ":" + config.server.port + '/api/directive/update')
+                .send({
+                    operation: str,
+                    sensorId,
+                    UserId: userId
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    operationUrl = res.body.msg;
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
+    describe("doDirective()", function () {
+        it("doDirective", function (done) {
+            console.log(operationUrl);
+            agent.get(operationUrl)
+                .end((err, res) => {
+                    console.log(res.body);
+                    operationUrl = res.body.msg;
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
+
+    describe("deleteDirective()", function () {
+        it("deleteDirective", function (done) {
+            agent.post(ip + ":" + config.server.port + '/api/directive/delete')
+                .send({
+                    operation: str,
+                    UserId: userId
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
+
 });
 
 

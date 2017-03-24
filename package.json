@@ -13,6 +13,7 @@
   "author": "oureda",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.1.5",
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.5",

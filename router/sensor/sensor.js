@@ -47,6 +47,9 @@ module.exports = router => {
             if (!ok) {
                 throw Error("类型错误");
             }
+            if(!body.deviceId){
+                throw Error("deviceId缺失");
+            }
             sensor = {
                 name: body.name,
                 unit: body.name === "GPS" ? null : body.unit,
