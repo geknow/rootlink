@@ -119,7 +119,14 @@ module.exports = router => {
                                 sensorId
                             }
                         }).then((sensor) => {
-                            operation.sensor = sensor;
+                            operation.sensor = {
+                                name: sensor.name,
+                                unit: sensor.unit,
+                                description: sensor.description,
+                                SensorId: sensor.SensorId,
+                                UserId: sensor.UserId,
+                                DeviceId: sensor.DeviceId
+                            };
                             callback()
                         });
                     } else if (!!triggerId) {

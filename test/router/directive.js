@@ -205,7 +205,7 @@ describe('Directive', function () {
         it("addDirective", function (done) {
             agent.post(ip + ":" + config.server.port + '/api/directive/add')
                 .send({
-                    operation: str,
+                    operation: new Date().toTimeString(),
                     sensorId,
                     UserId: userId
                 })
