@@ -22,6 +22,7 @@ module.exports = router => {
         let endT = query.endTime;
         let device;
         let sensorV;
+        var temp = {};
         try {
             device = await Device.findOne({
                 where: {
@@ -52,11 +53,9 @@ module.exports = router => {
                         ]
                     }
                 });
-
-                var temp = {};
-                temp.device = device;
                 temp.sensorValue = sensorV;
             }
+            temp.device = device;
 
             responser.success(ctx, temp);
         } catch (e) {
