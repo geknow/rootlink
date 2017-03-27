@@ -11,6 +11,7 @@ var url = require('url');
 
 
 var UserId;
+
 function *addUser() {
     for (var i = 0; i < 5; i++) {
         var user = {
@@ -39,7 +40,7 @@ function *addBlog() {
         yield db.models.Blog.create(blog);
     }
 }
-var deviceId ;
+var deviceId;
 function *addDevice() {
     for (var i = 0; i < 5; i++) {
         var device = {
@@ -52,6 +53,8 @@ function *addDevice() {
         deviceId = device.deviceId;
     }
 }
+
+var sensorId;
 function *addSensor() {
     for (var i = 0; i < 5; i++) {
         var sensor = {
@@ -62,7 +65,19 @@ function *addSensor() {
             UserId: UserId,
             unit: "经纬度"
         };
-        yield db.models.Sensor.create(sensor);
+        var sensor = yield db.models.Sensor.create(sensor);
+        sensorId = sensor.sensorId;
+    }
+}
+
+function *addSensorV() {
+    for (var i = 0; i < 5; i++) {
+        var sensorV = {
+            value1: i,
+            SensorId: sensorId,
+            DeviceId: deviceId
+        };
+        yield db.models.SensorValue.create(sensorV);
     }
 }
 
@@ -74,6 +89,7 @@ function* init() {
     yield addBlog();
     yield addDevice();
     yield addSensor();
+    yield addSensorV();
 }
 
 co(function*() {

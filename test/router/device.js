@@ -57,6 +57,20 @@ describe('Device', function () {
         })
     });
 
+    describe("getDevice()", function () {
+        it("getDevice", function (done) {
+            var a = new Date('2017-03-27 04:46:31.847000').getTime();
+            var b = new Date().getTime();
+            agent.get(ip + ":" + config.server.port + '/api/device/get?deviceId=ce5a4cde-06ea-4f75-a380-e81bf265ddb4'
+                +'&startTime='+a+'&endTime='+b)
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+                })
+        })
+    });
+
 
     describe("delDevice()", function () {
         it("delDevice", function (done) {

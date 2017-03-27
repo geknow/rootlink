@@ -15,18 +15,53 @@ const isEmptyObject = require("../../lib/utilx").isEmptyObject;
 
 module.exports = router => {
 
-    router.get("/device/get", async(ctx,next) => {
-        let deviceId = ctx.query.deviceId;
-        try{
-            let device = await Device.findOne({
+    router.get("/device/get", async(ctx, next) => {
+        let query = ctx.query;
+        let deviceId = query.deviceId;
+        let startT = query.startTime;
+        let endT = query.endTime;
+        let device;
+        let sensorV;
+        try {
+            device = await Device.findOne({
                 where: {
                     deviceId
                 }
             });
-            responser.success(ctx,device);
-        }catch (e){
+            if (!!startT && !!endT) {
+                startT = parseInt(startT);
+                endT = parseInt(endT);
+
+                startT = new Date(startT);
+                endT = new Date(endT);
+
+                sensorV = await SensorValue.findAll({
+                    where: {
+                        DeviceId: deviceId,
+                        $and: [
+                            {
+                                createdAt: {
+                                    $gte: startT
+                                }
+                            },
+                            {
+                                createdAt: {
+                                    $lte: endT
+                                }
+                            }
+                        ]
+                    }
+                });
+
+                var temp = {};
+                temp.device = device;
+                temp.sensorValue = sensorV;
+            }
+
+            responser.success(ctx, temp);
+        } catch (e) {
             logger.error(e);
-            responser.catchErr(ctx,e);
+            responser.catchErr(ctx, e);
         }
     });
 

@@ -250,6 +250,11 @@ Method:GET
 ```json
 RequestData:{
      deviceId: 
+     
+     
+     //用于获取某设备下在某时期的所有记录
+     startTime: //allowNUll(true),时间戳如1490615191847
+     endTime: //allowNUll(true),时间戳,如1490615191847
 }
 ```
 响应格式:

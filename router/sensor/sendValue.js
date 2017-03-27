@@ -38,8 +38,8 @@ module.exports = router => {
             sensorV.forEach(name => {
                 senV[name] = body[name];
             });
-            console.log("===============================");
-            console.log(senV);
+            logger.debug("===============================");
+            logger.debug(senV);
             await SensorValue.create(senV);
         } catch (e) {
             logger.error(e);
