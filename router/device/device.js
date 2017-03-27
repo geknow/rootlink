@@ -54,10 +54,12 @@ module.exports = router => {
                     }
                 });
                 temp.sensorValue = sensorV;
+                temp.device = device;
+                responser.success(ctx, temp);
+            } else {
+                responser.success(ctx, device);
             }
-            temp.device = device;
 
-            responser.success(ctx, temp);
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
