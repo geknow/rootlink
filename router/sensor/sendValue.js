@@ -6,7 +6,6 @@ const sensorV = require("../../config/config").sensorValue;
 const db = require('./../../model/index');
 const SensorValue = db.models.SensorValue;
 const Sensor = db.models.Sensor;
-const Device = db.models.Device;
 const responser = require('./../../lib/responser');
 const logger = require("../../log/index").logger;
 

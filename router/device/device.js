@@ -2,7 +2,6 @@
  * Created by webhugo on 12/26/16.
  */
 const db = require('./../../model/index');
-const User = db.models.User;
 const Device = db.models.Device;
 const Sensor = db.models.Sensor;
 const SensorValue = db.models.SensorValue;
@@ -11,7 +10,6 @@ const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 const logger = require("../../log/index").logger;
-const isEmptyObject = require("../../lib/utilx").isEmptyObject;
 
 module.exports = router => {
 
@@ -29,6 +27,9 @@ module.exports = router => {
                     deviceId
                 }
             });
+            logger.debug("=================");
+            logger.debug(device);
+            logger.debug("++++++++");
             if (!!startT && !!endT) {
                 startT = parseInt(startT);
                 endT = parseInt(endT);
@@ -53,6 +54,7 @@ module.exports = router => {
                         ]
                     }
                 });
+
                 temp.sensorValue = sensorV;
                 temp.device = device;
                 responser.success(ctx, temp);
@@ -71,12 +73,8 @@ module.exports = router => {
 
         let devices;
         try {
-            let user = ctx.currentUser;
-            logger.debug(user);
-            user = user || (await auth.user(ctx));
-            if (!user) {
-                throw Error("没登录");
-            }
+            let user = ctx.currentUser || (await auth.user(ctx));
+
             devices = await Device.findAll({
                 where: {
                     UserId: user.userId
@@ -95,7 +93,9 @@ module.exports = router => {
         try {
             let body = ctx.request.body;
             let user = ctx.currentUser || (await auth.user(ctx));
-
+            if (!body.name || !body.description) {
+                throw Error("参数缺失");
+            }
             device = await Device.create({
                 name: body.name,
                 description: body.description,
@@ -115,7 +115,9 @@ module.exports = router => {
             let body = ctx.request.body;
             let deviceId = body.deviceId;
             logger.debug(deviceId);
-
+            if (!deviceId) {
+                throw Error("deviceId null");
+            }
             count = await Device.destroy({
                 where: {
                     deviceId: deviceId
@@ -160,12 +162,11 @@ module.exports = router => {
             let body = ctx.request.body;
             let user = ctx.currentUser || (await auth.user(ctx));
 
-            body.name ? device.name = body.name : null;
-            body.description ? device.description = body.description : null;
-
-            if (isEmptyObject(device)) {
-                throw Error("nothing update");
+            if (!body.deviceId || !body.name || !body.description) {
+                throw Error("参数缺失");
             }
+            device.name = body.name;
+            device.description = body.description;
 
             device = await Device.update(device, {
                 where: {

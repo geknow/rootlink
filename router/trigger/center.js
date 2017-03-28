@@ -39,7 +39,7 @@ module.exports = router => {
         let trigger;
 
         try {
-            if (!ctx.currentUser.userId || !triggerId) {
+            if (!triggerId) {
                 throw Error("triggerId is null");
             }
             trigger = await Trigger.findOne({
@@ -53,7 +53,7 @@ module.exports = router => {
             responser.catchErr(ctx, e);
             return;
         }
-        if (q) {
+        if (q) {//为了嵌入式设备解析方便
             responser.success(ctx, {
                 status: trigger.status ? 1 : 0
             });
@@ -73,7 +73,7 @@ module.exports = router => {
         let trigger;
 
         try {
-            if (!name || !ctx.currentUser.userId || !deviceId) {
+            if (!name || !deviceId) {
                 throw Error("name or deviceId null")
             }
             trigger = await Trigger.create({
@@ -98,6 +98,9 @@ module.exports = router => {
     router.post("/trigger/delete", async(ctx, next) => {
         let triggerId = ctx.request.body.triggerId;
         try {
+            if(!triggerId){
+                throw Error("triggerId null");
+            }
             await Trigger.destroy({
                 where: {
                     UserId: ctx.currentUser.userId,
@@ -118,8 +121,11 @@ module.exports = router => {
         let triggerId = ctx.request.query.triggerId;
 
             try {
+                if(!triggerId){
+                    throw Error("triggerId null");
+                }
                 status = parseInt(status);
-                if ((status !== 0 && status !== 1 ) || !ctx.currentUser.userId){
+                if (status !== 0 && status !== 1){
                     throw Error("status not valid")
                 }
 

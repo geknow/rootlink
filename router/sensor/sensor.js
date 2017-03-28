@@ -6,9 +6,7 @@ const Sensor = db.models.Sensor;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
-const config = require('../../config/config');
 const type = require("./../../name.json").type;
-const isEmptyObject = require("../../lib/utilx").isEmptyObject;
 const SensorValue = db.models.SensorValue;
 const logger = require("../../log/index").logger;
 
@@ -20,7 +18,9 @@ module.exports = router => {
             let deviceId = ctx.request.query.deviceId;
             logger.debug(deviceId);
             logger.debug("----------");
-
+            if(!deviceId){
+                throw Error("deviceId null");
+            }
             sensors = await Sensor.findAll({
                 where: {
                     DeviceId: deviceId
@@ -40,15 +40,15 @@ module.exports = router => {
         try {
             let body = ctx.request.body;
             let ok = false;
-            type.forEach((name) => {
-                if (name == body.name)
+            type.forEach((Name) => {
+                if (Name == body.name)
                     ok = true;
             });
             if (!ok) {
                 throw Error("类型错误");
             }
-            if(!body.deviceId){
-                throw Error("deviceId缺失");
+            if(!body.deviceId || !body.description){
+                throw Error("参数缺失");
             }
             sensor = {
                 name: body.name,
@@ -74,7 +74,9 @@ module.exports = router => {
         try {
             let body = ctx.request.body;
             let sensorId = body.sensorId;
-
+            if(!sensorId){
+                throw Error("sensorId null");
+            }
             count = await Sensor.destroy({
                 where: {
                     sensorId
@@ -106,23 +108,21 @@ module.exports = router => {
 
             let body = ctx.request.body;
             let ok = false;
-            type.forEach((name) => {
-                if (name == body.name)
+            type.forEach((Name) => {
+                if (Name == body.name)
                     ok = true;
             });
             if (!ok) {
                 throw Error("类型错误");
             }
-
-            body.name ? sensor.name = body.name : null;
-            body.unit === "GPS" ? sensor.unit = body.unit : null;
-            body.description ? sensor.description = body.description : null;
-            body.DeviceId ? sensor.DeviceId = body.DeviceId : null;
-            sensor.UserId = ctx.currentUser.id;
-
-            if (isEmptyObject(sensor)) {
+            if(!body.name || !body.unit || !body.description || !body.DeviceId){
                 throw Error("参数缺失");
             }
+            sensor.name = body.name;
+            sensor.unit = body.unit;
+            sensor.description = body.description;
+            sensor.DeviceId = body.DeviceId;
+            sensor.UserId = ctx.currentUser.id;
 
             sensor = await Sensor.create(sensor)
         } catch (e) {

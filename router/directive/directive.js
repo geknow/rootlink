@@ -3,7 +3,6 @@
  */
 const db = require('./../../model/index');
 const User = db.models.User;
-const Device = db.models.Device;
 const Sensor = db.models.Sensor;
 const Trigger = db.models.Trigger;
 const Directive = db.models.Directive;
@@ -70,7 +69,7 @@ module.exports = router => {
                     operation
                 }
             });
-            if (directive) {
+            if (!!directive) {
                 throw Error("operation exist");
             }
 
@@ -92,7 +91,7 @@ module.exports = router => {
 
     router.get("/directive/all", async(ctx, next) => {
 
-        let directives;
+        let directives = [];
         try {
             let operations = await Directive.findOne({
                 where: {
@@ -100,69 +99,71 @@ module.exports = router => {
                 },
                 attributes: ["operation", "directiveId", "UserId", "TriggerId", "SensorId"]
             });
+            if (!!operations) {
+                directives = [{
+                    operation: operations.operation,
+                    directiveId: operations.directiveId,
+                    UserId: operations.UserId,
+                    TriggerId: operations.TriggerId,
+                    SensorId: operations.SensorId
+                }];
+                let p = new Promise((resolve, reject) => {
+                    async.eachSeries(directives, async(operation, callback) => {
+                        let sensorId = operation.SensorId;
+                        let triggerId = operation.TriggerId;
 
-            directives = [{
-                operation: operations.operation,
-                directiveId: operations.directiveId,
-                UserId: operations.UserId,
-                TriggerId: operations.TriggerId,
-                SensorId: operations.SensorId
-            }];
-            let p = new Promise((resolve, reject) => {
-                async.eachSeries(directives, async(operation, callback) => {
-                    let sensorId = operation.SensorId;
-                    let triggerId = operation.TriggerId;
-
-                    if (!!sensorId) {
-                        Sensor.findOne({
-                            where: {
-                                sensorId
-                            }
-                        }).then((sensor) => {
-                            operation.sensor = {
-                                name: sensor.name,
-                                unit: sensor.unit,
-                                description: sensor.description,
-                                SensorId: sensor.SensorId,
-                                UserId: sensor.UserId,
-                                DeviceId: sensor.DeviceId
-                            };
-                            callback()
-                        });
-                    } else if (!!triggerId) {
-                        Trigger.findOne({
-                            where: {
-                                triggerId
-                            }
-                        }).then((trigger) => {
-                            operation.trigger = {
-                                name: trigger.name,
-                                status: trigger.status,
-                                triggerId: trigger.triggerId,
-                                DeviceId: trigger.DeviceId,
-                                UserId: trigger.UserId
-                            };
-                            callback();
-                        })
-                    }
-                }, function (err) {
-                    if (err)
-                        reject(err);
-                    else
-                        resolve(directives);
+                        if (!!sensorId) {
+                            Sensor.findOne({
+                                where: {
+                                    sensorId
+                                }
+                            }).then((sensor) => {
+                                operation.sensor = {
+                                    name: sensor.name,
+                                    unit: sensor.unit,
+                                    description: sensor.description,
+                                    SensorId: sensor.SensorId,
+                                    UserId: sensor.UserId,
+                                    DeviceId: sensor.DeviceId
+                                };
+                                callback()
+                            });
+                        } else if (!!triggerId) {
+                            Trigger.findOne({
+                                where: {
+                                    triggerId
+                                }
+                            }).then((trigger) => {
+                                operation.trigger = {
+                                    name: trigger.name,
+                                    status: trigger.status,
+                                    triggerId: trigger.triggerId,
+                                    DeviceId: trigger.DeviceId,
+                                    UserId: trigger.UserId
+                                };
+                                callback();
+                            })
+                        }
+                    }, function (err) {
+                        if (err)
+                            reject(err);
+                        else
+                            resolve(directives);
+                    });
                 });
-            });
+                directives = await p;
 
-            directives = await p;
+
+            }
+
+
             responser.success(ctx, {
                 directives
             })
 
-
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
-            return;
         }
 
 
@@ -178,7 +179,9 @@ module.exports = router => {
             let status = body.status;
             let triggerId = body.triggerId;
             let sensorId = body.sensorId;
-
+            if (!!sensorId && !!triggerId) {
+                throw Error("sensorId和triggerId都存在");
+            }
 
             let u = await User.findOne({
                 where: {
@@ -192,7 +195,7 @@ module.exports = router => {
                 operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/sensor/getValue?sensorId=${sensorId}&key=${key}`);
             } else if (!!triggerId) {
                 status = parseInt(status);
-                if ((status !== 0 && status !== 1 ) || !triggerId) {
+                if (status !== 0 && status !== 1) {
                     throw Error("参数缺失或错误");
                 }
 
