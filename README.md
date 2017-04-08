@@ -17,6 +17,22 @@
 在开发阶段，`version` 一直使用 `1.0.0`，在发行之后，根据语义化版本号发行版本。
 
 
+## 部署后端流程
+
+### clone 前端代码
+将后端代码 [yeelink](https://git.oschina.net/shanchuanc/yeelink.git) 放于项目同级目录，如
+```
+- code
+|- yeelink
+|- rootlink
+```
+
+### 执行脚本
+- 在后端目录下，执行 `npm install`
+- 启动项目 执行 `make proStart`
+- 如果项目已经启动的前提下，想重启项目执行 `make proRestart`
+
+
 # url :
 # port :
 
