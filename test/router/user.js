@@ -21,39 +21,39 @@ describe('User', function () {
     /**
      * 注册
      */
-    // describe('getCode()', function () {
-    //     it('getCode', function (done) {
-    //         var url = ip + ":" + config.server.port + '/api/register/getCode?email=18940874730@163.com';
-    //         agent.get(url)
-    //             .end((err, res) => {
-    //                 console.log(res.body);
-    //                 code = res.body.msg.code;
-    //                 if (!err && !res.body.error)
-    //                     done();
-    //             });
-    //     })
-    // });
-    //
-    //
-    // describe("register()", function () {
-    //     it("registered", function (done) {
-    //         var url = ip + ":" + config.server.port + '/api/register';
-    //         agent.post(url)
-    //             .send({
-    //                 password: 123,
-    //                 email: "18940874730@163.com",
-    //                 username: "hugo",
-    //                 type: 1,
-    //                 code: code
-    //             })
-    //             .end((err, res) => {
-    //                 console.log(res.body);
-    //                 if (!err && !res.body.error) {
-    //                     done();
-    //                 }
-    //             });
-    //     })
-    // });
+    describe('getCode()', function () {
+        it('getCode', function (done) {
+            var url = ip + ":" + config.server.port + '/api/register/getCode?email=18940874730@163.com';
+            agent.get(url)
+                .end((err, res) => {
+                    console.log(res.body);
+                    code = res.body.msg.code;
+                    if (!err && !res.body.error)
+                        done();
+                });
+        })
+    });
+
+
+    describe("register()", function () {
+        it("registered", function (done) {
+            var url = ip + ":" + config.server.port + '/api/register';
+            agent.post(url)
+                .send({
+                    password: 123,
+                    email: "18940874730@163.com",
+                    username: "hugofsa",
+                    type: 1,
+                    code: code
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error) {
+                        done();
+                    }
+                });
+        })
+    });
 
     // describe('login()', function () {
     //     it('logined', function (done) {

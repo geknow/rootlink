@@ -65,15 +65,20 @@ let config = {
             from: "OurEDA <ouredaeducation@yeah.net>", // 发件地址
             to: address, // 收件列表 example: "2838890xx@qq.com, minimixx@126.com"
             subject: "您还差一步就完成注册，请使用下面的链接激活您的帐户", // 标题
-            html: `<div style="text-indent: 2em;`
-            + `min-height: 500px;`
-            + `font-family:MicrosoftYaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu;`
-            + `background: -webkit-gradient(white,darkseagreen);`
-            + `background: -moz-gradient(white,darkseagreen);`
-            + `background: -o-gradient(white,darkseagreen);`
-            + `background: linear-gradient(white,darkseagreen);"><h1>欢迎使用RootLink</h1>`
-            + `<p>验证码:${code}</p><p>若您不知道这封邮件从何而来`
-            + `, 请将其忽略, 对给您带来的不便深表歉意.</p></div>` // html 内容
+            // html: `<div style="text-indent: 2em;`
+            // + `min-height: 500px;`
+            // + `font-family:MicrosoftYaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu;`
+            // + `background: -webkit-gradient(white,darkseagreen);`
+            // + `background: -moz-gradient(white,darkseagreen);`
+            // + `background: -o-gradient(white,darkseagreen);`
+            // + `background: linear-gradient(white,darkseagreen);"><h1>欢迎使用RootLink</h1>`
+            // + `<p>验证码:${code}</p><p>若您不知道这封邮件从何而来`
+            // + `, 请将其忽略, 对给您带来的不便深表歉意.</p></div>` // html 内容
+            html: `<div style="background: white; border-radius: 4px; color: #3f3f3f; padding: 15px; font-family: Helvetica, Arial, 'Microsoft YaHei', sans-serif; border: 1px solid #e5e5e5; border-top: 3px solid #22b6e6">
+    <h1 style="color: #3f3f3f; margin: 12px 0; font-size: 24px; font-weight: bold;">欢迎使用 Rootlink</h1>
+    <p>验证码：<span style="color: rgb(20, 166, 222); font-weight: bold; font-family: Consolas, Courier new, monospace; display: inline-block; padding: 5px 24px; background-color: #e5e5e5; border-radius: 4px;">${code}</span></p>
+    <p style="color: #7f7f7f; font-size: 12px;">若您不知道这封邮件从何而来，请将其忽略。对给您带来的不便深表歉意。</p>
+  </div>`
         };
     },
     Jpush: {

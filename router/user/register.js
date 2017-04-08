@@ -10,7 +10,7 @@ const User = db.models.User;
 const logger = require("../../log/index").logger;
 const utilx = require("../../lib/utilx");
 
-module.exports = router=> {
+module.exports = router => {
 
     router.get('/register', async(ctx, next) => {
         responser.success(ctx);
@@ -43,14 +43,19 @@ module.exports = router=> {
             responser.catchErr(ctx, e);
             return;
         }
-        responser.success(ctx,{
-            code: code
-        })
+        if (process.env.NODE_ENV == "development") {
+            responser.success(ctx, {
+                code: code
+            })
+        } else {
+            responser.success(ctx);
+        }
+
     });
 
-    router.post('/register', async(ctx, next)=> {
+    router.post('/register', async(ctx, next) => {
         let body = ctx.request.body;
-        try{
+        try {
             ctx.checkBody("email").isEmail();
             if (ctx.errors) {
                 throw Error("邮箱错误");
@@ -66,7 +71,7 @@ module.exports = router=> {
             if (email !== body.email) {
                 throw Error("验证码错误");
             }
-        }catch (e){
+        } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
             return;
@@ -92,7 +97,7 @@ module.exports = router=> {
         };
 
         let error;
-        user = await db.models.User.create(user).catch(err=> {
+        user = await db.models.User.create(user).catch(err => {
             error = err;
         });
         if (user) {
