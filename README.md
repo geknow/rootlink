@@ -637,3 +637,12 @@ Response:{
 
 
 
+### 添加图片
+**/uploadImage**
+Method:POST
+```json
+RequestData:{
+     image: FILE 
+}
+```
+
