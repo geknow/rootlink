@@ -14,17 +14,17 @@ var url = require('url');
 var responser = require('../lib/responser');
 let logger = require("../log/index").logger;
 
-var uploadDir = path.join(__dirname,"../public/static");//同时创建public和upload会出错，得先有public文件夹
+var uploadDir = path.join(__dirname, "../public/static");//同时创建public和upload会出错，得先有public文件夹
 
-var newFileName = (filename, flag) => {
+var newFileName = (filename) => {
     var ret;
     do {
         filename = filename.replace(/\s+/g, "");
         var newfilename = `${utilx.randomNum(6)}-${filename}`;
-        ret = path.join(uploadDir, newfilename);
+        ret = path.join(uploadDir);
     } while (fs.exists(ret));
     return {
-        filename: flag ? newfilename : filename,
+        filename: newfilename,
         path: ret,
         url: `/upload/${newfilename}`
     };
@@ -46,11 +46,23 @@ var upload = multer({
     limits: {fileSize: maxSize}
 });
 
+var rename = (newname, oldname) => {
+    let suffix = oldname.substr(oldname.lastIndexOf("."));
+    newname = path.join(uploadDir, newname) + suffix;
+    fs.rename(path.join(uploadDir, oldname), newname, function (err) {
+        if (err)
+            logger.error(err)
+    });
+    return newname;
+};
+
 module.exports = (router) => {
 
     router.post('/uploadImage', upload.single('image'), async(ctx, next) => {
         logger.debug('/uploadImage');
         let newname = ctx.req.file.filename;
+        let name = ctx.req.body.name;
+        newname = rename(name, newname);
         let location = url.resolve("http://" + config.server.ip + ":" + config.server.port, "/static/" + newname);
         responser.success(ctx, location);
     })

@@ -18,9 +18,7 @@ var request = require("request");
 request = request.defaults({jar: true})
 var fs = require("fs");
 var path = require("path");
-var formData = {
-    "image": fs.createReadStream(path.join(__dirname, '../img/a.jpg')),
-};
+
 
 
 describe('uploadImage', function () {
@@ -30,7 +28,11 @@ describe('uploadImage', function () {
             var url = "http://"+ip+":" + config.server.port + '/api/uploadImage';
             request.post({
                 url,
-                formData: formData
+                formData: {
+                    "image": fs.createReadStream(path.join(__dirname, '../img/a.jpg')),
+                    name: "haha"
+                },
+                json: true
             }, function optionalCallback(err, httpResponse, body) {
                 if (err) {
                     return console.error('upload failed:', err);
