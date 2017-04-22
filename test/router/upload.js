@@ -23,11 +23,11 @@ var formData = {
 };
 
 
-describe('Trigger', function () {
+describe('uploadImage', function () {
     this.timeout(7000);     // extend timeout
     describe("uploadImage()", function () {
         it("uploadImage", function (done) {
-            var url = "http://127.0.0.1:" + config.server.port + '/api/uploadImage';
+            var url = "http://"+ip+":" + config.server.port + '/api/uploadImage';
             request.post({
                 url,
                 formData: formData

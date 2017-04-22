@@ -6,7 +6,7 @@ const config = require('./../../config/config');
 var should = require('should');
 let agent = require('superagent').agent();//保存cookie
 // let ip = require("../../config/config").server.ip;
-let ip = "localhost";
+ let ip = "127.0.0.1";
 let token ;
 let key;
 describe('First', function () {

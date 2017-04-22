@@ -50,7 +50,8 @@ module.exports = (router) => {
 
     router.post('/uploadImage', upload.single('image'), async(ctx, next) => {
         logger.debug('/uploadImage');
-        var location = url.resolve("http://" + config.server.ip + ":" + config.server.port, "/static/" + newname);
+        let newname = ctx.req.file.filename;
+        let location = url.resolve("http://" + config.server.ip + ":" + config.server.port, "/static/" + newname);
         responser.success(ctx, location);
     })
 };
