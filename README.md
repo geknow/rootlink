@@ -640,7 +640,8 @@ Response:{
 Method:POST
 ```json
 RequestData:{
-     image: FILE 
+     image: FILE ,
+     name : String
 }
 ```
 
