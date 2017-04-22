@@ -49,6 +49,7 @@
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "redis": "^2.6.3",
+    "request": "^2.81.0",
     "sass-loader": "^4.0.2",
     "sequelize": "^3.24.3",
     "sequelize-short": "^1.0.0",

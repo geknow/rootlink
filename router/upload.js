@@ -11,13 +11,12 @@ var db = require('../model/index');
 db.sync();
 var config = require('../config/config');
 var url = require('url');
-var Course = db.models.Course;
 var responser = require('../lib/responser');
 let logger = require("../log/index").logger;
 
-var uploadDir = path.join('/home/user/static');//同时创建public和upload会出错，得先有public文件夹
+var uploadDir = path.join(__dirname,"../public/static");//同时创建public和upload会出错，得先有public文件夹
 
-var newFileName = (filename) => {
+var newFileName = (filename, flag) => {
     var ret;
     do {
         filename = filename.replace(/\s+/g, "");
@@ -25,7 +24,7 @@ var newFileName = (filename) => {
         ret = path.join(uploadDir, newfilename);
     } while (fs.exists(ret));
     return {
-        filename: newfilename,
+        filename: flag ? newfilename : filename,
         path: ret,
         url: `/upload/${newfilename}`
     };
@@ -49,34 +48,9 @@ var upload = multer({
 
 module.exports = (router) => {
 
-    router.post('/admin/course/upload', upload.single('course'), async(ctx, next) => {
-        logger.debug('/course/upload');
-        var newname = ctx.req.file.filename;
-        var size = ctx.req.file.size;
-        size = size / 1E+6;
-        var body = ctx.req.body;
-        var title = body.title;
-        var difficulty = utilx.leftOrRight(body.difficulty, 1);
-        var description = utilx.leftOrRight(body.description, "none");
-        var teacher = body.teacher;
-        var cover = utilx.leftOrRight(body.cover, "none");
+    router.post('/uploadImage', upload.single('image'), async(ctx, next) => {
+        logger.debug('/uploadImage');
         var location = url.resolve("http://" + config.server.ip + ":" + config.server.port, "/static/" + newname);
-        var course = {
-            title,
-            difficulty,
-            description,
-            teacher,
-            cover,
-            location,
-            size
-        };
-        try {
-            var c = await Course.create(course);
-        } catch (e) {
-            responser.catchErr(ctx, e, 0);
-            return;
-        }
-        course.id = c.id;
-        responser.success(ctx, course);
+        responser.success(ctx, location);
     })
 };

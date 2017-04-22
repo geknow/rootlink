@@ -11,16 +11,16 @@ const responser = require("../lib/responser");
 const logger = require("../log/index").logger;
 const auth = require("../helper/auth");
 
-router.use(async (ctx, next) => {
-    try{
+router.use(async(ctx, next) => {
+    try {
         ctx.render = (path, data) => {
             data = data || {};
             return render(path, data);
         };
         await next();
-    }catch (e){
+    } catch (e) {
         logger.debug(e);
-        ctx.body = responser.catchErr(ctx,e);
+        ctx.body = responser.catchErr(ctx, e);
     }
 });
 
@@ -38,6 +38,8 @@ router.get("/loginValidate", async(ctx, next) => {
         });
     }
 });
+
+
 
 utilx.autoImport(__dirname, (tmpPath) => {   // 自动引入
     require(tmpPath)(router);
