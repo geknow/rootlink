@@ -47,8 +47,7 @@ var upload = multer({
 });
 
 var rename = (newname, oldname) => {
-    let suffix = oldname.substr(oldname.lastIndexOf("."));
-    newname = path.join(uploadDir, newname) + suffix;
+    newname = path.join(uploadDir, newname);
     fs.rename(path.join(uploadDir, oldname), newname, function (err) {
         if (err)
             logger.error(err)
