@@ -404,7 +404,7 @@ Response:{
 Method:POST
 ```json
 RequestData:{
-     sensorId: INT //allowNull(false)
+     sensorId: string //allowNull(false)
 }
 ```
 响应格式:
@@ -422,7 +422,7 @@ Response:{
 Method:POST
 ```json
 RequestData:{
-     sensorId: INT //allowNull(false)
+     sensorId: string//allowNull(false)
      value1: STRING
      value2: STRING
      ...
@@ -443,7 +443,7 @@ Response:{
 Method:GET
 ```json
 RequestData:{
-     sensorId: INT //allowNull(false)
+     sensorId: string//allowNull(false)
 }
 ```
 响应格式:
