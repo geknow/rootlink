@@ -115,13 +115,13 @@ module.exports = router => {
             if (!ok) {
                 throw Error("类型错误");
             }
-            if(!body.name || !body.unit || !body.description || !body.DeviceId){
+            if(!body.name || !body.unit || !body.description || !body.deviceId){
                 throw Error("参数缺失");
             }
             sensor.name = body.name;
             sensor.unit = body.unit;
             sensor.description = body.description;
-            sensor.DeviceId = body.DeviceId;
+            sensor.DeviceId = body.deviceId;
             sensor.UserId = ctx.currentUser.id;
 
             sensor = await Sensor.create(sensor)
