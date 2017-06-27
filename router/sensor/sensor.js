@@ -11,14 +11,14 @@ const SensorValue = db.models.SensorValue;
 const logger = require("../../log/index").logger;
 
 module.exports = router => {
-    router.get("/sensor/all", async(ctx, next) => {
+    router.get("/sensor/all", async (ctx, next) => {
 
         let sensors;
         try {
             let deviceId = ctx.request.query.deviceId;
             logger.debug(deviceId);
             logger.debug("----------");
-            if(!deviceId){
+            if (!deviceId) {
                 throw Error("deviceId null");
             }
             sensors = await Sensor.findAll({
@@ -34,7 +34,7 @@ module.exports = router => {
         responser.success(ctx, sensors);
     });
 
-    router.post("/sensor/add", async(ctx, next) => {
+    router.post("/sensor/add", async (ctx, next) => {
         let sensor;
 
         try {
@@ -47,7 +47,7 @@ module.exports = router => {
             if (!ok) {
                 throw Error("类型错误");
             }
-            if(!body.deviceId || !body.description){
+            if (!body.deviceId || !body.description) {
                 throw Error("参数缺失");
             }
             sensor = {
@@ -68,13 +68,13 @@ module.exports = router => {
         responser.success(ctx, sensor);
     });
 
-    router.post("/sensor/delete", async(ctx, next) => {
+    router.post("/sensor/delete", async (ctx, next) => {
 
         let count;
         try {
             let body = ctx.request.body;
             let sensorId = body.sensorId;
-            if(!sensorId){
+            if (!sensorId) {
                 throw Error("sensorId null");
             }
             count = await Sensor.destroy({
@@ -100,12 +100,9 @@ module.exports = router => {
         responser.success(ctx, count);
     });
 
-    router.post("/sensor/update", async(ctx, next) => {
+    router.post("/sensor/update", async (ctx, next) => {
         let sensor = {};
-
-
         try {
-
             let body = ctx.request.body;
             let ok = false;
             type.forEach((Name) => {
@@ -115,7 +112,7 @@ module.exports = router => {
             if (!ok) {
                 throw Error("类型错误");
             }
-            if(!body.name || !body.unit || !body.description || !body.deviceId){
+            if (!body.name || !body.unit || !body.description || !body.deviceId || !body.sensorId) {
                 throw Error("参数缺失");
             }
             sensor.name = body.name;
@@ -124,7 +121,12 @@ module.exports = router => {
             sensor.DeviceId = body.deviceId;
             sensor.UserId = ctx.currentUser.id;
 
-            sensor = await Sensor.update(sensor)
+            await Sensor.update(sensor, {
+                where: {
+                    sensorId: body.sensorId,
+                    UserId: ctx.currentUser.userId
+                }
+            })
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);

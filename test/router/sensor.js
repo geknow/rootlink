@@ -133,5 +133,26 @@ describe('Sensor', function () {
                         done();
                 })
         })
-    })
+    });
+
+
+    describe("updateSensor()", function () {
+        it("updateSensor", function (done) {
+            console.log(deviceId);
+            agent.post(ip + ":" + config.server.port + '/api/sensor/update')
+                .send({
+                    name: "数值类型传感器",
+                    description: "11111111111",
+                    unit: "C",
+                    deviceId: deviceId,
+                    sensorId: sensorId
+                })
+                .end((err, res) => {
+                    console.log(res.body);
+                    if (!err && !res.body.error)
+                        done();
+
+                })
+        })
+    });
 });
