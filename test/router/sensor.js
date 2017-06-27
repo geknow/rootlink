@@ -120,22 +120,6 @@ describe('Sensor', function () {
                 })
         })
     });
-
-    describe("delSensor()", function () {
-        it("delSensor", function (done) {
-            agent.post(ip + ":" + config.server.port + '/api/sensor/delete?key='+key)
-                .send({
-                    sensorId: sensorId
-                })
-                .end((err, res) => {
-                    console.log(res.body);
-                    if (!err && !res.body.error)
-                        done();
-                })
-        })
-    });
-
-
     describe("updateSensor()", function () {
         it("updateSensor", function (done) {
             console.log(deviceId);
@@ -155,4 +139,18 @@ describe('Sensor', function () {
                 })
         })
     });
+    // describe("delSensor()", function () {
+    //     it("delSensor", function (done) {
+    //         agent.post(ip + ":" + config.server.port + '/api/sensor/delete?key='+key)
+    //             .send({
+    //                 sensorId: sensorId
+    //             })
+    //             .end((err, res) => {
+    //                 console.log(res.body);
+    //                 if (!err && !res.body.error)
+    //                     done();
+    //             })
+    //     })
+    // });
+
 });
