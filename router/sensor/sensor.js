@@ -124,7 +124,7 @@ module.exports = router => {
             sensor.DeviceId = body.deviceId;
             sensor.UserId = ctx.currentUser.id;
 
-            sensor = await Sensor.create(sensor)
+            sensor = await Sensor.update(sensor)
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
