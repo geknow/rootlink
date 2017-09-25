@@ -16,8 +16,10 @@ module.exports = function (sequelize, DataTypes) {
     }, {
         updatedAt: false,
         associate: function (models) {
-            models.SensorValue.belongsTo(models.Sensor, {foreignKey: "SensorId"});
+            models.SensorValue.belongsTo(models.Sensor, {foreignKey: "SensorId",constraints: false});
             models.SensorValue.belongsTo(models.Device, {foreignKey: "DeviceId"});
+
+            models.Sensor.hasMany(models.SensorValue,{foreignKey : 'SensorId', constraints: false});
         },
         instanceMethods: {}
     })

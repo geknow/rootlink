@@ -24,7 +24,13 @@ module.exports = router => {
             sensors = await Sensor.findAll({
                 where: {
                     DeviceId: deviceId
-                }
+                },
+                include: [{
+                    model: SensorValue,
+                    order: [["createdAt"]],
+                    required: false,
+                    limit: 1
+                }]
             });
         } catch (e) {
             logger.debug(e);
