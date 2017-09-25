@@ -32,6 +32,14 @@ module.exports = router => {
                     limit: 1
                 }]
             });
+            for (let i = 0; i< sensors.length; i++){
+                let sensor = sensors[i];
+                if(!!sensor["SensorValues"] && sensor["SensorValues"].length !== 0){
+                    sensor["dataValues"]["value1"] = sensor["SensorValues"][0]["dataValues"]["value1"];
+                    sensor["dataValues"]["value2"] = sensor["SensorValues"][0]["dataValues"]["value2"];
+                }
+                delete sensor["dataValues"]["SensorValues"];
+            }
         } catch (e) {
             logger.debug(e);
             responser.catchErr(ctx, e);
