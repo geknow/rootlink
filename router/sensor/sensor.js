@@ -27,7 +27,7 @@ module.exports = router => {
                 },
                 include: [{
                     model: SensorValue,
-                    order: [["createdAt"]],
+                    order: [["createdAt","DESC"]],
                     required: false,
                     limit: 1
                 }]
