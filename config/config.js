@@ -64,7 +64,7 @@ let config = {
         return {
             from: "OurEDA <ouredaeducation@yeah.net>", // 发件地址
             to: address, // 收件列表 example: "2838890xx@qq.com, minimixx@126.com"
-            subject: "您还差一步就完成注册，请使用下面的链接激活您的帐户", // 标题
+            subject: "您还差一步就完成注册，请使用下面的验证码激活您的帐户", // 标题
             // html: `<div style="text-indent: 2em;`
             // + `min-height: 500px;`
             // + `font-family:MicrosoftYaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu;`

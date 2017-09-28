@@ -16,8 +16,7 @@ module.exports = router => {
             logger.debug("/sensor/upload");
             let body = ctx.request.body;
             let sensorId = body.sensorId;
-
-
+            logger.debug(body);
             if (!sensorId) {
                 throw Error("sensorId null");
             }
