@@ -18,7 +18,7 @@ module.exports = router => {
             let sensorId = body.sensorId;
             logger.debug(body);
             if (!sensorId) {
-                throw Error(body);
+                throw Error(JSON.parse(body));
             }
 
             //查出对应的deviceid
