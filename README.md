@@ -59,6 +59,9 @@ Response:{
  *   5xx-Server Error
  *   500-Internal Server Error
 
+
+静态目录在目录public下
+
 # 用户模块
 ## 登陆和注册和退出
 ### 注册接口:
@@ -645,4 +648,3 @@ RequestData:{
      name : String
 }
 ```
-
