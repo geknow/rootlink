@@ -67,6 +67,7 @@ module.exports = router => {
             sensor = {
                 name: body.name,
                 unit: body.name === "GPS" ? null : body.unit,
+                type: body.type,
                 description: body.description,
                 DeviceId: body.deviceId,
                 UserId: ctx.currentUser.userId
@@ -130,6 +131,7 @@ module.exports = router => {
                 throw Error("参数缺失");
             }
             sensor.name = body.name;
+            sensor.type = body.type;
             sensor.unit = body.unit;
             sensor.description = body.description;
             sensor.DeviceId = body.deviceId;

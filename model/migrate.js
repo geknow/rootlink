@@ -62,6 +62,7 @@ function *addSensor() {
             description: i,
             DeviceId: deviceId,
             value: 1,
+            type: "type",
             UserId: UserId,
             unit: "经纬度"
         };
