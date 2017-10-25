@@ -368,6 +368,7 @@ Method:POST
 RequestData:{
      name: STRING //allowNull(false),
      description: STRING //allowNull(true),
+     type: STRING //allowNull(false),
      deviceId: INT //allowNull(false),
      unit: STRING //单位 数值类型的单位是用户自己设定，只有一个，例如 摄氏度，GPS类型是经纬度（固定,不需要传参）
 }
@@ -390,6 +391,7 @@ RequestData:{
      name: STRING //allowNull(false),
      description: STRING //allowNull(true),
      DeviceId: INT //allowNull(false),
+     type: STRING //allowNull(false),
      unit: STRING //单位 数值类型的单位是用户自己设定，只有一个，例如 摄氏度，GPS类型是经纬度（固定,不需要传参）
      sensorId: STRING
 }
