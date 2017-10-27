@@ -15,24 +15,24 @@ describe('First', function () {
     /**
      * 先登录，因为下面很多路由都是需要登录才能操作的
      */
-    // describe('login()', function () {
-    //     it('logined', function (done) {
-    //         var url = ip + ":" + config.server.port + '/api/login';
-    //         agent.post(url)
-    //             .send({
-    //                 password: "123",
-    //                 username: "name4",
-    //                 rememberMe: true
-    //             })
-    //             .end((err, res) => {
-    //
-    //                 console.log(res.body);
-    //                 token = res.body.msg.token;
-    //                 if (!err && !res.body.error)
-    //                     done()
-    //             });
-    //     })
-    // });
+    describe('login()', function () {
+        it('logined', function (done) {
+            var url = ip + ":" + config.server.port + '/api/login';
+            agent.post(url)
+                .send({
+                    password: "123",
+                    username: "name4",
+                    rememberMe: true
+                })
+                .end((err, res) => {
+
+                    console.log(res.body);
+                    token = res.body.msg.token;
+                    if (!err && !res.body.error)
+                        done()
+                });
+        })
+    });
 
 
 });

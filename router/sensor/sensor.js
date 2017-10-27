@@ -55,7 +55,7 @@ module.exports = router => {
             let body = ctx.request.body;
             let ok = false;
             type.forEach((Name) => {
-                if (Name == body.name)
+                if (Name == body.type)
                     ok = true;
             });
             if (!ok) {
@@ -121,7 +121,7 @@ module.exports = router => {
             let body = ctx.request.body;
             let ok = false;
             type.forEach((Name) => {
-                if (Name == body.name)
+                if (Name == body.type)
                     ok = true;
             });
             if (!ok) {
