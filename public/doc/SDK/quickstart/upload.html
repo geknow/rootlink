@@ -1,0 +1,206 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8 " />
+<title>第一个实例</title>
+<link rel="stylesheet" href="/doc/css/main.css">
+<link rel="stylesheet" href="/doc/css/syntax.css">
+</head>
+<body>
+  <div class="nav">
+    <div class="nav-content">
+    <div class="nav-left">
+      <img src="/doc/img/logo.png" alt="logo" class="logo" />
+      <span>Rootlink</span>
+      <input type="text" placeholder="搜索" />
+    </div>
+    <div class="nav-right">
+      <div class="nav-l">
+        <ul>
+          <li><a href="http://118.89.28.157">首页</a></li>
+          <li><a href="http://118.89.28.157/blog">动态</a></li>
+          <li class="active"><a href="#">文档中心</a></li>
+        </ul>
+      </div>
+    <div class="nav-r">
+      <ul>
+        <li style="width:40px"><a href="http://118.89.28.157/login">登录</a></li>
+        <li style="width:40px"><a href="http://118.89.28.157/register">注册</a></li>
+      </ul>
+    </div>
+    </div>
+    </div>
+  </div>
+  <div class="con">
+    <div class="nav-down">
+      <ul>
+        <li><a href="/doc/SDK/quickstart/register.html">注册</a></li>
+        <li><a href="/doc/SDK/quickstart/upload.html">第一个实例</a></li>
+      </ul>
+    </div>
+    <div class="article">
+      <p>这个例子演示了如何开始使用RootLink平台，包括新建设备，新建传感器，并通过Arduino来上传数据到平台。</p>
+
+<h2 id="需要的硬件">需要的硬件</h2>
+
+<ul>
+  <li>Arduino UNO</li>
+  <li>Arduino Ethernet扩展板</li>
+  <li>网线</li>
+  <li>串口线</li>
+</ul>
+
+<h2 id="登录平台">登录平台</h2>
+<p>进入<a href="http://118.89.28.157/login">登录界面</a>，输入账号密码登录。</p>
+
+<p><img src="/doc/img/register-3.png" alt="登录" /></p>
+
+<h2 id="创建设备">创建设备</h2>
+<p>进入<a href="http://118.89.28.157/dashboard/device">用户中心</a>，能直接看到创建设备。</p>
+
+<p><img src="/doc/img/upload-0.png" alt="" /></p>
+
+<p>按照提示，填写名称和描述即可创建设备。</p>
+
+<p><img src="/doc/img/upload-1.png" alt="" /></p>
+
+<h2 id="获得api-key">获得API key</h2>
+
+<p><img src="/doc/img/upload-2.png" alt="" /></p>
+
+<p>这里的 <code class="highlighter-rouge">API key</code> 在写代码的时候会经常用到，用来作为用户验证，注意不要泄露了；单击 <code class="highlighter-rouge">复制</code> 即可复制到粘贴板，也可以通过 <code class="highlighter-rouge">重新生成 API</code> 来重置 <code class="highlighter-rouge">API key</code> 。</p>
+
+<h2 id="设备管理">设备管理</h2>
+
+<p><img src="/doc/img/upload-3.png" alt="" /></p>
+
+<p>点击中间的详情进入该设备的管理界面，左边的编辑可以修改设备的名称和描述，右边的删除可以删除该设备。</p>
+
+<h2 id="创建传感器">创建传感器</h2>
+
+<p>在设备管理界面单击添加传感器，选择 <code class="highlighter-rouge">数值类型传感器</code> ，填写传感器描述和传感器的单位。</p>
+
+<p><img src="/doc/img/upload-4.png" alt="" /></p>
+
+<p>初始化的传感器没有初始值。</p>
+
+<p><img src="/doc/img/upload-5.png" alt="" /></p>
+
+<h2 id="连接硬件">连接硬件</h2>
+
+<p>如图连接Arduino和Ethernet。</p>
+
+<h2 id="arduino端代码">Arduino端代码</h2>
+<p>下面的代码会发送一个随机数给相应的传感器。</p>
+
+<p>其中的关键就在于发送了如下的POST请求，在其他的硬件平台上构造出一样的请求即可。</p>
+
+<blockquote>
+  <p>注意，在HTTP header中需要添加 <code class="highlighter-rouge">Content-Type: application/json</code></p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>POST /api/sensor/upload?key=ic3i9ujyb44vguja9u4703090qnkzg1u
+
+{
+  "sensorId":"07986c79-c797-47c9-8add-05e2f35a24a6",
+  "value1":"17"
+}
+</code></pre>
+</div>
+
+<div class="language-c++ highlighter-rouge"><pre class="highlight"><code><span class="cp">#include &lt;SPI.h&gt;
+#include &lt;Ethernet.h&gt;
+</span><span class="n">String</span> <span class="n">data</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">sensorId</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">07986c79-c797-47c9-8add-05e2f35a24a6</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">value1</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">"</span><span class="p">;</span>
+<span class="n">String</span> <span class="n">data2</span> <span class="o">=</span> <span class="s">"</span><span class="se">\"</span><span class="s">}"</span><span class="p">;</span>
+
+<span class="n">byte</span> <span class="n">mac</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="mh">0xDE</span><span class="p">,</span> <span class="mh">0xAD</span><span class="p">,</span> <span class="mh">0xBE</span><span class="p">,</span> <span class="mh">0xEF</span><span class="p">,</span> <span class="mh">0xFE</span><span class="p">,</span> <span class="mh">0xED</span>
+<span class="p">};</span>
+
+
+<span class="n">IPAddress</span> <span class="n">ip</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">63</span><span class="p">);</span>
+
+<span class="c1">// fill in your Domain Name Server address here:
+</span><span class="n">IPAddress</span> <span class="n">myDns</span><span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">168</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// initialize the library instance:
+</span><span class="n">EthernetClient</span> <span class="n">client</span><span class="p">;</span>
+
+<span class="c1">//char server[] = "118.89.28.157";
+</span><span class="n">IPAddress</span> <span class="n">server</span><span class="p">(</span><span class="mi">118</span><span class="p">,</span><span class="mi">89</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">157</span><span class="p">);</span>
+
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">lastConnectionTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>             <span class="c1">// last time you connected to the server, in milliseconds
+</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">postingInterval</span> <span class="o">=</span> <span class="mi">10L</span> <span class="o">*</span> <span class="mi">1000L</span><span class="p">;</span> <span class="c1">// delay between updates, in milliseconds
+// the "L" is needed to use long type numbers
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// start serial port:
+</span>  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">Serial</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">;</span> <span class="c1">// wait for serial port to connect. Needed for native USB port only
+</span>  <span class="p">}</span>
+
+  <span class="c1">// give the ethernet module time to boot up:
+</span>  <span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="c1">// start the Ethernet connection using a fixed IP address and DNS server:
+</span>  <span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">myDns</span><span class="p">);</span>
+  <span class="c1">// print the Ethernet board/shield's IP address:
+</span>  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"My IP address: "</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">Ethernet</span><span class="p">.</span><span class="n">localIP</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// if there's incoming data from the net connection.
+</span>  <span class="c1">// send it out the serial port.  This is for debugging
+</span>  <span class="c1">// purposes only:
+</span>  <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// if ten seconds have passed since your last connection,
+</span>  <span class="c1">// then connect again and send data:
+</span>  <span class="k">if</span> <span class="p">(</span><span class="n">millis</span><span class="p">()</span> <span class="o">-</span> <span class="n">lastConnectionTime</span> <span class="o">&gt;</span> <span class="n">postingInterval</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">httpRequest</span><span class="p">();</span>
+  <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="c1">// this method makes a HTTP connection to the server:
+</span><span class="kt">void</span> <span class="nf">httpRequest</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">random</span><span class="p">(</span><span class="mi">50</span><span class="p">));</span>
+  <span class="n">String</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="n">random</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span> <span class="o">+</span> <span class="n">data2</span><span class="p">;</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"##############"</span><span class="p">);</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+  <span class="c1">// close any connection before send a new request.
+</span>  <span class="c1">// This will free the socket on the WiFi shield
+</span>  <span class="n">client</span><span class="p">.</span><span class="n">stop</span><span class="p">();</span>
+
+  <span class="c1">// if there's a successful connection:
+</span>  <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">server</span><span class="p">,</span> <span class="mi">80</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"connecting..."</span><span class="p">);</span>
+    <span class="c1">// send the HTTP GET request:
+</span>    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"POST /api/sensor/upload?key=ic3i9ujyb44vguja9u4703090qnkzg1u HTTP/1.1"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Host: 118.89.28.157"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"User-Agent: arduino-ethernet"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Connection: close"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"Content-Type: application/json"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"Content-Length: "</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">temp</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">client</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">temp</span><span class="p">);</span>
+    <span class="c1">// note the time that the connection was made:
+</span>    <span class="n">lastConnectionTime</span> <span class="o">=</span> <span class="n">millis</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// if you couldn't make a connection:
+</span>    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"connection failed"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+    </div>
+  </div>
+</body>
+
+</html>
