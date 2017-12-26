@@ -186,7 +186,8 @@ describe('Directive', function () {
             console.log(deviceId);
             agent.post(ip + ":" + config.server.port + '/api/sensor/add?key='+key)
                 .send({
-                    name: "数值类型传感器",
+                    name:"test",
+                    type: "数值类型传感器",
                     description: "1",
                     unit: "C",
                     deviceId: deviceId

@@ -4,7 +4,7 @@
 var fs = require('fs');
 var path = require('path');
 var crypto = require('crypto');
-var signature = require('../package.json').signature;
+var signature = require('../../package.json').signature;
 var server = require("../config/config").server;
 
 var utilx = (function () {
