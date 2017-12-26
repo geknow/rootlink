@@ -6,7 +6,7 @@ const Sensor = db.models.Sensor;
 const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
-const type = require("./../../name.json").type;
+const type = require("./../../../name.json").type;
 const SensorValue = db.models.SensorValue;
 const logger = require("../../log/index").logger;
 
