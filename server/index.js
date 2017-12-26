@@ -66,6 +66,7 @@ app.use(async(ctx, next) => {
         responser.catchErr(ctx, e);
     }
 });
+
 app.use(staticServer(path.join(__dirname, 'public')));
 app.use(koaBody());
 app.use(koaValidate());
