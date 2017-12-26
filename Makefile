@@ -21,10 +21,14 @@ devStart:
 proStart:
 	@export NODE_ENV=${pro_NODE_E};
 	@rm -rf build && mkdir build && babel -d ./build ./server
+	@cp ./server/views ./build -r
+	@cp ./server/public ./build -r
 	@pm2 start ${PROMAIN}
 proRestart:
 	@export NODE_ENV=${pro_NODE_E};
 	@rm -rf build && mkdir build && babel -d ./build ./server
+	@cp ./server/views ./build -r
+	@cp ./server/public ./build -r
 	@pm2 restart ${PROMAIN}
 stop:
 	@pm2 stop ${PROMAIN}

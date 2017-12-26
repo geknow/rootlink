@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Microsoft YaHei,WenQuanYi Micro Hei,SF UI Text,Arial,PingFang SC,Hiragino Sans GB,sans-serif;
+}
+H1 {
+    font-family: 'Open Sans Light',Georgia,'Source Han Sans CN','Xin Gothic','Hiragino Sans GB','Microsoft YaHei','Noto Sans CJK SC',sans-serif;
+	  font-weight: 300;
+    margin-bottom: 40px;
+    padding: 5px;
+    border-bottom: 2px LightGrey solid;
+    width: 100%;
+    color: DarkGreen;
+    line-height: 150%;
+}
+.nav {
+  position: fixed;
+  width: 100%;
+  height: 56px;
+  background-color: white;
+  padding-top: 30px;
+  box-shadow: rgba(0, 0, 0, 0.40) 0px 3px 10px;
+}
+.logo {
+  height: 40px;
+  position: relative;
+  top: 5px;
+}
+.nav-content {
+  max-width: 992px;
+  margin: 0 auto;
+}
+.nav-left {
+  float: left;
+  margin-top: auto;
+  font-size: 38px;
+  color: #369fd8;
+  width: 417.8px;
+}
+.nav-left input {
+  font-size: 12px;
+  height: 24px;
+  padding:5px 25px 5px 10px;
+  margin-left: 20px;
+  position: relative;
+  top: -7px;
+  background: #eeeeee;
+  border: 0px;
+}
+.nav-left input:focus {
+  border: 0px;
+}
+.nav-right {
+  float: right;
+}
+.nav-right a {
+  text-decoration: none;
+}
+.nav-l a {
+  color: #6EB9E3;
+}
+.nav-r a {
+  color: #369fd8;
+}
+.nav-right ul li {
+  float: left;
+  list-style: none;
+  padding: 0 0 12px;
+  margin: 0 12px;
+  width: 75px;
+  text-align: center;
+}
+.nav-right .nav-l {
+  float: left;
+  margin-top: 15px;
+  margin-bottom: 0px;
+  padding-right: 10px;
+  color: #6EB9E3;
+}
+.nav-right .nav-r ul li {
+  float: left;
+}
+.nav-right .nav-r {
+  float: right;
+  margin-top: 15px;
+  margin-bottom: 0;
+  color: #369fd8;
+}
+.active {
+  border-bottom: 6px solid #369fd8;
+}
+.con {
+  width: 100%;
+}
+.nav-down {
+  padding: 20px;
+  position: fixed;
+  top: 86px;
+  width: 250px;
+  height: 100%;
+  background: #262A33;
+  box-shadow: rgba(0, 0, 0, 0.40) 0px 3px 10px;
+}
+.article {
+  min-width: 800px;
+  padding-left: 20px;
+  padding-right: 40px;
+  margin-left: 350px;
+  padding-top: 120px;
+  padding-bottom: 30px;
+}
+.nav-down ul li {
+  font-size: 20px;
+  list-style: none;
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #fff;
+}
+.nav-down ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+h2 {
+  color: #333;
+  line-height: 50px;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+h3 {
+  color: #333;
+  line-height: 40px;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.article img {
+  max-width: 80%;
+  box-shadow: rgba(0, 0, 0, 0.40) 0px 3px 10px;
+  margin-bottom: 20px;
+}
+p {
+  color: #666;
+  line-height: 30px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+p a {
+  text-decoration: none;
+  color: #369fd8;
+}
+.article ul {
+  margin-left: 30px;
+}
+.article ul li {
+  list-style: circle;
+  color: #333;
+}
+blockquote {
+  border-left: 4px solid #c0c0c0;
+  font-style: italic;
+}
+blockquote p {
+  color: #666;
+  line-height: 40px;
+  height: 40px;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+code {
+	font-family: 'Open Sans','Microsoft YaHei';
+    font-size: 95%;
+	border:0;
+	color: #2C3E50;
+	background-color:#D6DBDF;
+	border-radius: 4px;
+	padding:2px 4px;
+}
+
+pre {
+    font-family: Inconsolata, Consolas, "DEJA VU SANS MONO", "DROID SANS MONO", Proggy, monospace;
+    font-size: 95%;
+    border: 1px solid #b0b5a8;
+    background-color: #EFF2F2;
+    padding: 5px;
+    line-height: 130%;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 95%;
+	white-space:pre-wrap;
+	overflow-x:auto;
+}
+
+pre > code {
+	font-family: Monaco, Inconsolata, Consolas, "DEJA VU SANS MONO", "DROID SANS MONO", Proggy, monospace;
+    font-size: 95%;
+    background-color: #EFF2F2;
+    padding: 0px;
+    width: 100%;
+	padding-left:0px;
+	border-radius:0px;
+}
