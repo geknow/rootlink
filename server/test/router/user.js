@@ -18,9 +18,9 @@ var key = "";
 describe('User', function () {
     this.timeout(7000);     // extend timeout
 
-    // /**
-    //  * 注册
-    //  */
+    /**
+     * 注册
+     */
     // describe('getCode()', function () {
     //     it('getCode', function (done) {
     //         var url = ip + ":" + config.server.port + '/api/register/getCode?email=18940874730@163.com';

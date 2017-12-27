@@ -7,28 +7,27 @@ PROJECT = "node project"
 dev_NODE_E = "development"
 pro_NODE_E = "production"
 #入口js文件
+PROMAIN =  ./build/index.js
 DEVMAIN =  ./server/babel.app.js
-PROMAIN=  ./build/index.js
 TESTS= ./server/test/router/*.js
 MIGRATE = ./server/model/migrate.js
 TIMEOUT = 10000
 
-
-.PHONY: start migrate build
+.PHONY: start migrate clean
 devStart:
 	@export NODE_ENV=${dev_NODE_E};
 	@nodemon ${DEVMAIN}
 proStart:
 	@export NODE_ENV=${pro_NODE_E};
-	@rm -rf build && mkdir build && babel -d ./build ./server
-	@cp ./server/views ./build -r
+	@babel ./server -d ./build
 	@cp ./server/public ./build -r
+	@cp ./server/views ./build -r
 	@pm2 start ${PROMAIN}
 proRestart:
 	@export NODE_ENV=${pro_NODE_E};
-	@rm -rf build && mkdir build && babel -d ./build ./server
-	@cp ./server/views ./build -r
+	@babel ./server -d ./build
 	@cp ./server/public ./build -r
+	@cp ./server/views ./build -r
 	@pm2 restart ${PROMAIN}
 stop:
 	@pm2 stop ${PROMAIN}
@@ -38,9 +37,8 @@ install:
 	@echo ${PROJECT} "install";
 	@npm install
 clean:
-	@rm -rf build && mkdir build
+	@rm -r ./build
 tests:
 	@echo "test"
 	@mocha -t ${TIMEOUT} ${TESTS}
-build:
-	@rm -rf build && mkdir build && babel -d ./build ./server
+build: start

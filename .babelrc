@@ -10,6 +10,10 @@
         "polyfill": false,
         "regenerator": true
       }
-    ]
+    ],
+    "transform-object-rest-spread"
+  ],
+  "ignore": [
+    "./server/public"
   ]
 }
