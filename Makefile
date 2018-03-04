@@ -18,16 +18,18 @@ devStart:
 	@export NODE_ENV=${dev_NODE_E};
 	@nodemon ${DEVMAIN}
 proStart:
+	@rm ./build -rf
 	@export NODE_ENV=${pro_NODE_E};
 	@babel ./server -d ./build
-	@cp ./server/public ./build -r
-	@cp ./server/views ./build -r
+	@cp ./server/public ./build -rf
+	@cp ./server/views ./build -rf
 	@pm2 start ${PROMAIN}
 proRestart:
+	@rm ./build -rf
 	@export NODE_ENV=${pro_NODE_E};
 	@babel ./server -d ./build
-	@cp ./server/public ./build -r
-	@cp ./server/views ./build -r
+	@cp ./server/public ./build -rf
+	@cp ./server/views ./build -rf
 	@pm2 restart ${PROMAIN}
 stop:
 	@pm2 stop ${PROMAIN}
