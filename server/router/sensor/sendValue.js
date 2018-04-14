@@ -70,5 +70,31 @@ module.exports = router => {
             return;
         }
         responser.success(ctx,sensorVs)
-    })
+    });
+
+    router.get("/sensor/getNames", async(ctx, next)=>{
+        let msg;
+        try{
+            let query = ctx.request.query;
+            let sensorId = query.sensorId;
+            if(!sensorId){
+                throw Error("sensorId 缺失");
+            }
+            let sensorName = await Sensor.findOne({
+                where: {
+                    sensorId: sensorId
+                }
+            });
+            let deviceName = await sensorName.getDevice();
+            msg = {
+                sensorName:sensorName.name,
+                deviceName:deviceName.name
+            }
+        }catch (e){
+            logger.error(e);
+            responser.catchErr(ctx,e);
+            return;
+        }
+        responser.success(ctx,msg)
+    });
 };

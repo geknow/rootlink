@@ -147,4 +147,31 @@ module.exports = router => {
             });
 
     });
+
+    router.get("/trigger/getNames", async(ctx, next)=>{
+        let triggerId = ctx.request.query.triggerId;
+        let msg = {};
+
+        try {
+            if(!triggerId){
+                throw Error("triggerId null");
+            }
+
+            let triggerName = await Trigger.findOne({
+                where: {
+                    triggerId: triggerId,
+                    UserId: ctx.currentUser.userId
+                }
+            });
+
+            let deviceName = await triggerName.getDevice();
+
+            msg.triggerName = triggerName.name;
+            msg.deviceName = deviceName.name;
+        } catch (e) {
+            responser.catchErr(ctx, e);
+            return;
+        }
+        responser.success(ctx, msg);
+    });
 };

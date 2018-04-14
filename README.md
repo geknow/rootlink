@@ -557,6 +557,15 @@ Response:{
 }
 ```
 
+### 获取触发器的名称和该触发器的设备名称
+**/trigger/getNames**
+Method:GET
+
+RequestData:{
+    trigger:INT,
+    
+}
+
 
 
 # 用户添加指令模块
