@@ -341,7 +341,6 @@ Response:{
 ```
 
 
-
 # 传感器模块
 ### 获取接口:
 **/sensor/all**
@@ -462,6 +461,25 @@ Response:{
 ```
 
 
+###获取传感器和设备名称
+***/sensor/getNames***
+```json
+RequestData:{
+     sensorId:string//allowNull(false)
+}
+```
+响应格式：
+```json
+Response:{
+    err:STRING,
+    status: INT,
+    msg:{
+        deviceName:STRING,
+        sensorName:STRING
+    }
+}
+```
+
 # 触发器模块
 ### 获取某触发器状态接口:
 **/trigger/status**
@@ -557,16 +575,25 @@ Response:{
 }
 ```
 
-### 获取触发器的名称和该触发器的设备名称
-**/trigger/getNames**
-Method:GET
 
+###获取触发器和设备名称
+***/sensor/getNames***
+```json
 RequestData:{
-    trigger:INT,
-    
+     triggerId:string//allowNull(false)
 }
-
-
+```
+响应格式：
+```json
+Response:{
+    err:STRING,
+    status: INT,
+    msg:{
+        triggerName:STRING,
+        sensorName:STRING
+    }
+}
+```
 
 # 用户添加指令模块
 ### 添加指令接口:
@@ -657,5 +684,28 @@ Method:POST
 RequestData:{
      image: FILE ,
      name : String
+}
+```
+
+#Socket.io
+###事件id
+完成socket连接后客户端发送
+```json
+id
+```
+
+###事件stop
+停止获取数据
+
+###事件newValue
+每次有新数据服务端立即发送
+数据格式
+```json
+{
+     sensorId:string//allowNull(false),
+     value1:STRING,
+     value2:STRING,
+     unit:STRING//单位,
+     type:DTRING
 }
 ```

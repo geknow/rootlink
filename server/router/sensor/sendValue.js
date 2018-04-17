@@ -1,5 +1,6 @@
 /**
  * Created by webhugo on 2/27/17.
+ * @modify by liuchaorun on 4/16/2018
  */
 
 const sensorV = require("../../config/config").sensorValue;
@@ -26,7 +27,7 @@ module.exports = router => {
                 where: {
                     sensorId: sensorId
                 },
-                attributes: ["DeviceId"]
+                attributes: ["DeviceId","unit","type"]
             });
 
             let senV = {
@@ -39,6 +40,9 @@ module.exports = router => {
             logger.debug("===============================");
             logger.debug(senV);
             await SensorValue.create(senV);
+            senV.unit = DeviceId.unit;
+            senV.type = DeviceId.type;
+            event.emit("new value",senV);
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
