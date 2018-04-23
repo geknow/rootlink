@@ -6,7 +6,7 @@ let server = require('../index').server;
 let app = require('../index').app;
 const io = require('socket.io')(server);
 const event = require('./event');
-let iots = {};
+let iots = [];
 let sockets = [];
 app.locals = {};
 app.locals.iots = iots;
@@ -20,7 +20,11 @@ io.on('connection', function(socket){
      * 利用sensorId标识socket
      */
     socket.on('id', function (data) {
-        iots[data] = socket;
+        console.log(id + 'connect');
+        iots.push({
+            id:data,
+            socket:socket
+        })
     });
 
     /**
@@ -29,17 +33,24 @@ io.on('connection', function(socket){
     socket.on("stop",function(){
         // console.log("disconnect of iot");
         sockets.splice(sockets.indexOf(socket),1);
-        for (let key in iots){
-            if(iots[key]===socket){
-                delete iots.key;
+        iots.map((name,i)=>{
+            if(name.socket===socket){
+                iots.splice(i,1);
+                console.log(name.id + 'disconnect');
             }
-        }
+        })
     });
     /**
      * 监听事件new value
      */
     event.on("new value", function (data) {
-        iots[data.sensorId].emit("newValue",data);
+        console.log(data);
+        iots.map((name)=>{
+            if(name.id === data.sensorId){
+                name.socket.emit("newValue",data);
+                console.log('send to ' + name.id);
+            }
+        });
     });
 
     /**
@@ -48,10 +59,11 @@ io.on('connection', function(socket){
     socket.on("disconnect",function(){
         // console.log("disconnect of iot");
         sockets.splice(sockets.indexOf(socket),1);
-        for (let key in iots){
-            if(iots[key]===socket){
-                delete iots.key;
+        iots.map((name,i)=>{
+            if(name.socket===socket){
+                iots.splice(i,1);
+                console.log(name.id + 'disconnect');
             }
-        }
+        })
     });
 });

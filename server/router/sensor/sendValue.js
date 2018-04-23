@@ -8,6 +8,7 @@ const db = require('./../../model/index');
 const SensorValue = db.models.SensorValue;
 const Sensor = db.models.Sensor;
 const responser = require('./../../lib/responser');
+const event = require('../../socket/event');
 const logger = require("../../log/index").logger;
 
 module.exports = router => {
@@ -42,6 +43,7 @@ module.exports = router => {
             await SensorValue.create(senV);
             senV.unit = DeviceId.unit;
             senV.type = DeviceId.type;
+            logger.debug(senV);
             event.emit("new value",senV);
         } catch (e) {
             logger.error(e);
