@@ -93,21 +93,23 @@ module.exports = router => {
 
         let directives = [];
         try {
-            let operations = await Directive.findOne({
+            let operations = await Directive.findAll({
                 where: {
                     UserId: ctx.currentUser.userId
                 },
                 attributes: ["operation", "directiveId", "UserId", "TriggerId", "SensorId", "operationUrl"]
             });
             if (!!operations) {
-                directives = [{
-                    operation: operations.operation,
-                    directiveId: operations.directiveId,
-                    UserId: operations.UserId,
-                    TriggerId: operations.TriggerId,
-                    SensorId: operations.SensorId,
-                    operationUrl:operations.operationUrl
-                }];
+                operations.map((i)=>{
+                    directives.push({
+                        operation: i.operation,
+                        directiveId: i.directiveId,
+                        UserId: i.UserId,
+                        TriggerId: i.TriggerId,
+                        SensorId: i.SensorId,
+                        operationUrl:i.operationUrl
+                    })
+                });
                 let p = new Promise((resolve, reject) => {
                     async.eachSeries(directives, async(operation, callback) => {
                         let sensorId = operation.SensorId;
