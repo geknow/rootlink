@@ -49,14 +49,14 @@ module.exports = router => {
 
 
             if (!!sensorId) {
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/wxdata?sensorId=${sensorId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxdata?sensorId=${sensorId}&key=${key}`);
             } else if (!!triggerId) {
                 let status = body.status;
                 status = parseInt(status);
                 if (status !== 0 && status !== 1) {
                     throw Error("status参数错误");
                 }
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/wxcontrol?status=${status}&triggerId=${triggerId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxcontrol?status=${status}&triggerId=${triggerId}&key=${key}`);
             } else {
                 throw Error("sensorId或triggerId缺失");
             }
@@ -193,14 +193,14 @@ module.exports = router => {
             let key = u.key;
 
             if (!!sensorId) {
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/wxdata?sensorId=${sensorId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxdata?sensorId=${sensorId}&key=${key}`);
             } else if (!!triggerId) {
                 status = parseInt(status);
                 if (status !== 0 && status !== 1) {
                     throw Error("参数缺失或错误");
                 }
 
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/wxcontrol?status=${status}&triggerId=${triggerId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxcontrol?status=${status}&triggerId=${triggerId}&key=${key}`);
 
             } else {
                 throw Error("参数缺失");
