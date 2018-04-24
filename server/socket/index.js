@@ -44,9 +44,9 @@ io.on('connection', function(socket){
      * 监听事件new value
      */
     event.on("new value", function (data) {
-        console.log(data);
+        //console.log(data);
         iots.map((name)=>{
-            if(name.id === data.sensorId){
+            if(name.id === data.SensorId){
                 name.socket.emit("newValue",data);
                 console.log('send to ' + name.id);
             }
