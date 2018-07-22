@@ -28,7 +28,7 @@ module.exports = {
             LoginToken
         };
         ctx.cookies.set(cookieName, LoginToken, {
-            maxAge: 30* 60 * 1000//30分钟过期
+            maxAge: 30* 60 * 1000 * 2 * 24 *365 *10 //一百年过期
         });
 
 

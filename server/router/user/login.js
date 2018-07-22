@@ -50,17 +50,26 @@ module.exports = router => {
                     }
                 });
                 //token已经有30天,删除token
-                if (user && (new Date() - user.expireTime) / D > 30) {
-                    await user.destroy();
-                    user = null;
-                } else if (user) {
+                // if (user && (new Date() - user.expireTime) / D > 30) {
+                //     await user.destroy();
+                //     user = null;
+                // } else if (user) {
+                //     user = await db.models.User.findOne({
+                //         where: {
+                //             userId: user.userId
+                //         }
+                //     })
+                // }
+                /**
+                 * 去掉周期限制
+                 */
+                if (user) {
                     user = await db.models.User.findOne({
                         where: {
                             userId: user.userId
                         }
                     })
                 }
-
             } else if (username) {
                 user = await db.models.User.findOne({
                     where: {
