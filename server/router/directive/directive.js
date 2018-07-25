@@ -49,14 +49,14 @@ module.exports = router => {
 
 
             if (!!sensorId) {
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/sensor/getValue?sensorId=${sensorId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxdata?sensorId=${sensorId}&key=${key}`);
             } else if (!!triggerId) {
                 let status = body.status;
                 status = parseInt(status);
                 if (status !== 0 && status !== 1) {
                     throw Error("status参数错误");
                 }
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/trigger/control?status=${status}&triggerId=${triggerId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxcontrol?status=${status}&triggerId=${triggerId}&key=${key}`);
             } else {
                 throw Error("sensorId或triggerId缺失");
             }
@@ -93,20 +93,23 @@ module.exports = router => {
 
         let directives = [];
         try {
-            let operations = await Directive.findOne({
+            let operations = await Directive.findAll({
                 where: {
                     UserId: ctx.currentUser.userId
                 },
-                attributes: ["operation", "directiveId", "UserId", "TriggerId", "SensorId"]
+                attributes: ["operation", "directiveId", "UserId", "TriggerId", "SensorId", "operationUrl"]
             });
             if (!!operations) {
-                directives = [{
-                    operation: operations.operation,
-                    directiveId: operations.directiveId,
-                    UserId: operations.UserId,
-                    TriggerId: operations.TriggerId,
-                    SensorId: operations.SensorId
-                }];
+                operations.map((i)=>{
+                    directives.push({
+                        operation: i.operation,
+                        directiveId: i.directiveId,
+                        UserId: i.UserId,
+                        TriggerId: i.TriggerId,
+                        SensorId: i.SensorId,
+                        operationUrl:i.operationUrl
+                    })
+                });
                 let p = new Promise((resolve, reject) => {
                     async.eachSeries(directives, async(operation, callback) => {
                         let sensorId = operation.SensorId;
@@ -192,14 +195,14 @@ module.exports = router => {
             let key = u.key;
 
             if (!!sensorId) {
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/sensor/getValue?sensorId=${sensorId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxdata?sensorId=${sensorId}&key=${key}`);
             } else if (!!triggerId) {
                 status = parseInt(status);
                 if (status !== 0 && status !== 1) {
                     throw Error("参数缺失或错误");
                 }
 
-                operationUrl = `http://${server.ip}:${server.port}/api/` + generatorStr(`/api/trigger/control?status=${status}&triggerId=${triggerId}&key=${key}`);
+                operationUrl = `http://www.rootlink.cn/api/` + generatorStr(`/wxcontrol?status=${status}&triggerId=${triggerId}&key=${key}`);
 
             } else {
                 throw Error("参数缺失");

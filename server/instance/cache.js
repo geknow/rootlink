@@ -22,9 +22,9 @@ client.on('error', function (err) {
 });
 
 // add key prefix
-var commands = ['set', 'setex', 'get', 'expire','del'];
+var commands = ['set', 'setex', 'get', 'expire', 'del'];
 
-commands.forEach( function (cmd)  {
+commands.forEach(function (cmd) {
     var oldCmd = `_${cmd}`;
     client[oldCmd] = client[cmd];
     client[cmd] = function (key, arg, cb) {
@@ -38,7 +38,6 @@ client.jsetex = (key, expire, val, callback) => {
 };
 
 
-
 var redisCo = redisCoWrapper(client);
 // json get
 redisCo.jget = async function (key) {
@@ -47,12 +46,12 @@ redisCo.jget = async function (key) {
     return util.isNullOrUndefined(val) ? val : JSON.parse(val);
 };
 redisCo.del = async function (key) {
-    try{
+    try {
         logger.debug("del");
         // await redisCo.del(key);
         await redisCo.set(key, undefined);
         logger.debug("delOver")
-    }catch (e){
+    } catch (e) {
         logger.error(e);
         return false;
     }
@@ -60,7 +59,6 @@ redisCo.del = async function (key) {
 };
 
 redisCo._client = client;
-
 
 
 module.exports = redisCo;

@@ -1,11 +1,13 @@
 /**
  * Created by webhugo on 12/26/16.
+ * @modify by liuchaorun on 16/4/2018
  */
-var server = require('../index').server;
-var app = require('../index').app;
+let server = require('../index').server;
+let app = require('../index').app;
 const io = require('socket.io')(server);
-var iots = [];
-var sockets = [];
+const event = require('./event');
+let iots = [];
+let sockets = [];
 app.locals = {};
 app.locals.iots = iots;
 app.locals.sockets = sockets;
@@ -15,11 +17,40 @@ io.on('connection', function(socket){
     // console.log("new connect");
 
     /**
+     * 利用sensorId标识socket
+     */
+    socket.on('id', function (data) {
+        console.log(id + 'connect');
+        iots.push({
+            id:data,
+            socket:socket
+        })
+    });
+
+    /**
      * 设备下线
      */
     socket.on("stop",function(){
         // console.log("disconnect of iot");
         sockets.splice(sockets.indexOf(socket),1);
+        iots.map((name,i)=>{
+            if(name.socket===socket){
+                iots.splice(i,1);
+                console.log(name.id + 'disconnect');
+            }
+        })
+    });
+    /**
+     * 监听事件new value
+     */
+    event.on("new value", function (data) {
+        //console.log(data);
+        iots.map((name)=>{
+            if(name.id === data.SensorId){
+                name.socket.emit("newValue",data);
+                console.log('send to ' + name.id);
+            }
+        });
     });
 
     /**
@@ -28,5 +59,11 @@ io.on('connection', function(socket){
     socket.on("disconnect",function(){
         // console.log("disconnect of iot");
         sockets.splice(sockets.indexOf(socket),1);
+        iots.map((name,i)=>{
+            if(name.socket===socket){
+                iots.splice(i,1);
+                console.log(name.id + 'disconnect');
+            }
+        })
     });
 });

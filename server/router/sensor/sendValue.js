@@ -1,5 +1,6 @@
 /**
  * Created by webhugo on 2/27/17.
+ * @modify by liuchaorun on 4/16/2018
  */
 
 const sensorV = require("../../config/config").sensorValue;
@@ -7,6 +8,7 @@ const db = require('./../../model/index');
 const SensorValue = db.models.SensorValue;
 const Sensor = db.models.Sensor;
 const responser = require('./../../lib/responser');
+const event = require('../../socket/event');
 const logger = require("../../log/index").logger;
 
 module.exports = router => {
@@ -26,7 +28,7 @@ module.exports = router => {
                 where: {
                     sensorId: sensorId
                 },
-                attributes: ["DeviceId"]
+                attributes: ["DeviceId","unit","type"]
             });
 
             let senV = {
@@ -39,6 +41,10 @@ module.exports = router => {
             logger.debug("===============================");
             logger.debug(senV);
             await SensorValue.create(senV);
+            senV.unit = DeviceId.unit;
+            senV.type = DeviceId.type;
+            logger.debug(senV);
+            event.emit("new value",senV);
         } catch (e) {
             logger.error(e);
             responser.catchErr(ctx, e);
@@ -70,5 +76,31 @@ module.exports = router => {
             return;
         }
         responser.success(ctx,sensorVs)
-    })
+    });
+
+    router.get("/sensor/getNames", async(ctx, next)=>{
+        let msg;
+        try{
+            let query = ctx.request.query;
+            let sensorId = query.sensorId;
+            if(!sensorId){
+                throw Error("sensorId 缺失");
+            }
+            let sensorName = await Sensor.findOne({
+                where: {
+                    sensorId: sensorId
+                }
+            });
+            let deviceName = await sensorName.getDevice();
+            msg = {
+                sensorName:sensorName.name,
+                deviceName:deviceName.name
+            }
+        }catch (e){
+            logger.error(e);
+            responser.catchErr(ctx,e);
+            return;
+        }
+        responser.success(ctx,msg)
+    });
 };
