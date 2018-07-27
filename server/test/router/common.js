@@ -3,11 +3,10 @@
  */
 console.warn("在test之前，把config目录下的config.js 的isRender改为false!!!!!!");
 const config = require('./../../config/config');
-var should = require('should');
+let should = require('should');
 let agent = require('superagent').agent();//保存cookie
-// let ip = require("../../config/config").server.ip;
- let ip = "127.0.0.1";
-let token ;
+let ip = "127.0.0.1";
+let token;
 let key;
 describe('First', function () {
     this.timeout(7000);     // extend timeout
@@ -17,7 +16,7 @@ describe('First', function () {
      */
     describe('login()', function () {
         it('logined', function (done) {
-            var url = ip + ":" + config.server.port + '/api/login';
+            let url = ip + ":" + config.server.port + '/api/login';
             agent.post(url)
                 .send({
                     password: "123",
@@ -25,9 +24,9 @@ describe('First', function () {
                     rememberMe: true
                 })
                 .end((err, res) => {
-
                     console.log(res.body);
                     token = res.body.msg.token;
+                    key = res.body.msg.key;
                     if (!err && !res.body.error)
                         done()
                 });
@@ -41,5 +40,7 @@ module.exports = {
     config,
     should,
     agent,
-    ip
+    ip,
+    token,
+    key
 };

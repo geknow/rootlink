@@ -245,6 +245,28 @@ Response:{
 
 
 # 设备模块
+### 以设备为模块更新数据
+***/device/upload***
+Method:POST
+```
+RequestData:{
+    devideId: STRING,
+    sensor:[{
+        sensorId:STRING,
+        value1: STRING,
+        value2: STRING
+    },{},{}]
+}
+```
+响应格式:
+```
+Response:{
+    error: STRING,
+    status: INTERGER,
+    msg: { }
+}
+```
+
 ### 获取接口:
 **/device/all**
 Method:GET

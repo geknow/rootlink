@@ -10,10 +10,12 @@ const auth = require('./../../helper/auth');
 const responser = require('./../../lib/responser');
 const EvenImit = require('../../instance/EvenImit');
 const logger = require("../../log/index").logger;
+const sensorV = require("../../config/config").sensorValue;
+const event = require('../../socket/event');
 
 module.exports = router => {
 
-    router.get("/device/get", async(ctx, next) => {
+    router.get("/device/get", async (ctx, next) => {
         let query = ctx.query;
         let deviceId = query.deviceId;
         let startT = query.startTime;
@@ -69,7 +71,7 @@ module.exports = router => {
     });
 
 
-    router.get("/device/all", async(ctx, next) => {
+    router.get("/device/all", async (ctx, next) => {
 
         let devices;
         try {
@@ -88,7 +90,7 @@ module.exports = router => {
         responser.success(ctx, devices);
     });
 
-    router.post("/device/add", async(ctx, next) => {
+    router.post("/device/add", async (ctx, next) => {
         let device;
         try {
             let body = ctx.request.body;
@@ -109,7 +111,7 @@ module.exports = router => {
         responser.success(ctx, device);
     });
 
-    router.post("/device/delete", async(ctx, next) => {
+    router.post("/device/delete", async (ctx, next) => {
         let count;
         try {
             let body = ctx.request.body;
@@ -154,7 +156,7 @@ module.exports = router => {
     });
 
 
-    router.post("/device/update", async(ctx, next) => {
+    router.post("/device/update", async (ctx, next) => {
 
         let device = {};
 
@@ -181,5 +183,41 @@ module.exports = router => {
         }
 
         responser.success(ctx, device);
-    })
+    });
+
+    router.post("/device/upload", async (ctx, next) => {
+        try {
+            let body = ctx.request.body;
+            let deviceId = body.deviceId;
+            for (let sensorElement of body.sensor) {
+
+                //查出对应的deviceid
+                let DeviceId = await Sensor.findOne({
+                    where: {
+                        sensorId: sensorElement.sensorId
+                    },
+                    attributes: ["DeviceId", "unit", "type"]
+                });
+
+                let senV = {
+                    SensorId: sensorElement.sensorId,
+                    DeviceId: deviceId
+                };
+                sensorV.forEach(name => {
+                    senV[name] = sensorElement[name];
+                });
+
+                await SensorValue.create(senV);
+                senV.unit = DeviceId.unit;
+                senV.type = DeviceId.type;
+                logger.debug(senV);
+                event.emit("new value", senV);
+            }
+        } catch (e) {
+            logger.error(e);
+            responser.catchErr(ctx, e);
+            return;
+        }
+        responser.success(ctx);
+    });
 };
